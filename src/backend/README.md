@@ -1,4 +1,6 @@
 Use nodemon for automatic server restarts :
 
-### $ npm install ### 
-### $ npm run app ###
+```
+npm install
+npm run app 
+```
