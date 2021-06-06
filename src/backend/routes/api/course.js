@@ -4,30 +4,28 @@
  */
 
 // routes/api/course.js
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
 // Load Course Model
-const Course = require("../../models/Course");
+const Course = require('../../models/Course');
 
 /**
  * @route GET api/course/test
  * @description test route
  * @access Public
  */
-router.get("/test", (req, res) => res.send("course route testing!"));
+router.get('/test', (req, res) => res.send('course route testing!'));
 
 /**
  * @route GET api/course
  * @description Get all available courses
  * @access Public
  */
-router.get("/", (req, res) => {
-  Course.find()
-    .then((courses) => res.json(courses))
-    .catch((error) =>
-      res.status(404).json({ message: "No available Courses found" })
-    );
+router.get('/', (req, res) => {
+    Course.find()
+        .then(courses => res.json(courses))
+        .catch(error => res.status(404).json({ message: 'No available Courses found' }));
 });
 
 /**
@@ -35,14 +33,12 @@ router.get("/", (req, res) => {
  * @description Get single course by id
  * @access Public
  */
-router.get("/:id", (req, res) => {
-  Course.findById(req.params.id)
-    .then((course) => res.json(course))
-    .catch((error) =>
-      res
-        .status(404)
-        .json({ message: `No Course with id ${req.params.id} found` })
-    );
+router.get('/:id', (req, res) => {
+    Course.findById(req.params.id)
+        .then(course => res.json(course))
+        .catch(error =>
+            res.status(404).json({ message: `No Course with id ${req.params.id} found` })
+        );
 });
 
 /**
@@ -50,12 +46,11 @@ router.get("/:id", (req, res) => {
  * @description
  * @access Public
  */
-router.post("/", (req, res) => {
-  Course.create(req.body)
-    .then((course) => res.json({ message: "Course created successfully" }))
-    .catch((error) =>
-      res.status(400).json({ errorMessage: "Unable to add this course" })
-    );
+router.post('/', (req, res) => {
+    console.log('post api/course/payload');
+    Course.create(req.body)
+        .then(course => res.json({ message: 'Course created successfully' }))
+        .catch(error => res.status(400).json({ errorMessage: 'Unable to add this course' }));
 });
 
 /**
@@ -63,14 +58,10 @@ router.post("/", (req, res) => {
  * @description updates a course by id
  * @Access Public
  */
-router.put("/:id", (req, res) => {
-  Course.findByIdAndUpdate(req.params.id, req.body)
-    .then((course) =>
-      res.json({ message: `Updated course ${req.params.id} successfully` })
-    )
-    .catch((error) =>
-      res.status(400).json({ error: "Unable to update the Database" })
-    );
+router.put('/:id', (req, res) => {
+    Course.findByIdAndUpdate(req.params.id, req.body)
+        .then(course => res.json({ message: `Updated course ${req.params.id} successfully` }))
+        .catch(error => res.status(400).json({ error: 'Unable to update the Database' }));
 });
 
 /**
@@ -78,16 +69,14 @@ router.put("/:id", (req, res) => {
  * @description deletes a course by id
  * @access Public
  */
-router.delete("/:id", (req, res) => {
-  Course.findByIdAndRemove(req.params.id, req.body)
-    .then((course) =>
-      res.json({
-        message: `Course with id ${req.params.id} deleted successfully`,
-      })
-    )
-    .catch((err) =>
-      res.status(404).json({ error: `No Course with id ${req.params.id}` })
-    );
+router.delete('/:id', (req, res) => {
+    Course.findByIdAndRemove(req.params.id, req.body)
+        .then(course =>
+            res.json({
+                message: `Course with id ${req.params.id} deleted successfully`
+            })
+        )
+        .catch(err => res.status(404).json({ error: `No Course with id ${req.params.id}` }));
 });
 
 module.exports = router;

@@ -5,16 +5,16 @@ const mongoose = require('mongoose');
 const CourseSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
+        required: true
     },
     university: {
         type: String,
-        required: true,
+        required: true
     },
     faculty: {
         type: String,
-        required: true,
-    },
+        required: true
+    }
 });
 
 module.exports = Course = mongoose.model('course', CourseSchema);
