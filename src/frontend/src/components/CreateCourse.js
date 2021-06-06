@@ -48,6 +48,7 @@ class CreateCourse extends Component {
         return (
             <div className="CreateCourse">
                 <div className="container">
+                    <row></row>
                     <Form noValidate onSubmit={this.onSubmit}>
                         <Form.Group controlId="formCreateCourseName">
                             <Form.Label>Course Name</Form.Label>
