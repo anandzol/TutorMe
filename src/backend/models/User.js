@@ -1,5 +1,6 @@
+// models/User.js
+
 const mongoose = require('mongoose');
-var GeoJSON = require('mongoose-geojson-schema');
 
 // Define the point schema used for coordinates
 const pointSchema = new mongoose.Schema({
@@ -28,11 +29,18 @@ const citySchema = new mongoose.Schema({
 // Define the user schema
 const UserSchema = new mongoose.Schema({
     // Login happens strictly through email
-
     email: {
         type: String,
         required: true,
         unique: true
+    },
+    firstName: {
+        type: String,
+        required: true
+    },
+    lastName: {
+        type: String,
+        required: true
     },
     password: {
         type: String,
@@ -42,14 +50,13 @@ const UserSchema = new mongoose.Schema({
         type: String,
         enum: ['male', 'female', 'undefined']
     },
+
+    // Semester of the student/tutor, can be used for
+    // recommended courses/tutorial sessions
     semester: {
         type: Number,
         min: 1,
         max: 12
-    },
-    universityId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'University'
     },
     program: {
         type: String,
@@ -59,7 +66,12 @@ const UserSchema = new mongoose.Schema({
     dateOfBirth: {
         type: Date
     },
-    // We use the location in order to calculate e.g. distance towards an onsite tutorial session
+    lastOnline: {
+        type: Date,
+        required: true
+    },
+    // We use the location in order to calculate e.g. distance
+    // towards an onsite tutorial session
     location: {
         type: citySchema
     },
@@ -72,4 +84,7 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.set('versionKey', false);
 
-module.exports = mongoose.model('User', UserSchema);
+// adds createdAt, updatedAt properties which are fetched for profile information
+UserSchema.set('timestamps', true);
+
+module.exports = User = mongoose.model('user', UserSchema);

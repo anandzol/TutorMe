@@ -48,7 +48,6 @@ class CreateCourse extends Component {
         return (
             <div className="CreateCourse">
                 <div className="container">
-                    <row></row>
                     <Form noValidate onSubmit={this.onSubmit}>
                         <Form.Group controlId="formCreateCourseName">
                             <Form.Label>Course Name</Form.Label>
@@ -60,7 +59,8 @@ class CreateCourse extends Component {
                                 rows={1}
                             />
                             <Form.Text className="text-muted">
-                                Enter the course name which you would like to create!
+                                Enter the course name which you would like to
+                                create!
                             </Form.Text>
                         </Form.Group>
                         <Form.Group controlId="formCreateCourseUniversity">
@@ -73,7 +73,8 @@ class CreateCourse extends Component {
                                 rows={1}
                             />
                             <Form.Text className="text-muted">
-                                Enter the university of the course which you would like to create!
+                                Enter the university of the course which you
+                                would like to create!
                             </Form.Text>
                         </Form.Group>
                         <Form.Group controlId="formCreateFaculty">
@@ -86,7 +87,8 @@ class CreateCourse extends Component {
                                 rows={1}
                             />
                             <Form.Text className="text-muted">
-                                Enter the faculty of the course which you would like to create!
+                                Enter the faculty of the course which you would
+                                like to create!
                             </Form.Text>
                         </Form.Group>
                         <Button variant="primary" type="submit">
