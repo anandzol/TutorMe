@@ -1,27 +1,34 @@
 import React, { Component } from 'react';
+import graduationIcon from '../assets/graduation.png';
 import {
     Nav,
     Navbar,
     Form,
     FormControl,
     Button,
-    NavDropdown
+    NavDropdown,
+    NavbarBrand
 } from 'react-bootstrap';
 class NavigationBar extends Component {
+    constructor() {
+        super();
+    }
+
     render() {
         return (
             <Navbar bg="primary" variant="dark">
-                <div></div>
-                <Navbar.Brand href="/home">TutorMe</Navbar.Brand>
+                <a href="/">
+                    <img
+                        src={graduationIcon}
+                        className="NavigationBarLogo"
+                    ></img>
+                </a>
+                <Navbar.Brand className="NavigationBar" href="/home">
+                    TutorMe
+                </Navbar.Brand>
                 <Nav className="ProfileButton">
-                    <NavDropdown
-                        className="ProfileButton"
-                        title="Profile"
-                        id="collasible-nav-dropdown"
-                    >
-                        <NavDropdown.Item href="#action/3.1">
-                            Home
-                        </NavDropdown.Item>
+                    <NavDropdown title="Profile" id="collasible-nav-dropdown">
+                        <NavDropdown.Item href="/">Home</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.2">
                             Edit Profile
                         </NavDropdown.Item>
