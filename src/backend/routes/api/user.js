@@ -44,7 +44,7 @@ router.get('/:id', (req, res) => {
  */
 router.post('/', (req, res) => {
     console.log('post api/user/payload');
-    user.create(req.body)
+    User.create(req.body)
         .then(user => res.json({ message: 'user created successfully' }))
         .catch(error => res.status(400).json({ errorMessage: 'Unable to add this user' }));
 });
@@ -55,7 +55,7 @@ router.post('/', (req, res) => {
  * @Access Public
  */
 router.put('/:id', (req, res) => {
-    user.findByIdAndUpdate(req.params.id, req.body)
+    User.findByIdAndUpdate(req.params.id, req.body)
         .then(user => res.json({ message: `Updated user ${req.params.id} successfully` }))
         .catch(error => res.status(400).json({ error: 'Unable to update the Database' }));
 });
@@ -66,7 +66,7 @@ router.put('/:id', (req, res) => {
  * @access Public
  */
 router.delete('/:id', (req, res) => {
-    user.findByIdAndRemove(req.params.id, req.body)
+    User.findByIdAndRemove(req.params.id, req.body)
         .then(user =>
             res.json({
                 message: `user with id ${req.params.id} deleted successfully`
