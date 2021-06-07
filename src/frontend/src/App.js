@@ -4,16 +4,24 @@ import './App.css';
 
 import CreateCourse from './components/CreateCourse';
 import RegisterUser from './components/RegisterUser';
-import ShowCourseList from './components/ShowCourseList';
+import HomeScreen from './components/HomeScreen';
 
 class App extends Component {
     render() {
         return (
             <Router>
                 <div>
-                    <Route exact path="/" component={ShowCourseList} />
-                    <Route exact path="/create-course" component={CreateCourse} />
-                    <Route exact path="/register-user" component={RegisterUser} />
+                    <Route exact path="/" component={HomeScreen} />
+                    <Route
+                        exact
+                        path="/create-course"
+                        component={CreateCourse}
+                    />
+                    <Route
+                        exact
+                        path="/register-user"
+                        component={RegisterUser}
+                    />
                 </div>
             </Router>
         );
