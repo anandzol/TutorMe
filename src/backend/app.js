@@ -8,6 +8,7 @@ var cors = require('cors');
 const app = express();
 
 const courses = require('./routes/api/course');
+const users = require('./routes/api/user');
 
 connectDB();
 
@@ -21,6 +22,7 @@ app.get('/', (req, res) => res.send('test123'));
 
 // Init API routes
 app.use('/api/course', courses);
+app.use('/api/user', users);
 
 const port = process.env.PORT || 8082;
 

@@ -60,7 +60,7 @@ class NavigationBar extends Component {
                 <a href="/">
                     <img src={graduationIcon} className={classes.logo}></img>
                 </a>
-                <Navbar.Brand className={classes.bar} href="/home">
+                <Navbar.Brand className={classes.bar} href="/">
                     TutorMe
                 </Navbar.Brand>
                 <Nav>

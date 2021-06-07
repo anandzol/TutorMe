@@ -2,6 +2,17 @@
 
 const mongoose = require('mongoose');
 
+const RatingSchema = new mongoose.Schema({
+    // User who gave the rating
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+
+    // Rating of user
+    rating: {
+        type: Number,
+        min: 1,
+        max: 5
+    }
+});
 // Define the point schema used for coordinates
 const pointSchema = new mongoose.Schema({
     type: {
@@ -63,23 +74,20 @@ const UserSchema = new mongoose.Schema({
         enum: ['bachelor', 'master'],
         required: true
     },
-    dateOfBirth: {
-        type: Date
-    },
+    dateOfBirth: Date,
     lastOnline: {
         type: Date,
         required: true
     },
     // We use the location in order to calculate e.g. distance
     // towards an onsite tutorial session
-    location: {
-        type: citySchema
-    },
+    location: [citySchema],
     role: {
         type: String,
         enum: ['student', 'tutor', 'admin'],
         default: 'student'
-    }
+    },
+    ratings: [RatingSchema]
 });
 
 UserSchema.set('versionKey', false);
@@ -88,3 +96,20 @@ UserSchema.set('versionKey', false);
 UserSchema.set('timestamps', true);
 
 module.exports = User = mongoose.model('user', UserSchema);
+
+/**
+ * Returns the average rating if available, otherwise 0
+ * @Returns {Number} average rating of a user if Ratings are available
+ */
+UserSchema.virtual('averageRating').get(function () {
+    let avgRating = 0;
+    let numberOfRatings = this.rating.length;
+
+    if (numberOfRatings == 0) {
+        return 0;
+    }
+
+    let totalRating = this.rating.reduce((rating, acc) => rating.rating + acc, 0);
+
+    return totalRating / numberOfRatings;
+});

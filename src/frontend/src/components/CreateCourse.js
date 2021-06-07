@@ -30,7 +30,6 @@ class CreateCourse extends Component {
             faculty: this.state.faculty
         };
 
-        console.log(data);
         axios
             .post('http://localhost:8082/api/course', data)
             .then(res => {
@@ -39,8 +38,7 @@ class CreateCourse extends Component {
                     university: '',
                     faculty: ''
                 });
-                console.log(this.state);
-                this.props.history.push('/create-course');
+                // this.props.history.push('/create-course');
             })
             .catch(error => {
                 console.log('Error in Create course (frontend)');
@@ -59,7 +57,7 @@ class CreateCourse extends Component {
                                 <Form.Control
                                     type="text"
                                     name="name"
-                                    values={this.state.name}
+                                    value={this.state.name}
                                     onChange={this.onChange}
                                     rows={1}
                                 />
@@ -73,7 +71,7 @@ class CreateCourse extends Component {
                                 <Form.Control
                                     type="text"
                                     name="university"
-                                    values={this.state.university}
+                                    value={this.state.university}
                                     onChange={this.onChange}
                                     rows={1}
                                 />
@@ -87,7 +85,7 @@ class CreateCourse extends Component {
                                 <Form.Control
                                     type="text"
                                     name="faculty"
-                                    values={this.state.faculty}
+                                    value={this.state.faculty}
                                     onChange={this.onChange}
                                     rows={1}
                                 />
