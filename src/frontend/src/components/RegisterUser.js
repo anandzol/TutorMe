@@ -50,11 +50,8 @@ class RegisterUser extends Component {
             lastOnline: new Date(),
             location: undefined,
             role: 'student',
-            email: ''
-        };
-
-        this.errors = {
-            passwordError: false
+            email: '',
+            errors: {}
         };
     }
 
@@ -72,56 +69,101 @@ class RegisterUser extends Component {
         this.props.history.push('');
     };
 
-    onBlurPassword = e => {
-        if (this.state.password != '' && this.state.confirmPassword != '') {
-            if (this.state.password != this.state.confirmPassword) {
-                this.errors.passwordError = true;
-            } else {
-                this.errors.passwordError = false;
-            }
+    onRegister = e => {
+        e.preventDefault();
+
+        if (this.validateInput()) {
+            const data = {
+                email: this.state.email,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                password: this.state.password,
+                gender: this.state.gender,
+                semester: this.state.semester,
+                program: this.state.program,
+                dateOfBirth: this.state.dateOfBirth,
+                lastOnline: this.state.lastOnline,
+                location: this.state.location,
+                role: this.state.role
+            };
+
+            axios
+                .post('http://localhost:8082/api/User', data)
+                .then(res => {
+                    this.setState({
+                        email: '',
+                        firstName: '',
+                        lastName: '',
+                        password: '',
+                        confirmPassword: '',
+                        gender: 'male',
+                        semester: 1,
+                        program: 'bachelor',
+                        dateOfBirth: new Date(),
+                        lastOnline: new Date(),
+                        location: undefined,
+                        role: 'student'
+                    });
+                    this.props.history.push('/');
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
     };
 
-    onRegister = e => {
-        e.preventDefault();
-        const data = {
-            email: this.state.email,
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            password: this.state.password,
-            gender: this.state.gender,
-            semester: this.state.semester,
-            program: this.state.program,
-            dateOfBirth: this.state.dateOfBirth,
-            lastOnline: this.state.lastOnline,
-            location: this.state.location,
-            role: this.state.role
-        };
+    /**
+     * Validates wether all user inputs are correct
+     * @returns {Boolean} true if all required fields are filled out.
+     */
+    validateInput() {
+        let input = this.state;
+        let errors = {};
+        let isValid = true;
 
-        console.log(data);
-        axios
-            .post('http://localhost:8082/api/User', data)
-            .then(res => {
-                this.setState({
-                    email: '',
-                    firstName: '',
-                    lastName: '',
-                    password: '',
-                    confirmPassword: '',
-                    gender: 'male',
-                    semester: 1,
-                    program: 'bachelor',
-                    dateOfBirth: new Date(),
-                    lastOnline: new Date(),
-                    location: undefined,
-                    role: 'student'
-                });
-                this.props.history.push('/');
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    };
+        if (input['firstName'] === '') {
+            isValid = false;
+            errors['firstName'] = 'Please enter your first name!';
+        }
+        if (input['lastName'] === '') {
+            isValid = false;
+            errors['lastName'] = 'Please enter your last name!';
+        }
+
+        if (input['email'] !== '') {
+            const regExp =
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if (!regExp.test(input['email'])) {
+                isValid = false;
+                errors['email'] = 'Please enter a valid email adress!';
+            }
+        } else if (input['email'] === '') {
+            isValid = false;
+            errors['email'] = 'Please enter an email adress!';
+        }
+
+        if (input['password'] === '') {
+            isValid = false;
+            errors['password'] = 'Please enter a password!';
+        }
+
+        if (input['confirmPassword'] === '') {
+            isValid = false;
+            errors['confirmPassword'] = 'Please enter your password confirmation';
+        }
+
+        if (input['password'] !== '' && input['confirmPassword'] !== '') {
+            if (input['password'] !== input['confirmPassword']) {
+                errors['password'] = "Your passwords don't match";
+            }
+        }
+
+        this.setState({
+            errors: errors
+        });
+
+        return isValid;
+    }
 
     render() {
         const { classes } = this.props;
@@ -146,6 +188,9 @@ class RegisterUser extends Component {
                                                 value={this.state.firstName}
                                                 onChange={this.onChange}
                                             />
+                                            <div className="text-danger">
+                                                {this.state.errors.firstName}
+                                            </div>
                                         </div>
                                         <div class="col">
                                             <label htmlFor="lastNameInput">Last Name</label>
@@ -158,6 +203,9 @@ class RegisterUser extends Component {
                                                 value={this.state.lastName}
                                                 onChange={this.onChange}
                                             />
+                                            <div className="text-danger">
+                                                {this.state.errors.lastName}
+                                            </div>
                                         </div>
                                         <div>
                                             <Form.Group
@@ -193,7 +241,9 @@ class RegisterUser extends Component {
                                     <small id="emailHelp" className="form-text text-muted">
                                         We'll never share your email with anyone else.
                                     </small>
+                                    <div className="text-danger">{this.state.errors.email}</div>
                                 </div>
+
                                 <div className="form-group text-left">
                                     <label htmlFor="exampleInputPassword1">Password</label>
                                     <input
@@ -205,7 +255,9 @@ class RegisterUser extends Component {
                                         value={this.state.password}
                                         onChange={this.onChange}
                                     />
+                                    <div className="text-danger">{this.state.errors.password}</div>
                                 </div>
+
                                 <div className="form-group text-left">
                                     <label htmlFor="exampleInputPassword1">Confirm Password</label>
                                     <input
@@ -217,7 +269,11 @@ class RegisterUser extends Component {
                                         value={this.state.confirmPassword}
                                         onChange={this.onChange}
                                     />
+                                    <div className="text-danger">
+                                        {this.state.errors.confirmPassword}
+                                    </div>
                                 </div>
+
                                 <div class={classes.container + ' ' + 'row row-cols-4'}>
                                     <div class="col">
                                         <Form.Group controlId="university">
@@ -236,6 +292,7 @@ class RegisterUser extends Component {
                                             </Form.Control>
                                         </Form.Group>
                                     </div>
+
                                     <div class="col">
                                         <Form.Group controlId="degree">
                                             <Form.Label>Program</Form.Label>
@@ -251,6 +308,7 @@ class RegisterUser extends Component {
                                             </Form.Control>
                                         </Form.Group>
                                     </div>
+
                                     <div class="col">
                                         <Form.Group
                                             controlId="semester"
@@ -277,6 +335,7 @@ class RegisterUser extends Component {
                                             </Form.Control>
                                         </Form.Group>
                                     </div>
+
                                     <div class="col">
                                         <Form.Group controlId="program">
                                             <Form.Label>Role</Form.Label>
@@ -294,6 +353,7 @@ class RegisterUser extends Component {
                                         </Form.Group>
                                     </div>
                                 </div>
+
                                 <div className={classes.button_box}>
                                     <Button
                                         variant="primary"
