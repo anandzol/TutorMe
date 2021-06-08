@@ -5,9 +5,6 @@ const router = express.Router();
 
 const AuthController = require('../controllers/auth');
 
-// Load User Model
-const User = require('../../models/User');
-
 /**
  * @route GET api/user/test
  * @description test route

@@ -45,7 +45,6 @@ const defaultState = {
     program: 'bachelor',
     dateOfBirth: new Date(),
     lastOnline: new Date(),
-    location: undefined,
     role: 'student',
     email: '',
     errors: {}
@@ -115,7 +114,6 @@ class RegisterUser extends Component {
                 program: this.state.program,
                 dateOfBirth: this.state.dateOfBirth,
                 lastOnline: this.state.lastOnline,
-                location: this.state.location,
                 role: this.state.role
             };
 

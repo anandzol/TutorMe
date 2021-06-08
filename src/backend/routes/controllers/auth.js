@@ -3,7 +3,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const config = require('../../config');
-const User = require('../../models/User');
+const User = require('../../models/user');
 
 /**
  * API controller for a user login
@@ -41,7 +41,10 @@ const login = async (req, res) => {
         }
 
         // Check if the password is valid
-        const isPasswordValid = bcrypt.compareSync(req.body.password, user.password);
+        const isPasswordValid = bcrypt.compareSync(
+            req.body.password,
+            user.password
+        );
 
         if (!isPasswordValid) {
             return res.status(401).send({ token: null });

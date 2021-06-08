@@ -1,41 +1,6 @@
-// models/User.js
+// models/user.js
 
 const mongoose = require('mongoose');
-
-const RatingSchema = new mongoose.Schema({
-    // User who gave the rating
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-
-    // Rating of user
-    rating: {
-        type: Number,
-        min: 1,
-        max: 5
-    }
-});
-// Define the point schema used for coordinates
-const pointSchema = new mongoose.Schema({
-    type: {
-        type: String,
-        enum: ['Point'],
-        required: true
-    },
-
-    // Careful: GeoJSON uses langtitude before latitude !
-    coordinates: {
-        type: [Number],
-        required: true
-    }
-});
-
-// Define a city schema used for cities
-const citySchema = new mongoose.Schema({
-    name: String,
-    location: {
-        type: pointSchema,
-        required: true
-    }
-});
 
 // Define the user schema
 const UserSchema = new mongoose.Schema({
@@ -81,36 +46,19 @@ const UserSchema = new mongoose.Schema({
     },
     // We use the location in order to calculate e.g. distance
     // towards an onsite tutorial session
-    location: [citySchema],
     role: {
         type: String,
         enum: ['student', 'tutor', 'moderator'],
         default: 'student'
     },
-    university: String,
-    ratings: [RatingSchema]
+    university: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'university'
+    }
 });
-
-UserSchema.set('versionKey', false);
 
 // adds createdAt, updatedAt properties which are fetched for profile information
 UserSchema.set('timestamps', true);
+UserSchema.set('versionKey', false);
 
 module.exports = User = mongoose.model('user', UserSchema);
-
-/**
- * Returns the average rating if available, otherwise 0
- * @Returns {Number} average rating of a user if Ratings are available
- */
-UserSchema.virtual('averageRating').get(function () {
-    let avgRating = 0;
-    let numberOfRatings = this.rating.length;
-
-    if (numberOfRatings == 0) {
-        return 0;
-    }
-
-    let totalRating = this.rating.reduce((rating, acc) => rating.rating + acc, 0);
-
-    return totalRating / numberOfRatings;
-});
