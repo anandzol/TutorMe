@@ -70,13 +70,12 @@ class NavigationBar extends Component {
                 <Nav className={classes.profileButton}>
                     <NavDropdown
                         title={<span className={classes.profileButton__span}>Profile</span>}
-                        id="collasible-nav-dropdown"
-                    >
+                        id="collasible-nav-dropdown">
                         <NavDropdown.Item href="/">Home</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.2">Edit Profile</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.3">Offer Course</NavDropdown.Item>
-                        <NavDropdown.Divider />
                         <NavDropdown.Item href="#action/3.4">Manage Course</NavDropdown.Item>
+                        <NavDropdown.Divider />
                         <NavDropdown.Item href="#action/3.4">Sign Out</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
