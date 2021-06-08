@@ -71,7 +71,7 @@ const UserSchema = new mongoose.Schema({
     },
     program: {
         type: String,
-        enum: ['bachelor', 'master'],
+        enum: ['bachelor', 'master', 'graduate'],
         required: true
     },
     dateOfBirth: Date,
@@ -84,9 +84,10 @@ const UserSchema = new mongoose.Schema({
     location: [citySchema],
     role: {
         type: String,
-        enum: ['student', 'tutor', 'admin'],
+        enum: ['student', 'tutor', 'moderator'],
         default: 'student'
     },
+    university: String,
     ratings: [RatingSchema]
 });
 

@@ -44,6 +44,7 @@ router.get('/:id', (req, res) => {
  */
 router.post('/', (req, res) => {
     console.log('post api/user/payload');
+    console.log(req.body);
     User.create(req.body)
         .then(user => res.json({ message: 'user created successfully' }))
         .catch(error => res.status(400).json({ errorMessage: 'Unable to add this user' }));

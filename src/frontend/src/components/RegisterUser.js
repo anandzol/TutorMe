@@ -36,19 +36,25 @@ const styles = () => ({
 class RegisterUser extends Component {
     constructor() {
         super();
+
+        // Init state with placeholder values as displayed
         this.state = {
-            email: '',
             firstName: '',
             lastName: '',
             password: '',
             confirmPassword: '',
-            gender: '',
+            gender: 'male',
             semester: 1,
-            program: '',
-            dateOfBirth: JSON.stringify(new Date()),
-            lastOnline: JSON.stringify(new Date()),
+            program: 'bachelor',
+            dateOfBirth: new Date(),
+            lastOnline: new Date(),
             location: undefined,
-            role: 'student'
+            role: 'student',
+            email: ''
+        };
+
+        this.errors = {
+            passwordError: false
         };
     }
 
@@ -66,10 +72,20 @@ class RegisterUser extends Component {
         this.props.history.push('');
     };
 
+    onBlurPassword = e => {
+        if (this.state.password != '' && this.state.confirmPassword != '') {
+            if (this.state.password != this.state.confirmPassword) {
+                this.errors.passwordError = true;
+            } else {
+                this.errors.passwordError = false;
+            }
+        }
+    };
+
     onRegister = e => {
         e.preventDefault();
         const data = {
-            email: this.state.name,
+            email: this.state.email,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             password: this.state.password,
@@ -85,26 +101,31 @@ class RegisterUser extends Component {
         console.log(data);
         axios
             .post('http://localhost:8082/api/User', data)
-            .then(res =>
+            .then(res => {
                 this.setState({
                     email: '',
                     firstName: '',
                     lastName: '',
                     password: '',
-                    gender: '',
+                    confirmPassword: '',
+                    gender: 'male',
                     semester: 1,
-                    program: '',
-                    dateOfBirth: JSON.stringify(new Date()),
-                    lastOnline: JSON.stringify(new Date()),
+                    program: 'bachelor',
+                    dateOfBirth: new Date(),
+                    lastOnline: new Date(),
                     location: undefined,
                     role: 'student'
-                })
-            )
-            .catch(error => {});
+                });
+                this.props.history.push('/');
+            })
+            .catch(error => {
+                console.log(error);
+            });
     };
 
     render() {
         const { classes } = this.props;
+        var optionState = this.props.optionState;
         return (
             <div>
                 <NavigationBar></NavigationBar>
@@ -115,9 +136,7 @@ class RegisterUser extends Component {
                                 <div className={classes.row_padding_top}>
                                     <div class="row row-cols-3">
                                         <div class="col">
-                                            <label htmlFor="firstNameInput">
-                                                First Name
-                                            </label>
+                                            <label htmlFor="firstNameInput">First Name</label>
                                             <input
                                                 type="text"
                                                 name="firstName"
@@ -129,14 +148,12 @@ class RegisterUser extends Component {
                                             />
                                         </div>
                                         <div class="col">
-                                            <label htmlFor="lastNameInput">
-                                                Last Name
-                                            </label>
+                                            <label htmlFor="lastNameInput">Last Name</label>
                                             <input
                                                 type="text"
                                                 name="lastName"
                                                 className="form-control"
-                                                id="firstName"
+                                                id="lastName"
                                                 placeholder="Mustermann"
                                                 value={this.state.lastName}
                                                 onChange={this.onChange}
@@ -145,9 +162,7 @@ class RegisterUser extends Component {
                                         <div>
                                             <Form.Group
                                                 controlId="gender"
-                                                className={
-                                                    classes.row__padding_right
-                                                }
+                                                className={classes.row__padding_right}
                                             >
                                                 <Form.Label>Gender</Form.Label>
                                                 <Form.Control
@@ -155,12 +170,8 @@ class RegisterUser extends Component {
                                                     as="select"
                                                     onChange={this.onChange}
                                                 >
-                                                    <option value="male">
-                                                        Male
-                                                    </option>
-                                                    <option value="female">
-                                                        Female
-                                                    </option>
+                                                    <option values="male">Male</option>
+                                                    <option values="female">Female</option>
                                                     <option>Undefined</option>
                                                 </Form.Control>
                                             </Form.Group>
@@ -169,30 +180,22 @@ class RegisterUser extends Component {
                                 </div>
 
                                 <div className={classes.label__padding_top}>
-                                    <label htmlFor="exampleInputEmail1">
-                                        Email address
-                                    </label>
+                                    <label htmlFor="exampleInputEmail">Email address</label>
                                     <input
-                                        type="email"
-                                        className="form-control"
+                                        type="text"
                                         name="email"
-                                        aria-describedby="emailHelp"
-                                        placeholder="name@example.com"
+                                        className="form-control"
+                                        id="email"
+                                        placeholder="mail@example.com"
                                         value={this.state.email}
                                         onChange={this.onChange}
                                     />
-                                    <small
-                                        id="emailHelp"
-                                        className="form-text text-muted"
-                                    >
-                                        We'll never share your email with anyone
-                                        else.
+                                    <small id="emailHelp" className="form-text text-muted">
+                                        We'll never share your email with anyone else.
                                     </small>
                                 </div>
                                 <div className="form-group text-left">
-                                    <label htmlFor="exampleInputPassword1">
-                                        Password
-                                    </label>
+                                    <label htmlFor="exampleInputPassword1">Password</label>
                                     <input
                                         type="password"
                                         className="form-control"
@@ -204,12 +207,10 @@ class RegisterUser extends Component {
                                     />
                                 </div>
                                 <div className="form-group text-left">
-                                    <label htmlFor="exampleInputPassword1">
-                                        Confirm Password
-                                    </label>
+                                    <label htmlFor="exampleInputPassword1">Confirm Password</label>
                                     <input
                                         type="password"
-                                        name="confirmPasswo"
+                                        name="confirmPassword"
                                         className="form-control"
                                         id="confirmPassword"
                                         placeholder="Confirm Password"
@@ -217,34 +218,36 @@ class RegisterUser extends Component {
                                         onChange={this.onChange}
                                     />
                                 </div>
-                                <div
-                                    class={
-                                        classes.container +
-                                        ' ' +
-                                        'row row-cols-4'
-                                    }
-                                    style={{ paddingTop: 20 }}
-                                >
+                                <div class={classes.container + ' ' + 'row row-cols-4'}>
                                     <div class="col">
                                         <Form.Group controlId="university">
                                             <Form.Label>University</Form.Label>
-                                            <Form.Control as="select">
-                                                <option>
+                                            <Form.Control
+                                                as="select"
+                                                name="university"
+                                                onChange={this.onChange}
+                                            >
+                                                <option values={'tum'}>
                                                     Technical University Munich
                                                 </option>
-                                                <option>
-                                                    Ludwig Maximilian University
-                                                    Munich
+                                                <option values={'lmu'}>
+                                                    Ludwig Maximilian University Munich
                                                 </option>
                                             </Form.Control>
                                         </Form.Group>
                                     </div>
                                     <div class="col">
                                         <Form.Group controlId="degree">
-                                            <Form.Label>Degree</Form.Label>
-                                            <Form.Control as="select">
-                                                <option>Bachelor</option>
-                                                <option>Master</option>
+                                            <Form.Label>Program</Form.Label>
+                                            <Form.Control
+                                                as="select"
+                                                name="program"
+                                                onChange={this.onChange}
+                                                value={this.state.program}
+                                            >
+                                                <option value="bachelor">Bachelor</option>
+                                                <option value="master">Master</option>
+                                                <option value="graduate">Graduate</option>
                                             </Form.Control>
                                         </Form.Group>
                                     </div>
@@ -257,10 +260,9 @@ class RegisterUser extends Component {
                                             <Form.Control
                                                 name="semester"
                                                 as="select"
+                                                value={this.state.value}
                                             >
-                                                <option tyxpevalue={1}>
-                                                    1
-                                                </option>
+                                                <option value={1}>1</option>
                                                 <option value={2}>2</option>
                                                 <option value={3}>3</option>
                                                 <option value={4}>4</option>
@@ -276,12 +278,18 @@ class RegisterUser extends Component {
                                         </Form.Group>
                                     </div>
                                     <div class="col">
-                                        <Form.Group controlId="semester">
-                                            <Form.Label>Semester</Form.Label>
-                                            <Form.Control as="select">
-                                                <option>Student</option>
-                                                <option>Tutor</option>
-                                                <option>Moderator</option>
+                                        <Form.Group controlId="program">
+                                            <Form.Label>Role</Form.Label>
+                                            <Form.Control
+                                                name="role"
+                                                as="select"
+                                                value={optionState}
+                                                onChange={this.onChange}
+                                                value={this.state.role}
+                                            >
+                                                <option value="student">Student</option>
+                                                <option value="tutor">Tutor</option>
+                                                <option value="moderator">Moderator</option>
                                             </Form.Control>
                                         </Form.Group>
                                     </div>
