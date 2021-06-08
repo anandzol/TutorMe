@@ -1,8 +1,16 @@
+// routes/controllers/auth.js
+
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const config = require('../../config');
 const User = require('../../models/User');
 
+/**
+ * API controller for a user login
+ * @param {Object} req Request containing the payload with email and password
+ * @param {Object} res Response wether the login was successful
+ * @returns
+ */
 const login = async (req, res) => {
     // Verify wether all necessary properties are contained
     if (!Object.prototype.hasOwnProperty.call(req.body, 'password'))
@@ -61,8 +69,13 @@ const login = async (req, res) => {
     }
 };
 
+/**
+ * API controller for user registration.
+ * @param {Object} req Request containing the payload with the user object
+ * @param {Object} res Response wether the registration was successful
+ * @returns
+ */
 const register = async (req, res) => {
-    console.log('register');
     try {
         const hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
@@ -101,6 +114,12 @@ const register = async (req, res) => {
     }
 };
 
+/**
+ * API controller to retreive the email of the current user
+ * @param {Object} req Request containing the userId of the JWT
+ * @param {Object} res Response wether the retreival was successful
+ * @returns
+ */
 const me = async (req, res) => {
     try {
         let user = await User.findById(req.userId).select('email').exec();
@@ -121,6 +140,11 @@ const me = async (req, res) => {
     }
 };
 
+/**
+ * API Controller to log the current user out
+ * @param {Object} req
+ * @param {Object} res Response setting the token to null
+ */
 const logout = (req, res) => {
     res.status(200).send({
         token: null
