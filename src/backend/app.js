@@ -2,7 +2,7 @@
 // Entry point of the backend
 
 const express = require('express');
-const connectDB = require('./config/db');
+const connectDB = require('./db');
 var cors = require('cors');
 
 const app = express();

@@ -3,6 +3,8 @@
 const express = require('express');
 const router = express.Router();
 
+const AuthController = require('../controllers/auth');
+
 // Load User Model
 const User = require('../../models/User');
 
@@ -14,66 +16,17 @@ const User = require('../../models/User');
 router.get('/test', (req, res) => res.send('user route testing!'));
 
 /**
- * @route GET api/user
- * @description Get all available user
+ * @route POST api/user/login/{payload}
+ * @description logs into an existing account
  * @access Public
  */
-router.get('/', (req, res) => {
-    User.find()
-        .then(user => res.json(user))
-        .catch(error => res.status(404).json({ message: 'No available Users found' }));
-});
+router.post('/login', AuthController.login);
 
 /**
- * @route GET api/user/:id
- * @description Get single User by id
+ * @route POST api/user/register/{payload}
+ * @description Registers a new mail
  * @access Public
  */
-router.get('/:id', (req, res) => {
-    User.findById(req.params.id)
-        .then(user => res.json(user))
-        .catch(error =>
-            res.status(404).json({ message: `No user with id ${req.params.id} found` })
-        );
-});
-
-/**
- * @route POST api/user/{payload}
- * @description
- * @access Public
- */
-router.post('/', (req, res) => {
-    console.log('post api/user/payload');
-    console.log(req.body);
-    User.create(req.body)
-        .then(user => res.json({ message: 'user created successfully' }))
-        .catch(error => res.status(400).json({ errorMessage: 'Unable to add this user' }));
-});
-
-/**
- * @route PUT api/user/:id
- * @description updates a user by id
- * @Access Public
- */
-router.put('/:id', (req, res) => {
-    User.findByIdAndUpdate(req.params.id, req.body)
-        .then(user => res.json({ message: `Updated user ${req.params.id} successfully` }))
-        .catch(error => res.status(400).json({ error: 'Unable to update the Database' }));
-});
-
-/**
- * @route DELETE api/boooks/:id
- * @description deletes a user by id
- * @access Public
- */
-router.delete('/:id', (req, res) => {
-    User.findByIdAndRemove(req.params.id, req.body)
-        .then(user =>
-            res.json({
-                message: `user with id ${req.params.id} deleted successfully`
-            })
-        )
-        .catch(err => res.status(404).json({ error: `No user with id ${req.params.id}` }));
-});
+router.post('/register', AuthController.register);
 
 module.exports = router;

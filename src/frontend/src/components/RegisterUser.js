@@ -34,6 +34,10 @@ const styles = () => ({
 });
 
 class RegisterUser extends Component {
+    baseURL() {
+        return 'http://localhost:8082/api/user';
+    }
+
     constructor() {
         super();
 
@@ -87,8 +91,9 @@ class RegisterUser extends Component {
                 role: this.state.role
             };
 
+            console.log(this.baseURL());
             axios
-                .post('http://localhost:8082/api/User', data)
+                .post(`${this.baseURL()}/register`, data)
                 .then(res => {
                     this.setState({
                         email: '',
@@ -104,6 +109,7 @@ class RegisterUser extends Component {
                         location: undefined,
                         role: 'student'
                     });
+                    console.log('user created');
                     this.props.history.push('/');
                 })
                 .catch(error => {
@@ -192,6 +198,7 @@ class RegisterUser extends Component {
                                                 {this.state.errors.firstName}
                                             </div>
                                         </div>
+
                                         <div class="col">
                                             <label htmlFor="lastNameInput">Last Name</label>
                                             <input
@@ -207,6 +214,7 @@ class RegisterUser extends Component {
                                                 {this.state.errors.lastName}
                                             </div>
                                         </div>
+
                                         <div>
                                             <Form.Group
                                                 controlId="gender"
