@@ -76,6 +76,7 @@ const roles = [
 ];
 
 // /components/RegisterUser.js
+
 class RegisterUser extends Component {
     baseURL() {
         return 'http://localhost:8082/api/user';
