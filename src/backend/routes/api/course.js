@@ -47,7 +47,6 @@ router.get('/:id', (req, res) => {
  * @access Public
  */
 router.post('/', (req, res) => {
-    console.log('post api/course/payload');
     Course.create(req.body)
         .then(course => res.json({ message: 'Course created successfully' }))
         .catch(error => res.status(400).json({ errorMessage: 'Unable to add this course' }));

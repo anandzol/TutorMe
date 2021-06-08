@@ -5,6 +5,8 @@ import { withStyles } from '@material-ui/styles';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
+// @Todo Refactor
+// @Todo Dynamically set the values for university + their id
 const styles = () => ({
     container: {
         paddingTop: '20px',
@@ -33,30 +35,55 @@ const styles = () => ({
     }
 });
 
+const defaultState = {
+    firstName: '',
+    lastName: '',
+    password: '',
+    confirmPassword: '',
+    gender: 'male',
+    semester: 1,
+    program: 'bachelor',
+    dateOfBirth: new Date(),
+    lastOnline: new Date(),
+    location: undefined,
+    role: 'student',
+    email: '',
+    errors: {}
+};
+
+const semesterCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const degree = [
+    {
+        bachelor: 'Bachelor'
+    },
+    {
+        master: 'Master'
+    },
+    {
+        graduate: 'Graduate'
+    }
+];
+const roles = [
+    {
+        student: 'Student'
+    },
+    {
+        tutor: 'Tutor'
+    },
+    {
+        moderator: 'Moderator'
+    }
+];
+
+// /components/RegisterUser.js
 class RegisterUser extends Component {
     baseURL() {
         return 'http://localhost:8082/api/user';
     }
-
     constructor() {
         super();
 
-        // Init state with placeholder values as displayed
-        this.state = {
-            firstName: '',
-            lastName: '',
-            password: '',
-            confirmPassword: '',
-            gender: 'male',
-            semester: 1,
-            program: 'bachelor',
-            dateOfBirth: new Date(),
-            lastOnline: new Date(),
-            location: undefined,
-            role: 'student',
-            email: '',
-            errors: {}
-        };
+        this.state = defaultState;
     }
 
     onChange = e => {
@@ -76,7 +103,7 @@ class RegisterUser extends Component {
     onRegister = e => {
         e.preventDefault();
 
-        if (this.validateInput()) {
+        if (this.validateInput() && this.validateEmail()) {
             const data = {
                 email: this.state.email,
                 firstName: this.state.firstName,
@@ -91,25 +118,10 @@ class RegisterUser extends Component {
                 role: this.state.role
             };
 
-            console.log(this.baseURL());
             axios
                 .post(`${this.baseURL()}/register`, data)
                 .then(res => {
-                    this.setState({
-                        email: '',
-                        firstName: '',
-                        lastName: '',
-                        password: '',
-                        confirmPassword: '',
-                        gender: 'male',
-                        semester: 1,
-                        program: 'bachelor',
-                        dateOfBirth: new Date(),
-                        lastOnline: new Date(),
-                        location: undefined,
-                        role: 'student'
-                    });
-                    console.log('user created');
+                    this.setState(defaultState);
                     this.props.history.push('/');
                 })
                 .catch(error => {
@@ -173,6 +185,7 @@ class RegisterUser extends Component {
 
     render() {
         const { classes } = this.props;
+
         var optionState = this.props.optionState;
         return (
             <div>
@@ -183,6 +196,7 @@ class RegisterUser extends Component {
                             <form>
                                 <div className={classes.row_padding_top}>
                                     <div class="row row-cols-3">
+                                        {/* First name input */}
                                         <div class="col">
                                             <label htmlFor="firstNameInput">First Name</label>
                                             <input
@@ -199,6 +213,7 @@ class RegisterUser extends Component {
                                             </div>
                                         </div>
 
+                                        {/* First name input */}
                                         <div class="col">
                                             <label htmlFor="lastNameInput">Last Name</label>
                                             <input
@@ -215,17 +230,16 @@ class RegisterUser extends Component {
                                             </div>
                                         </div>
 
+                                        {/* Gender input control */}
                                         <div>
                                             <Form.Group
                                                 controlId="gender"
-                                                className={classes.row__padding_right}
-                                            >
+                                                className={classes.row__padding_right}>
                                                 <Form.Label>Gender</Form.Label>
                                                 <Form.Control
                                                     name="gender"
                                                     as="select"
-                                                    onChange={this.onChange}
-                                                >
+                                                    onChange={this.onChange}>
                                                     <option values="male">Male</option>
                                                     <option values="female">Female</option>
                                                     <option>Undefined</option>
@@ -235,6 +249,7 @@ class RegisterUser extends Component {
                                     </div>
                                 </div>
 
+                                {/* Email input */}
                                 <div className={classes.label__padding_top}>
                                     <label htmlFor="exampleInputEmail">Email address</label>
                                     <input
@@ -252,6 +267,7 @@ class RegisterUser extends Component {
                                     <div className="text-danger">{this.state.errors.email}</div>
                                 </div>
 
+                                {/* Password input */}
                                 <div className="form-group text-left">
                                     <label htmlFor="exampleInputPassword1">Password</label>
                                     <input
@@ -266,6 +282,7 @@ class RegisterUser extends Component {
                                     <div className="text-danger">{this.state.errors.password}</div>
                                 </div>
 
+                                {/* Confirm password input */}
                                 <div className="form-group text-left">
                                     <label htmlFor="exampleInputPassword1">Confirm Password</label>
                                     <input
@@ -283,14 +300,14 @@ class RegisterUser extends Component {
                                 </div>
 
                                 <div class={classes.container + ' ' + 'row row-cols-4'}>
+                                    {/* University input option */}
                                     <div class="col">
                                         <Form.Group controlId="university">
                                             <Form.Label>University</Form.Label>
                                             <Form.Control
                                                 as="select"
                                                 name="university"
-                                                onChange={this.onChange}
-                                            >
+                                                onChange={this.onChange}>
                                                 <option values={'tum'}>
                                                     Technical University Munich
                                                 </option>
@@ -301,84 +318,75 @@ class RegisterUser extends Component {
                                         </Form.Group>
                                     </div>
 
+                                    {/* Program input option */}
                                     <div class="col">
-                                        <Form.Group controlId="degree">
+                                        <Form.Group controlId="degree" onChange={this.onChange}>
                                             <Form.Label>Program</Form.Label>
-                                            <Form.Control
-                                                as="select"
-                                                name="program"
-                                                onChange={this.onChange}
-                                                value={this.state.program}
-                                            >
-                                                <option value="bachelor">Bachelor</option>
-                                                <option value="master">Master</option>
-                                                <option value="graduate">Graduate</option>
+                                            <Form.Control name="program" as="select">
+                                                {degree.map((item, _) => (
+                                                    <option value={Object.keys(item)[0]}>
+                                                        {Object.values(item)[0]}
+                                                    </option>
+                                                ))}
                                             </Form.Control>
                                         </Form.Group>
                                     </div>
 
+                                    {/* Semester input option */}
                                     <div class="col">
                                         <Form.Group
                                             controlId="semester"
-                                            onChange={this.onChangeNumber}
-                                        >
+                                            onChange={this.onChangeNumber}>
                                             <Form.Label>Semester</Form.Label>
                                             <Form.Control
                                                 name="semester"
                                                 as="select"
-                                                value={this.state.value}
-                                            >
-                                                <option value={1}>1</option>
-                                                <option value={2}>2</option>
-                                                <option value={3}>3</option>
-                                                <option value={4}>4</option>
-                                                <option value={5}>5</option>
-                                                <option value={6}>6</option>
-                                                <option value={7}>7</option>
-                                                <option value={8}>8</option>
-                                                <option value={9}>9</option>
-                                                <option value={10}>10</option>
-                                                <option value={11}>11</option>
-                                                <option value={12}>12</option>
+                                                value={this.state.value}>
+                                                {semesterCount.map((item, _) => (
+                                                    <option value={item}>{item}</option>
+                                                ))}
                                             </Form.Control>
                                         </Form.Group>
                                     </div>
 
+                                    {/* User role input option */}
                                     <div class="col">
-                                        <Form.Group controlId="program">
+                                        <Form.Group controlId="role">
                                             <Form.Label>Role</Form.Label>
                                             <Form.Control
                                                 name="role"
                                                 as="select"
                                                 value={optionState}
                                                 onChange={this.onChange}
-                                                value={this.state.role}
-                                            >
-                                                <option value="student">Student</option>
-                                                <option value="tutor">Tutor</option>
-                                                <option value="moderator">Moderator</option>
+                                                value={this.state.role}>
+                                                {roles.map((item, _) => (
+                                                    <option value={Object.keys(item)[0]}>
+                                                        {Object.values(item)[0]}
+                                                    </option>
+                                                ))}
                                             </Form.Control>
                                         </Form.Group>
                                     </div>
                                 </div>
 
                                 <div className={classes.button_box}>
+                                    {/* Register Button */}
                                     <Button
                                         variant="primary"
                                         size="lg"
                                         active
                                         className={classes.button}
-                                        onClick={this.onRegister}
-                                    >
+                                        onClick={this.onRegister}>
                                         Register
                                     </Button>
+
+                                    {/* Cancel Button */}
                                     <Button
                                         variant="secondary"
                                         size="lg"
                                         active
                                         className={classes.button}
-                                        onClick={this.onCancel}
-                                    >
+                                        onClick={this.onCancel}>
                                         Cancel
                                     </Button>
                                 </div>

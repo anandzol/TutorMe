@@ -1,8 +1,16 @@
 import { Component } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import NavigationBar from '../components/NavigationBar';
+import { withStyles } from '@material-ui/styles';
+
+const styles = theme => ({
+    button__padding_top: {
+        paddingTop: '20px'
+    }
+});
 class HomeScreen extends Component {
     render() {
+        const { classes } = this.props;
         return (
             <div>
                 <NavigationBar></NavigationBar>
@@ -10,13 +18,23 @@ class HomeScreen extends Component {
 
                 <div>
                     <button>
-                        <a href="/create-course" style={{ paddingTop: 20 }}>
+                        <a href="/create-course" className={classes.button__padding_top}>
                             Create Course
                         </a>
                     </button>
                     <button>
-                        <a href="/register-user" style={{ paddingTop: 20 }}>
+                        <a href="/register-user" className={classes.button__padding_top}>
                             Register User
+                        </a>
+                    </button>
+                    <button>
+                        <a href="/login" className={classes.button__padding_top}>
+                            Login
+                        </a>
+                    </button>
+                    <button>
+                        <a href="/showOfferings" className={classes.button__padding_top}>
+                            Show Offerings
                         </a>
                     </button>
                 </div>
@@ -25,4 +43,4 @@ class HomeScreen extends Component {
     }
 }
 
-export default HomeScreen;
+export default withStyles(styles)(HomeScreen);

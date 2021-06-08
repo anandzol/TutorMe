@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
 import graduationIcon from '../assets/graduation.png';
-import {
-    Nav,
-    Navbar,
-    Form,
-    FormControl,
-    Button,
-    NavDropdown,
-    NavbarBrand
-} from 'react-bootstrap';
+import { Nav, Navbar, Form, FormControl, Button, NavDropdown, NavbarBrand } from 'react-bootstrap';
+
+// @Todo: Use Icons instead of labels for Calendar/List/Profile
 import { withStyles } from '@material-ui/styles';
 
-const styles = theme => ({
+const styles = () => ({
     bar: {
         fontSize: 'xx-large'
     },
@@ -75,27 +69,15 @@ class NavigationBar extends Component {
                 </Nav>
                 <Nav className={classes.profileButton}>
                     <NavDropdown
-                        title={
-                            <span className={classes.profileButton__span}>
-                                Profile
-                            </span>
-                        }
+                        title={<span className={classes.profileButton__span}>Profile</span>}
                         id="collasible-nav-dropdown"
                     >
                         <NavDropdown.Item href="/">Home</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">
-                            Edit Profile
-                        </NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">
-                            Offer Course
-                        </NavDropdown.Item>
+                        <NavDropdown.Item href="#action/3.2">Edit Profile</NavDropdown.Item>
+                        <NavDropdown.Item href="#action/3.3">Offer Course</NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item href="#action/3.4">
-                            Manage Course
-                        </NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.4">
-                            Sign Out
-                        </NavDropdown.Item>
+                        <NavDropdown.Item href="#action/3.4">Manage Course</NavDropdown.Item>
+                        <NavDropdown.Item href="#action/3.4">Sign Out</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
             </Navbar>
