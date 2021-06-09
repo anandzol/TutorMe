@@ -12,6 +12,18 @@ const FacultyController = require('../controllers/faculty');
 router.get('/test', (req, res) => res.send('university route testing!'));
 
 /**
+ * @route GET api/faculty
+ * @description Get all available faculties
+ * @access Public
+ */
+router.get('/', (req, res) => {
+    Faculty.find()
+        .then(faculty => res.json(faculty))
+        .catch(error =>
+            res.status(404).json({ message: 'No available Faculties found' })
+        );
+});
+/**
  * @route POST api/faculty/{payload}
  * @description
  * @access Public

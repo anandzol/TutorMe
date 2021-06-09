@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/styles';
 
 const defaultState = {
     name: '',
-    universityId: '',
+    university: '',
     universities: []
 };
 
@@ -51,7 +51,7 @@ class createFaculty extends Component {
         e.preventDefault();
         const data = {
             name: this.state.name,
-            universityId: this.state.universityId
+            university: this.state.university
         };
 
         axios
@@ -76,7 +76,7 @@ class createFaculty extends Component {
                     <Form onSubmit={this.onSubmit} className={classes.form_padding}>
                         <Form.Group>
                             <Form.Label>University</Form.Label>
-                            <Form.Control as="select" name="universityId" onChange={this.onChange}>
+                            <Form.Control as="select" name="university" onChange={this.onChange}>
                                 {this.state.universities.map((item, _) => (
                                     <option value={item._id}>{item.name}</option>
                                 ))}

@@ -9,7 +9,7 @@ const FacultySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    universityId: { type: mongoose.Schema.Types.ObjectId, ref: 'university' },
+    university: { type: mongoose.Schema.Types.ObjectId, ref: 'university' },
 
     courses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'course' }]
 });
