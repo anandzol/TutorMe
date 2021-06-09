@@ -33,8 +33,18 @@ class HomeScreen extends Component {
                         </a>
                     </button>
                     <button>
-                        <a href="/showOfferings" className={classes.button__padding_top}>
+                        <a href="/show-offerings" className={classes.button__padding_top}>
                             Show Offerings
+                        </a>
+                    </button>
+                    <button>
+                        <a href="/create-university" className={classes.button__padding_top}>
+                            Create University
+                        </a>
+                    </button>
+                    <button>
+                        <a href="/create-faculty" className={classes.button__padding_top}>
+                            Create Faculty
                         </a>
                     </button>
                 </div>

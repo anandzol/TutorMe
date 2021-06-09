@@ -10,7 +10,7 @@ const app = express();
 const courses = require('./routes/api/course');
 const users = require('./routes/api/user');
 const universities = require('./routes/api/university');
-
+const faculties = require('./routes/api/faculty');
 connectDB();
 
 // Cors
@@ -25,6 +25,7 @@ app.get('/', (req, res) => res.send('test123'));
 app.use('/api/course', courses);
 app.use('/api/user', users);
 app.use('/api/university', universities);
+app.use('/api/faculty', faculties);
 
 const port = process.env.PORT || 8082;
 

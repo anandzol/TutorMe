@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import NavigationBar from '../components/NavigationBar';
 import { withStyles } from '@material-ui/styles';
@@ -74,12 +74,10 @@ const roles = [
     }
 ];
 
+const baseURL = 'http://localhost:8082/api/user';
 // /components/RegisterUser.js
 
 class RegisterUser extends Component {
-    baseURL() {
-        return 'http://localhost:8082/api/user';
-    }
     constructor() {
         super();
 
@@ -118,7 +116,7 @@ class RegisterUser extends Component {
             };
 
             axios
-                .post(`${this.baseURL()}/register`, data)
+                .post(`${baseURL}/register`, data)
                 .then(res => {
                     this.setState(defaultState);
                     this.props.history.push('/');
