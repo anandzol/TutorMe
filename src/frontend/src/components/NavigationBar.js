@@ -12,7 +12,7 @@ const styles = () => ({
     listButton: {
         position: 'absolute',
         right: '350px',
-        top: '23px',
+        top: '31px',
         zIndex: 1000,
         fontSize: 'xx-large',
         color: 'white'
@@ -20,7 +20,7 @@ const styles = () => ({
     calendarButton: {
         position: 'absolute',
         right: '190px',
-        top: '23px',
+        top: '31px',
         zIndex: 1000,
         fontSize: 'xx-large',
         color: 'white'
@@ -28,7 +28,7 @@ const styles = () => ({
     profileButton: {
         position: 'absolute',
         right: '50px',
-        top: '15px',
+        top: '23px',
         zIndex: 1000
     },
     logo: {

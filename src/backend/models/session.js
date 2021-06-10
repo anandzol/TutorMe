@@ -22,11 +22,8 @@ const SessionSchema = new mongoose.Schema({
         min: 1,
         max: 100
     },
-    location: {
-        type: String,
-        enum: ['onsite, remote'],
-        required: true
-    },
+    onsite: Boolean,
+    remote: Boolean,
     description: String
 });
 
