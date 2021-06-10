@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { Button, Form, Card } from 'react-bootstrap';
 import NavigationBar from '../components/NavigationBar';
 import { withStyles } from '@material-ui/styles';
 import '../App.css';
@@ -8,8 +7,7 @@ import axios from 'axios';
 
 const styles = () => ({
     button_box: {
-        position: 'absolute',
-        left: '436px',
+        position: 'relative',
         paddingTop: '2rem'
     },
     component: {
@@ -18,6 +16,20 @@ const styles = () => ({
         paddingBottom: '10px',
         minHeight: '100vh',
         color: 'white'
+    },
+    card: {
+        color: 'black',
+        minHeight: '30vh',
+        fontSize: 'large'
+    },
+    form: {
+        paddingRight: '1rem',
+        paddingLeft: '1rem',
+        paddingTop: '2rem',
+        paddingBottom: '1rem'
+    },
+    padding_top: {
+        paddingTop: '2rem'
     }
 });
 
@@ -143,69 +155,75 @@ class CreateCourse extends Component {
             <div>
                 <NavigationBar></NavigationBar>
                 <div className={classes.component}>
-                    <div className="container">
-                        <Form onSubmit={this.onSubmit}>
-                            <Form.Group>
-                                <Form.Label>University</Form.Label>
-                                <Form.Control
-                                    as="select"
-                                    name="university"
-                                    onChange={this.onChangeUniversity}>
-                                    {this.state.availableUniversities.map((item, _) => (
-                                        <option value={item._id}>{item.name}</option>
-                                    ))}
-                                </Form.Control>
-                                <Form.Text className="text-muted">
-                                    Select the University of the course which you would like to
-                                    create!
-                                </Form.Text>
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Faculty</Form.Label>
-                                <Form.Control as="select" name="faculty" onChange={this.onChange}>
-                                    {this.state.availableFaculties.map((item, _) => (
-                                        <option value={item.id}>{item.name}</option>
-                                    ))}
-                                </Form.Control>
-                                <Form.Text className="text-muted">
-                                    Select the Faculty of the course which you would like to create!
-                                </Form.Text>
-                            </Form.Group>
-                            <Form.Group controlId="formCreateCourseName">
-                                <Form.Label>Course Name</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="name"
-                                    value={this.state.name}
-                                    onChange={this.onChange}
-                                    rows={1}
-                                />
-                                <Form.Text className="text-muted">
-                                    Enter the course name which you would like to create!
-                                </Form.Text>
-                            </Form.Group>
-                            <div className={classes.button_box}>
-                                {/* Register Button */}
-                                <Button
-                                    variant="primary"
-                                    size="lg"
-                                    active
-                                    className={classes.button}
-                                    onClick={this.onSubmit}>
-                                    Register
-                                </Button>
+                    <div className={`container ${classes.padding_top}`}>
+                        <Card className={classes.card}>
+                            <Form onSubmit={this.onSubmit} className={classes.form}>
+                                <Form.Group>
+                                    <Form.Label>University</Form.Label>
+                                    <Form.Control
+                                        as="select"
+                                        name="university"
+                                        onChange={this.onChangeUniversity}>
+                                        {this.state.availableUniversities.map((item, _) => (
+                                            <option value={item._id}>{item.name}</option>
+                                        ))}
+                                    </Form.Control>
+                                    <Form.Text className="text-muted">
+                                        Select the University of the course which you would like to
+                                        create!
+                                    </Form.Text>
+                                </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Faculty</Form.Label>
+                                    <Form.Control
+                                        as="select"
+                                        name="faculty"
+                                        onChange={this.onChange}>
+                                        {this.state.availableFaculties.map((item, _) => (
+                                            <option value={item.id}>{item.name}</option>
+                                        ))}
+                                    </Form.Control>
+                                    <Form.Text className="text-muted">
+                                        Select the Faculty of the course which you would like to
+                                        create!
+                                    </Form.Text>
+                                </Form.Group>
+                                <Form.Group controlId="formCreateCourseName">
+                                    <Form.Label>Course Name</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="name"
+                                        value={this.state.name}
+                                        onChange={this.onChange}
+                                        rows={1}
+                                    />
+                                    <Form.Text className="text-muted">
+                                        Enter the course name which you would like to create!
+                                    </Form.Text>
+                                </Form.Group>
+                                <div className={classes.button_box}>
+                                    {/* Register Button */}
+                                    <Button
+                                        variant="primary"
+                                        size="lg"
+                                        active
+                                        className={classes.button}
+                                        onClick={this.onSubmit}>
+                                        Register
+                                    </Button>
 
-                                {/* Cancel Button */}
-                                <Button
-                                    variant="secondary"
-                                    size="lg"
-                                    active
-                                    className={classes.button}
-                                    onClick={this.onCancel}>
-                                    Cancel
-                                </Button>
-                            </div>
-                        </Form>
+                                    {/* Cancel Button */}
+                                    <Button
+                                        variant="secondary"
+                                        size="lg"
+                                        active
+                                        className={classes.button}
+                                        onClick={this.onCancel}>
+                                        Cancel
+                                    </Button>
+                                </div>
+                            </Form>
+                        </Card>
                     </div>
                 </div>
             </div>
