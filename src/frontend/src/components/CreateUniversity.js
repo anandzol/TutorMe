@@ -46,6 +46,7 @@ class CreateUniversity extends Component {
     }
     onChange = e => {
         this.setState({ [e.target.name]: e.target.value });
+        this.setState({ errors: [] });
     };
 
     onCancel = e => {

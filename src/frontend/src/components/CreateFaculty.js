@@ -6,7 +6,8 @@ import { withStyles } from '@material-ui/styles';
 const defaultState = {
     name: '',
     university: '',
-    universities: []
+    universities: [],
+    errors: []
 };
 
 const styles = () => ({
@@ -70,26 +71,48 @@ class createFaculty extends Component {
             });
     }
 
+    validateInput() {
+        let input = this.state.name;
+        let errors = [];
+        if (input === '') {
+            errors['name'] = 'Please enter a university name!';
+            this.setState({
+                errors: errors
+            });
+            return false;
+        }
+
+        return true;
+    }
+
     onChange = e => {
         this.setState({ [e.target.name]: e.target.value });
+        this.setState({ errors: [] });
+    };
+
+    onCancel = e => {
+        this.props.history.push('/');
     };
 
     onSubmit = e => {
         e.preventDefault();
-        const data = {
-            name: this.state.name,
-            university: this.state.university
-        };
 
-        axios
-            .post(`${SERVER_URL}/faculty`, data)
-            .then(res => {
-                this.setState(defaultState);
-                this.props.history.push('/');
-            })
-            .catch(error => {
-                console.log('Error in create faculty');
-            });
+        if (this.validateInput()) {
+            const data = {
+                name: this.state.name,
+                university: this.state.university
+            };
+
+            axios
+                .post(`${SERVER_URL}/faculty`, data)
+                .then(res => {
+                    this.setState(defaultState);
+                    this.props.history.push('/');
+                })
+                .catch(error => {
+                    console.log('Error in create faculty');
+                });
+        }
     };
 
     render() {
@@ -126,6 +149,7 @@ class createFaculty extends Component {
                                         value={this.state.name}
                                         onChange={this.onChange}
                                         rows={1}></Form.Control>
+                                    <div className="text-danger">{this.state.errors.name}</div>
                                     <Form.Text className="text-muted">
                                         Enter the faculty name which you would like to create!
                                     </Form.Text>
