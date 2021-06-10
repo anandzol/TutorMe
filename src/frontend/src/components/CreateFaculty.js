@@ -40,6 +40,7 @@ const styles = () => ({
 
 const SERVER_URL = 'http://localhost:8082/api';
 
+// /components/CreateFaculty.js
 class createFaculty extends Component {
     constructor() {
         super();
@@ -75,7 +76,7 @@ class createFaculty extends Component {
         let input = this.state.name;
         let errors = [];
         if (input === '') {
-            errors['name'] = 'Please enter a university name!';
+            errors['name'] = 'Please enter a faculty name!';
             this.setState({
                 errors: errors
             });

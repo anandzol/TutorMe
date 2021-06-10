@@ -37,11 +37,13 @@ const defaultState = {
     university: '',
     faculty: '',
     availableUniversities: [],
-    availableFaculties: []
+    availableFaculties: [],
+    errors: []
 };
 
 const SERVER_URL = 'http://localhost:8082/api';
 
+// /components/CreateCourse.js
 class CreateCourse extends Component {
     constructor() {
         super();
@@ -82,6 +84,7 @@ class CreateCourse extends Component {
 
     onChange = e => {
         this.setState({ [e.target.name]: e.target.value });
+        this.setState({ errors: [] });
     };
 
     onCancel = e => {
@@ -126,24 +129,40 @@ class CreateCourse extends Component {
             });
     };
 
+    validateInput() {
+        let input = this.state.name;
+        let errors = [];
+        if (input === '') {
+            errors['name'] = 'Please enter a course name!';
+            this.setState({
+                errors: errors
+            });
+            return false;
+        }
+
+        return true;
+    }
+
     onSubmit = e => {
         e.preventDefault();
 
-        const data = {
-            name: this.state.name,
-            university: this.state.university,
-            faculty: this.state.faculty
-        };
+        if (this.validateInput()) {
+            const data = {
+                name: this.state.name,
+                university: this.state.university,
+                faculty: this.state.faculty
+            };
 
-        axios
-            .post(`${SERVER_URL}/course`, data)
-            .then(res => {
-                this.setState(defaultState);
-                this.props.history.push('/');
-            })
-            .catch(error => {
-                console.log('Error in Create course');
-            });
+            axios
+                .post(`${SERVER_URL}/course`, data)
+                .then(res => {
+                    this.setState(defaultState);
+                    this.props.history.push('/');
+                })
+                .catch(error => {
+                    console.log('Error in Create course');
+                });
+        }
     };
 
     render() {
@@ -197,6 +216,7 @@ class CreateCourse extends Component {
                                     <Form.Text className="text-muted">
                                         Enter the course name which you would like to create!
                                     </Form.Text>
+                                    <div className="text-danger">{this.state.errors.name}</div>
                                 </Form.Group>
                                 <div className={classes.button_box}>
                                     {/* Register Button */}

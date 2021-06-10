@@ -39,6 +39,7 @@ const styles = () => ({
 
 const SERVER_URL = 'http://localhost:8082/api';
 
+// /components/CreateUniversity.js
 class CreateUniversity extends Component {
     constructor() {
         super();

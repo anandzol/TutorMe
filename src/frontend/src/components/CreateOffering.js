@@ -25,6 +25,7 @@ const styles = () => ({
     }
 });
 
+// /components/CreateOferring.js
 class CreateOffering extends Component {
     constructor() {
         super();
@@ -34,7 +35,6 @@ class CreateOffering extends Component {
         const { classes } = this.props;
         return (
             <div className={classes.container}>
-                <NavigationBar></NavigationBar>
                 <div className={classes.header}>Offer Course</div>
                 <div className="container">
                     <Card className={classes.card}>

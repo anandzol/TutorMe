@@ -74,7 +74,6 @@ const roles = [
 const SERVER_URL = 'http://localhost:8082/api';
 
 // /components/RegisterUser.js
-
 class RegisterUser extends Component {
     constructor() {
         super();
