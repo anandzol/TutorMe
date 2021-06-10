@@ -9,7 +9,7 @@ const styles = () => ({
         position: 'relative',
         paddingTop: '4rem',
         left: '400px',
-        fontSize: 'xxx-large',
+        fontSize: 'xx-large',
         paddingBottom: '0.5rem',
         fontWeight: 'bold'
     },

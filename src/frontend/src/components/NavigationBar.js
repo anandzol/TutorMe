@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import graduationIcon from '../assets/graduation.png';
-import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Nav, Navbar, NavDropdown, Row } from 'react-bootstrap';
 
 // @Todo: Use Icons instead of labels for Calendar/List/Profile
 import { withStyles } from '@material-ui/styles';
@@ -39,6 +39,11 @@ const styles = () => ({
     profileButton__span: {
         color: 'white',
         fontSize: 'xx-large'
+    },
+    title: {
+        position: 'relative',
+        left: '4rem',
+        color: '#56b5ab'
     }
 });
 
@@ -55,7 +60,10 @@ class NavigationBar extends Component {
                     <img src={graduationIcon} className={classes.logo}></img>
                 </a>
                 <Navbar.Brand className={classes.bar} href="/">
-                    TutorMe
+                    <Row>
+                        <div className="col-sm-4">Tutor</div>
+                        <div className={`${classes.title} col-sm-0`}>Me</div>
+                    </Row>
                 </Navbar.Brand>
                 <Nav>
                     <a href="/" className={classes.listButton}>

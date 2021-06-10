@@ -10,11 +10,12 @@ const styles = () => ({
         paddingTop: '2rem'
     },
     component: {
-        backgroundColor: '#2c3e50',
+        // backgroundColor: '#2c3e50',
+        backgroundColor: 'white',
         paddingTop: '10px',
         paddingBottom: '10px',
         minHeight: '100vh',
-        color: 'white'
+        color: 'black'
     },
     card: {
         color: 'black',
@@ -172,6 +173,7 @@ class CreateCourse extends Component {
             <div>
                 <div className={classes.component}>
                     <div className={`container ${classes.padding_top}`}>
+                        <h2>Create Course</h2>
                         <Card className={classes.card}>
                             <Form onSubmit={this.onSubmit} className={classes.form}>
                                 <Form.Group>
