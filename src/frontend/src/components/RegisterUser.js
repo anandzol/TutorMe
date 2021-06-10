@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import NavigationBar from '../components/NavigationBar';
 import { withStyles } from '@material-ui/styles';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -127,7 +126,7 @@ class RegisterUser extends Component {
     };
 
     /**
-     * Validates wether all user inputs are correct
+     * Validates wether all user inputs are in the correct format/filled out
      * @returns {Boolean} true if all required fields are filled out.
      */
     validateInput() {
@@ -185,7 +184,6 @@ class RegisterUser extends Component {
         var optionState = this.props.optionState;
         return (
             <div>
-                <NavigationBar></NavigationBar>
                 <div className="container">
                     <div className={classes.container}>
                         <div className="card col-12 login-card mt-2 hv-cente">

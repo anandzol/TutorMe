@@ -8,20 +8,23 @@ import HomeScreen from './components/HomeScreen';
 import CreateUniversity from './components/CreateUniversity';
 import CreateFaculty from './components/CreateFaculty';
 import CreateOffering from './components/CreateOffering';
-
+import NavigationBar from './components/NavigationBar';
 class App extends Component {
     render() {
         return (
-            <Router>
-                <div>
-                    <Route exact path="/" component={HomeScreen} />
-                    <Route exact path="/create-course" component={CreateCourse} />
-                    <Route exact path="/register-user" component={RegisterUser} />
-                    <Route exact path="/create-university" component={CreateUniversity} />
-                    <Route exact path="/create-faculty" component={CreateFaculty} />
-                    <Route exact path="/create-offering" component={CreateOffering} />
-                </div>
-            </Router>
+            <div>
+                <NavigationBar></NavigationBar>
+                <Router>
+                    <div>
+                        <Route exact path="/" component={HomeScreen} />
+                        <Route exact path="/create-course" component={CreateCourse} />
+                        <Route exact path="/register-user" component={RegisterUser} />
+                        <Route exact path="/create-university" component={CreateUniversity} />
+                        <Route exact path="/create-faculty" component={CreateFaculty} />
+                        <Route exact path="/create-offering" component={CreateOffering} />
+                    </div>
+                </Router>
+            </div>
         );
     }
 }

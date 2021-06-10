@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Form, Card } from 'react-bootstrap';
-import NavigationBar from '../components/NavigationBar';
 import { withStyles } from '@material-ui/styles';
 import '../App.css';
 import axios from 'axios';
@@ -139,7 +138,6 @@ class CreateCourse extends Component {
         axios
             .post(`${SERVER_URL}/course`, data)
             .then(res => {
-                console.log('success');
                 this.setState(defaultState);
                 this.props.history.push('/');
             })
@@ -153,7 +151,6 @@ class CreateCourse extends Component {
 
         return (
             <div>
-                <NavigationBar></NavigationBar>
                 <div className={classes.component}>
                     <div className={`container ${classes.padding_top}`}>
                         <Card className={classes.card}>

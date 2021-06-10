@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import NavigationBar from '../components/NavigationBar';
 import { Form, Button, Card } from 'react-bootstrap';
 import axios from 'axios';
 import { withStyles } from '@material-ui/styles';
@@ -98,7 +97,6 @@ class createFaculty extends Component {
 
         return (
             <div>
-                <NavigationBar></NavigationBar>
                 <div className={classes.component}>
                     <div className={`container ${classes.top_padding}`}>
                         <Card className={classes.card}>

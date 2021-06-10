@@ -13,7 +13,6 @@ class HomeScreen extends Component {
         const { classes } = this.props;
         return (
             <div>
-                <NavigationBar></NavigationBar>
                 <div>Homescreen currently to access the different routes:</div>
 
                 <div>
