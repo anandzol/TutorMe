@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import graduationIcon from '../assets/graduation.png';
-import { Nav, Navbar, Form, FormControl, Button, NavDropdown, NavbarBrand } from 'react-bootstrap';
+import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 
 // @Todo: Use Icons instead of labels for Calendar/List/Profile
 import { withStyles } from '@material-ui/styles';
