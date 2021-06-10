@@ -7,38 +7,38 @@ import { withStyles } from '@material-ui/styles';
 
 const styles = () => ({
     bar: {
-        fontSize: 'xx-large'
+        fontSize: 'xxx-large'
     },
     listButton: {
         position: 'absolute',
         right: '350px',
-        top: '21px',
+        top: '23px',
         zIndex: 1000,
-        fontSize: 'x-large',
+        fontSize: 'xx-large',
         color: 'white'
     },
     calendarButton: {
         position: 'absolute',
-        right: '220px',
-        top: '21px',
+        right: '190px',
+        top: '23px',
         zIndex: 1000,
-        fontSize: 'x-large',
+        fontSize: 'xx-large',
         color: 'white'
     },
     profileButton: {
         position: 'absolute',
-        right: '100px',
-        top: '13px',
+        right: '50px',
+        top: '15px',
         zIndex: 1000
     },
     logo: {
         paddingRight: '10px',
-        height: '50px',
-        width: '50px'
+        height: '70px',
+        width: '70px'
     },
     profileButton__span: {
         color: 'white',
-        fontSize: 'x-large'
+        fontSize: 'xx-large'
     }
 });
 
