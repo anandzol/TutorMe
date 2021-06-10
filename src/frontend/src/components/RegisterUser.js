@@ -5,8 +5,6 @@ import { withStyles } from '@material-ui/styles';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-// @Todo Refactor
-// @Todo Dynamically set the values for university + their id
 const styles = () => ({
     container: {
         paddingTop: '20px',
@@ -74,7 +72,8 @@ const roles = [
     }
 ];
 
-const baseURL = 'http://localhost:8082/api/user';
+const SERVER_URL = 'http://localhost:8082/api';
+
 // /components/RegisterUser.js
 
 class RegisterUser extends Component {
@@ -116,7 +115,7 @@ class RegisterUser extends Component {
             };
 
             axios
-                .post(`${baseURL}/register`, data)
+                .post(`${SERVER_URL}/register`, data)
                 .then(res => {
                     this.setState(defaultState);
                     this.props.history.push('/');

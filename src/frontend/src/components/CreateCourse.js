@@ -3,11 +3,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import NavigationBar from '../components/NavigationBar';
 import { withStyles } from '@material-ui/styles';
-
 import '../App.css';
 import axios from 'axios';
-
-const baseURL = 'http://localhost:8082/api/course';
 
 const styles = () => ({
     button_box: {
@@ -20,16 +17,49 @@ const styles = () => ({
 const defaultState = {
     name: '',
     university: '',
-    faculty: ''
+    faculty: '',
+    availableUniversities: [],
+    availableFaculties: []
 };
+
+const SERVER_URL = 'http://localhost:8082/api';
+
 class CreateCourse extends Component {
     constructor() {
         super();
-        this.state = {
-            name: '',
-            university: '',
-            faculty: ''
-        };
+        this.state = defaultState;
+    }
+
+    componentDidMount() {
+        axios
+
+            // Get all the available universities to render the available options
+            .get(`${SERVER_URL}/university`)
+            .then(response => {
+                // Sort order of universities alphabetically
+                const universitiesSorted = response.data.sort((a, b) =>
+                    a.name.localeCompare(b.name)
+                );
+
+                this.setState({
+                    availableUniversities: universitiesSorted
+                });
+
+                if (universitiesSorted.length > 0 && universitiesSorted[0].faculties.length > 0) {
+                    const availableFacultiesSorted = universitiesSorted[0].faculties.sort((a, b) =>
+                        a.name.localeCompare(b.name)
+                    );
+
+                    this.setState({
+                        university: universitiesSorted[0]._id,
+                        availableFaculties: availableFacultiesSorted,
+                        faculty: availableFacultiesSorted[0]._id
+                    });
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     onChange = e => {
@@ -39,6 +69,43 @@ class CreateCourse extends Component {
     onCancel = e => {
         e.preventDefault();
         this.props.history.push('');
+    };
+
+    onChangeUniversity = e => {
+        this.setState({ [e.target.name]: e.target.value });
+
+        axios
+            // Get all the available universities to render the available options
+            .get(`${SERVER_URL}/university/${e.target.value}`)
+            .then(response => {
+                let facultiesSorted = [];
+
+                // Sort all universities by their name alphabetically
+                response.data.faculties
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .forEach(item => {
+                        facultiesSorted.push({
+                            id: item._id,
+                            name: item.name
+                        });
+                    });
+
+                // Set the selected university to the first displayed university
+                if (facultiesSorted.length > 0) {
+                    this.setState({
+                        faculty: facultiesSorted[0].id,
+                        availableFaculties: facultiesSorted
+                    });
+                } else {
+                    this.setState({
+                        faculty: '',
+                        availableFaculties: []
+                    });
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
     };
 
     onSubmit = e => {
@@ -51,8 +118,9 @@ class CreateCourse extends Component {
         };
 
         axios
-            .post(baseURL, data)
+            .post(`${SERVER_URL}/course`, data)
             .then(res => {
+                console.log('success');
                 this.setState(defaultState);
                 this.props.history.push('/');
             })
@@ -70,6 +138,32 @@ class CreateCourse extends Component {
                 <div className="CreateCourse">
                     <div className="container">
                         <Form noValidate onSubmit={this.onSubmit}>
+                            <Form.Group>
+                                <Form.Label>University</Form.Label>
+                                <Form.Control
+                                    as="select"
+                                    name="university"
+                                    onChange={this.onChangeUniversity}>
+                                    {this.state.availableUniversities.map((item, _) => (
+                                        <option value={item._id}>{item.name}</option>
+                                    ))}
+                                </Form.Control>
+                                <Form.Text className="text-muted">
+                                    Select the University of the course which you would like to
+                                    create!
+                                </Form.Text>
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Faculty</Form.Label>
+                                <Form.Control as="select" name="faculty" onChange={this.onChange}>
+                                    {this.state.availableFaculties.map((item, _) => (
+                                        <option value={item.id}>{item.name}</option>
+                                    ))}
+                                </Form.Control>
+                                <Form.Text className="text-muted">
+                                    Select the Faculty of the course which you would like to create!
+                                </Form.Text>
+                            </Form.Group>
                             <Form.Group controlId="formCreateCourseName">
                                 <Form.Label>Course Name</Form.Label>
                                 <Form.Control
@@ -83,34 +177,6 @@ class CreateCourse extends Component {
                                     Enter the course name which you would like to create!
                                 </Form.Text>
                             </Form.Group>
-                            <Form.Group controlId="formCreateCourseUniversity">
-                                <Form.Label>University Name</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="university"
-                                    value={this.state.university}
-                                    onChange={this.onChange}
-                                    rows={1}
-                                />
-                                <Form.Text className="text-muted">
-                                    Enter the university of the course which you would like to
-                                    create!
-                                </Form.Text>
-                            </Form.Group>
-                            <Form.Group controlId="formCreateFaculty">
-                                <Form.Label>Faculty Name</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="faculty"
-                                    value={this.state.faculty}
-                                    onChange={this.onChange}
-                                    rows={1}
-                                />
-                                <Form.Text className="text-muted">
-                                    Enter the faculty of the course which you would like to create!
-                                </Form.Text>
-                            </Form.Group>
-
                             <div className={classes.button_box}>
                                 {/* Register Button */}
                                 <Button

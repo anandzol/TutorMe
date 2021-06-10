@@ -3,7 +3,6 @@ import NavigationBar from '../components/NavigationBar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-
 import { withStyles } from '@material-ui/styles';
 
 const defaultState = {
@@ -22,7 +21,8 @@ const styles = () => ({
         paddingTop: '20px'
     }
 });
-const baseURL = 'http://localhost:8082/api';
+
+const SERVER_URL = 'http://localhost:8082/api';
 
 class createFaculty extends Component {
     constructor() {
@@ -32,7 +32,9 @@ class createFaculty extends Component {
 
     componentDidMount() {
         axios
-            .get(`${baseURL}/university`)
+
+            // Get all the available universities to render the available options
+            .get(`${SERVER_URL}/university`)
             .then(response => {
                 this.setState({
                     universities: response.data
@@ -55,7 +57,7 @@ class createFaculty extends Component {
         };
 
         axios
-            .post(`${baseURL}/faculty`, data)
+            .post(`${SERVER_URL}/faculty`, data)
             .then(res => {
                 console.log('success');
                 this.setState(defaultState);

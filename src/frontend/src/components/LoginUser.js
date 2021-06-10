@@ -1,8 +1,5 @@
 import React, { Component, useEffect } from 'react';
 import axios from 'axios';
+import { config } from '../../config';
 
-class LoginUser extends Component {
-    baseURL() {
-        return 'http://localhost:8082/api/user';
-    }
-}
+class LoginUser extends Component {}

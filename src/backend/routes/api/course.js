@@ -1,5 +1,5 @@
 /**
- * @todo add controllers for more specific request handling? (similar to how it is in the SEBA demo app)
+ * @todo add controllers for more specific request handling?
  * @todo test cases
  */
 
@@ -10,6 +10,8 @@ const router = express.Router();
 // Load Course Model
 const Course = require('../../models/course');
 
+// Load Course Controller
+const CourseController = require('../controllers/course');
 /**
  * @route GET api/course/test
  * @description test route
@@ -50,13 +52,7 @@ router.get('/:id', (req, res) => {
  * @description
  * @access Public
  */
-router.post('/', (req, res) => {
-    Course.create(req.body)
-        .then(course => res.json({ message: 'Course created successfully' }))
-        .catch(error =>
-            res.status(400).json({ errorMessage: 'Unable to add this course' })
-        );
-});
+router.post('/', CourseController.create);
 
 /**
  * @route PUT api/course/:id

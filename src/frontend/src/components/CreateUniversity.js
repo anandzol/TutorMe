@@ -20,7 +20,8 @@ const styles = () => ({
         paddingTop: '20px'
     }
 });
-const baseURL = 'http://localhost:8082/api/university';
+
+const SERVER_URL = 'http://localhost:8082/api';
 
 class CreateUniversity extends Component {
     constructor() {
@@ -38,13 +39,13 @@ class CreateUniversity extends Component {
         };
 
         axios
-            .post(baseURL, data)
+            .post(`${SERVER_URL}/university`, data)
             .then(res => {
                 this.setState(defaultState);
                 this.props.history.push('/');
             })
             .catch(error => {
-                console.log('Error in create university');
+                console.log(error);
             });
     };
 

@@ -14,9 +14,9 @@ const create = (req, res) => {
                 // Add faculty to list of faculties by university
                 university.faculties.push(faculty);
                 university.save();
-                res.json({ message: 'Faculty created' });
             }
         });
+        res.json({ message: 'Faculty created' });
     });
 };
 
