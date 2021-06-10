@@ -11,6 +11,13 @@ const styles = () => ({
         position: 'absolute',
         left: '436px',
         paddingTop: '2rem'
+    },
+    component: {
+        backgroundColor: '#2c3e50',
+        paddingTop: '10px',
+        paddingBottom: '10px',
+        minHeight: '100vh',
+        color: 'white'
     }
 });
 
@@ -135,9 +142,9 @@ class CreateCourse extends Component {
         return (
             <div>
                 <NavigationBar></NavigationBar>
-                <div className="CreateCourse">
+                <div className={classes.component}>
                     <div className="container">
-                        <Form noValidate onSubmit={this.onSubmit}>
+                        <Form onSubmit={this.onSubmit}>
                             <Form.Group>
                                 <Form.Label>University</Form.Label>
                                 <Form.Control

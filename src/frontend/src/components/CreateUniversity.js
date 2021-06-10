@@ -13,11 +13,18 @@ const defaultState = {
 const styles = () => ({
     button_box: {
         position: 'absolute',
-        left: '445px',
+        left: '437px',
         paddingTop: '1rem'
     },
     form_padding: {
         paddingTop: '20px'
+    },
+    component: {
+        backgroundColor: '#2c3e50',
+        paddingTop: '10px',
+        paddingBottom: '10px',
+        minHeight: '100vh',
+        color: 'white'
     }
 });
 
@@ -55,42 +62,44 @@ class CreateUniversity extends Component {
         return (
             <div>
                 <NavigationBar></NavigationBar>
-                <div className="container">
-                    <Form onSubmit={this.onSubmit} className={classes.form_padding}>
-                        <Form.Group>
-                            <Form.Label>University Name</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="name"
-                                value={this.state.name}
-                                onChange={this.onChange}
-                                rows={1}></Form.Control>
-                            <Form.Text className="text-muted">
-                                Enter the university name which you would like to create!
-                            </Form.Text>
-                        </Form.Group>
-                    </Form>
-                    <div className={classes.button_box}>
-                        {/* Create Button */}
-                        <Button
-                            variant="primary"
-                            size="sm"
-                            active
-                            className={classes.button}
-                            onClick={this.onSubmit}>
-                            Create
-                        </Button>
+                <div className={classes.component}>
+                    <div className="container">
+                        <Form onSubmit={this.onSubmit} className={classes.form_padding}>
+                            <Form.Group>
+                                <Form.Label>University Name</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="name"
+                                    value={this.state.name}
+                                    onChange={this.onChange}
+                                    rows={1}></Form.Control>
+                                <Form.Text className="text-muted">
+                                    Enter the university name which you would like to create!
+                                </Form.Text>
+                            </Form.Group>
+                        </Form>
+                        <div className={classes.button_box}>
+                            {/* Create Button */}
+                            <Button
+                                variant="primary"
+                                size="lg"
+                                active
+                                className={classes.button}
+                                onClick={this.onSubmit}>
+                                Create
+                            </Button>
 
-                        {/* Cancel Button */}
-                        <Button
-                            variant="secondary"
-                            size="sm"
-                            active
-                            className={classes.button}
-                            onClick={this.onCancel}>
-                            Cancel
-                        </Button>
-                    </div>{' '}
+                            {/* Cancel Button */}
+                            <Button
+                                variant="secondary"
+                                size="lg"
+                                active
+                                className={classes.button}
+                                onClick={this.onCancel}>
+                                Cancel
+                            </Button>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

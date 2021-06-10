@@ -7,6 +7,8 @@ import RegisterUser from './components/RegisterUser';
 import HomeScreen from './components/HomeScreen';
 import CreateUniversity from './components/CreateUniversity';
 import CreateFaculty from './components/CreateFaculty';
+import CreateOffering from './components/CreateOffering';
+
 class App extends Component {
     render() {
         return (
@@ -17,6 +19,7 @@ class App extends Component {
                     <Route exact path="/register-user" component={RegisterUser} />
                     <Route exact path="/create-university" component={CreateUniversity} />
                     <Route exact path="/create-faculty" component={CreateFaculty} />
+                    <Route exact path="/create-offering" component={CreateOffering} />
                 </div>
             </Router>
         );

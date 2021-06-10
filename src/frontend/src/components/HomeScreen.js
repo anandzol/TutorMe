@@ -32,6 +32,11 @@ class HomeScreen extends Component {
                             Show Offerings
                         </a>
                     </button>
+                    <button>
+                        <a href="create-offering" className={classes.button__padding_top}>
+                            Create Offering
+                        </a>
+                    </button>
                 </div>
             </div>
         );
