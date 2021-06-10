@@ -1,4 +1,4 @@
-To run the app :
+To run the app on port 3000 :
 
 ```
 npm install
