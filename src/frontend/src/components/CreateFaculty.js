@@ -36,9 +36,19 @@ class createFaculty extends Component {
             // Get all the available universities to render the available options
             .get(`${SERVER_URL}/university`)
             .then(response => {
+                const universitiesSorted = response.data.sort((a, b) =>
+                    a.name.localeCompare(b.name)
+                );
+
                 this.setState({
-                    universities: response.data
+                    universities: universitiesSorted
                 });
+
+                if (universitiesSorted.length > 0) {
+                    this.setState({
+                        university: universitiesSorted[0]._id
+                    });
+                }
             })
             .catch(error => {
                 console.log(error);
@@ -59,7 +69,6 @@ class createFaculty extends Component {
         axios
             .post(`${SERVER_URL}/faculty`, data)
             .then(res => {
-                console.log('success');
                 this.setState(defaultState);
                 this.props.history.push('/');
             })
