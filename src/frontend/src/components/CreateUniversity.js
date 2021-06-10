@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import NavigationBar from '../components/NavigationBar';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import { Form, Button, Card } from 'react-bootstrap';
 import axios from 'axios';
 
 import { withStyles } from '@material-ui/styles';
