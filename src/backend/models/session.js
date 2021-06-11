@@ -32,7 +32,7 @@ const SessionSchema = new mongoose.Schema({
     status: {
         type: String,
         required: true,
-        enum: ['verified', 'pending', 'discarded'],
+        enum: ['verified', 'pending', 'rejected'],
         default: 'pending'
     }
 });
