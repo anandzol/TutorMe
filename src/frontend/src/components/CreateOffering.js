@@ -6,6 +6,8 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import NumericInput from 'react-numeric-input';
 
+import 'react-datepicker/dist/react-datepicker.css';
+
 const styles = () => ({
     title: {
         position: 'relative',
@@ -40,14 +42,33 @@ const styles = () => ({
         paddingLeft: '50px',
         fontSize: '17px'
     },
+    file_selector: {
+        paddingTop: '1.12rem',
+        paddingLeft: '20px',
+        width: '20rem'
+    },
     form_selectors: {
         paddingTop: '8px',
         paddingLeft: '5rem'
     },
+    date_picker: {
+        paddingLeft: '20px',
+        width: '20rem',
+        paddingTop: '1.1rem'
+    },
     numeric_input: {
-        paddingTop: '1rem',
-        paddingLeft: '5rem',
-        height: '1rem'
+        paddingTop: '2.2rem',
+        paddingLeft: '20px'
+    },
+    checkmarks_left: {
+        paddingTop: '2.2rem',
+        paddingLeft: '3.1rem'
+    },
+    description_area: {
+        width: '40rem'
+    },
+    padding_top: {
+        paddingTop: '5rem'
     }
 });
 
@@ -74,7 +95,7 @@ const labels = [
     'Upload CV',
     'Upload relevant course transcripts',
     'Dates/Time offered',
-    'Enter your hourly wage',
+    'Enter your hourly wage (€/h)',
     'Description'
 ];
 const SERVER_URL = 'http://localhost:8082/api';
@@ -144,6 +165,18 @@ class CreateOffering extends Component {
                                             </Form.Label>
                                         </div>
                                     ))}
+                                    <Row className={classes.padding_top}>
+                                        <div className="col-sm-4">
+                                            <div className={classes.checkmarks_left}>
+                                                <Form.Check name="terms" label="Remote" />
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-4">
+                                            <div className={classes.checkmarks_left}>
+                                                <Form.Check name="terms" label="Onsite" />
+                                            </div>
+                                        </div>
+                                    </Row>
                                 </div>
                                 <div className="col-sm-0">
                                     <div className={classes.vl}></div>
@@ -179,13 +212,13 @@ class CreateOffering extends Component {
                                             <option>Undefined</option>
                                         </Form.Control>
                                     </Form.Group>
-                                    <Form.Group className={classes.form_option}>
+                                    <Form.Group className={classes.file_selector}>
                                         <Form.File id="cvFile" />
                                     </Form.Group>
-                                    <Form.Group className={classes.form_option}>
+                                    <Form.Group className={classes.file_selector}>
                                         <Form.File id="transcriptFile" />
                                     </Form.Group>
-                                    <div className={classes.form_option}>
+                                    <div className={classes.date_picker}>
                                         <DatePicker
                                             selected={this.state.date}
                                             name="date"
@@ -193,11 +226,20 @@ class CreateOffering extends Component {
                                             dateFormat="MMMM d, yyyy h:mm aa"
                                             onChange={this.onChangeDate}></DatePicker>
                                     </div>
-                                    <div>
-                                        <NumericInput className="form-control" />
+                                    <div className={classes.numeric_input}>
+                                        <NumericInput
+                                            className={'form-control'}
+                                            min={1}
+                                            max={100}
+                                        />
                                     </div>
-                                    <div>
-                                        <NumericInput className="form-control" />
+                                    <div className={classes.numeric_input}>
+                                        <Form.Control
+                                            as="textarea"
+                                            placeholder="(max. 200 words)"
+                                            rows={5}
+                                            className={classes.description_area}
+                                        />
                                     </div>
                                 </div>
                             </Row>
