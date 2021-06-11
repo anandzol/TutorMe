@@ -8,6 +8,7 @@ import NumericInput from 'react-numeric-input';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
+// @todo: Refactor api calls to faculty/university service
 const styles = () => ({
     title: {
         position: 'relative',
@@ -171,18 +172,20 @@ class CreateOffering extends Component {
                                 });
                             } else {
                                 this.setState({
-                                    course: ''
+                                    course: '',
+                                    availableCourses: []
                                 });
                             }
-
-                            console.log(response);
                         })
                         .catch(error => {
                             console.log(error);
                         });
                 } else {
                     this.setState({
-                        faculty: ''
+                        faculty: '',
+                        availableFaculties: [],
+                        course: '',
+                        availableCourses: []
                     });
                 }
             })
@@ -211,11 +214,10 @@ class CreateOffering extends Component {
                     });
                 } else {
                     this.setState({
-                        course: ''
+                        course: '',
+                        availableCourses: []
                     });
                 }
-
-                console.log(response);
             })
             .catch(error => {
                 console.log(error);
@@ -233,7 +235,6 @@ class CreateOffering extends Component {
                     a.name.localeCompare(b.name)
                 );
 
-                console.log(universitiesSorted);
                 this.setState({
                     availableUniversities: universitiesSorted
                 });
@@ -257,8 +258,6 @@ class CreateOffering extends Component {
 
     render() {
         const { classes } = this.props;
-
-        console.log(this.state.availableCourses);
         return (
             <div className="container">
                 <div className={classes.title}>Offer Course</div>
@@ -281,7 +280,7 @@ class CreateOffering extends Component {
                                 <div className={classes.vl}></div>
                             </div>
                             <div className={`${classes.form_selectors} col-sm-3`}>
-                                {/** Right Form for selecting the unversity*/}
+                                {/** Form for selecting the unversity*/}
                                 <Form.Group
                                     controlId="universityGroup"
                                     className={classes.form_option}>
@@ -295,7 +294,7 @@ class CreateOffering extends Component {
                                     </Form.Control>
                                 </Form.Group>
 
-                                {/** Right Form for selecting the corresponding faculty*/}
+                                {/** Form for selecting the corresponding faculty*/}
                                 <Form.Group
                                     controlId="universityGroup"
                                     className={classes.form_option}>
@@ -309,7 +308,7 @@ class CreateOffering extends Component {
                                     </Form.Control>
                                 </Form.Group>
 
-                                {/** Right Form for selecting the corresponding course*/}
+                                {/** Form for selecting the corresponding course*/}
                                 <Form.Group
                                     controlId="universityGroup"
                                     className={classes.form_option}>
@@ -322,9 +321,13 @@ class CreateOffering extends Component {
                                         ))}
                                     </Form.Control>
                                 </Form.Group>
+
+                                {/** Form for uploading a cv*/}
                                 <Form.Group className={classes.file_selector}>
                                     <Form.File id="cvFile" />
                                 </Form.Group>
+
+                                {/** Right Form for selecting the corresponding course*/}
                                 <Form.Group className={classes.file_selector}>
                                     <Form.File id="transcriptFile" />
                                 </Form.Group>

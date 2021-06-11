@@ -28,7 +28,13 @@ const SessionSchema = new mongoose.Schema({
     },
     onsite: Boolean,
     remote: Boolean,
-    description: String
+    description: String,
+    status: {
+        type: String,
+        required: true,
+        enum: ['verified', 'pending', 'discarded'],
+        default: 'pending'
+    }
 });
 
 SessionSchema.set('timestamps', true);
