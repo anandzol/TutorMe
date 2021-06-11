@@ -14,8 +14,12 @@ const SessionSchema = new mongoose.Schema({
         ref: 'course',
         required: true
     },
-    startDate: Date,
-    endDate: Date,
+    date: Date,
+    duration: {
+        type: Number,
+        min: 30,
+        max: 120
+    },
     price: {
         type: Number,
         required: true,
