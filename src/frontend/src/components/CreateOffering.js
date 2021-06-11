@@ -69,6 +69,15 @@ const styles = () => ({
     },
     padding_top: {
         paddingTop: '5rem'
+    },
+    button_box: {
+        position: 'absolute',
+        right: '1rem',
+        paddingTop: '5rem'
+    },
+    button: {
+        width: '10rem',
+        height: '3rem'
     }
 });
 
@@ -243,10 +252,28 @@ class CreateOffering extends Component {
                                     </div>
                                 </div>
                             </Row>
+                            <div className={classes.button_box}>
+                                {/* Register Button */}
+                                <Button
+                                    variant="primary"
+                                    size="lg"
+                                    active
+                                    className={classes.button}
+                                    onClick={this.onRegister}>
+                                    Register
+                                </Button>
+
+                                {/* Cancel Button */}
+                                <Button
+                                    variant="secondary"
+                                    size="lg"
+                                    active
+                                    className={classes.button}
+                                    onClick={this.onCancel}>
+                                    Cancel
+                                </Button>
+                            </div>
                         </Form>
-                        <Card.Body>
-                            <Form></Form>
-                        </Card.Body>
                     </Card>
                 </div>
             </div>
