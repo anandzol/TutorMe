@@ -93,8 +93,10 @@ class CreateCourse extends Component {
         this.props.history.push('');
     };
 
+    // Refactor this to use university service
     onChangeUniversity = e => {
-        this.setState({ [e.target.name]: e.target.value });
+        const universityId = e.target.value;
+        this.setState({ [e.target.name]: universityId });
 
         axios
             // Get all the available universities to render the available options

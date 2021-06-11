@@ -1,6 +1,7 @@
 // routes/controller/faculty.js
 const University = require('../../models/university');
 const Faculty = require('../../models/faculty');
+const faculty = require('../../models/faculty');
 
 /**
  * API Controller for creating a new faculty
@@ -20,6 +21,27 @@ const create = (req, res) => {
     });
 };
 
+/**
+ * API Controller for fetching all courses of a university
+ * @param {Object} req req.params.name contains the name of the university
+ * @param {Object} res
+ * @returns
+ */
+const getCourses = (req, res) => {
+    Faculty.findOne({ _id: req.params.id })
+        .populate('courses')
+        .then(faculty => {
+            res.json(faculty.courses);
+        })
+        .catch(error =>
+            res.status(404).json({
+                error: `No available faculty with id: ${req.params.id}`,
+                message: error.message
+            })
+        );
+};
+
 module.exports = {
-    create
+    create,
+    getCourses
 };

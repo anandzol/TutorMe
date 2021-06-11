@@ -12,10 +12,10 @@ const styles = () => ({
     title: {
         position: 'relative',
         paddingTop: '4rem',
-        left: '400px',
         fontSize: 'xx-large',
-        paddingBottom: '0.5rem',
-        fontWeight: 'bold'
+        paddingBottom: '1rem',
+        fontWeight: 'bold',
+        left: '-18rem'
     },
     card: {
         position: 'absolute',
@@ -62,13 +62,13 @@ const styles = () => ({
     },
     checkmarks_left: {
         paddingTop: '2.2rem',
-        paddingLeft: '3.1rem'
+        paddingLeft: '20px'
     },
     description_area: {
         width: '40rem'
     },
     padding_top: {
-        paddingTop: '5rem'
+        paddingTop: '1rem'
     },
     button_box: {
         position: 'absolute',
@@ -125,6 +125,103 @@ class CreateOffering extends Component {
         });
     };
 
+    // Refactor this to use university service
+    onChangeUniversity = e => {
+        const universityId = e.target.value;
+        this.setState({ [e.target.name]: universityId });
+
+        axios
+            // Get all the available universities to render the available options
+            .get(`${SERVER_URL}/university/${e.target.value}`)
+            .then(response => {
+                let facultiesSorted = [];
+
+                // Sort all universities by their name alphabetically
+                response.data.faculties
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .forEach(item => {
+                        facultiesSorted.push({
+                            _id: item._id,
+                            name: item.name
+                        });
+                    });
+
+                // Set the selected university to the first displayed university
+                if (facultiesSorted.length > 0) {
+                    this.setState({
+                        faculty: facultiesSorted[0]._id,
+                        availableFaculties: facultiesSorted
+                    });
+
+                    axios
+                        .get(`${SERVER_URL}/faculty/courses/${facultiesSorted[0]._id}`)
+                        .then(response => {
+                            let coursesSorted = [];
+
+                            response.data
+                                .sort((a, b) => a.name.localeCompare(b.name))
+                                .forEach(item => {
+                                    coursesSorted.push({ _id: item._id, name: item.name });
+                                });
+
+                            if (coursesSorted.length > 0) {
+                                this.setState({
+                                    course: coursesSorted[0]._id,
+                                    availableCourses: coursesSorted
+                                });
+                            } else {
+                                this.setState({
+                                    course: ''
+                                });
+                            }
+
+                            console.log(response);
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                } else {
+                    this.setState({
+                        faculty: ''
+                    });
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
+
+    onChangeFaculty = e => {
+        const facultyId = e.target.value;
+        axios
+            .get(`${SERVER_URL}/faculty/courses/${facultyId}`)
+            .then(response => {
+                let coursesSorted = [];
+
+                response.data
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .forEach(item => {
+                        coursesSorted.push({ _id: item._id, name: item.name });
+                    });
+
+                if (coursesSorted.length > 0) {
+                    this.setState({
+                        course: coursesSorted[0]._id,
+                        availableCourses: coursesSorted
+                    });
+                } else {
+                    this.setState({
+                        course: ''
+                    });
+                }
+
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
+
     componentDidMount() {
         axios
 
@@ -136,6 +233,7 @@ class CreateOffering extends Component {
                     a.name.localeCompare(b.name)
                 );
 
+                console.log(universitiesSorted);
                 this.setState({
                     availableUniversities: universitiesSorted
                 });
@@ -159,123 +257,133 @@ class CreateOffering extends Component {
 
     render() {
         const { classes } = this.props;
-        return (
-            <div className={classes.container}>
-                <div className={classes.title}>Offer Course</div>
-                <div className="container">
-                    <Card className={classes.card}>
-                        <Form>
-                            <Row>
-                                <div className="col-sm-4">
-                                    {labels.map((item, index) => (
-                                        <div>
-                                            <Form.Label className={classes.form_label}>
-                                                {item}
-                                            </Form.Label>
-                                        </div>
-                                    ))}
-                                    <Row className={classes.padding_top}>
-                                        <div className="col-sm-4">
-                                            <div className={classes.checkmarks_left}>
-                                                <Form.Check name="terms" label="Remote" />
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-4">
-                                            <div className={classes.checkmarks_left}>
-                                                <Form.Check name="terms" label="Onsite" />
-                                            </div>
-                                        </div>
-                                    </Row>
-                                </div>
-                                <div className="col-sm-0">
-                                    <div className={classes.vl}></div>
-                                </div>
-                                <div className={`${classes.form_selectors} col-sm-3`}>
-                                    <Form.Group controlId="gender" className={classes.form_option}>
-                                        <Form.Control
-                                            name="gender"
-                                            as="select"
-                                            onChange={this.onChange}>
-                                            <option values="male">Male</option>
-                                            <option values="female">Female</option>
-                                            <option>Undefined</option>
-                                        </Form.Control>
-                                    </Form.Group>
-                                    <Form.Group controlId="gender" className={classes.form_option}>
-                                        <Form.Control
-                                            name="gender"
-                                            as="select"
-                                            onChange={this.onChange}>
-                                            <option values="male">Male</option>
-                                            <option values="female">Female</option>
-                                            <option>Undefined</option>
-                                        </Form.Control>
-                                    </Form.Group>
-                                    <Form.Group controlId="gender" className={classes.form_option}>
-                                        <Form.Control
-                                            name="gender"
-                                            as="select"
-                                            onChange={this.onChange}>
-                                            <option values="male">Male</option>
-                                            <option values="female">Female</option>
-                                            <option>Undefined</option>
-                                        </Form.Control>
-                                    </Form.Group>
-                                    <Form.Group className={classes.file_selector}>
-                                        <Form.File id="cvFile" />
-                                    </Form.Group>
-                                    <Form.Group className={classes.file_selector}>
-                                        <Form.File id="transcriptFile" />
-                                    </Form.Group>
-                                    <div className={classes.date_picker}>
-                                        <DatePicker
-                                            selected={this.state.date}
-                                            name="date"
-                                            showTimeSelect
-                                            dateFormat="MMMM d, yyyy h:mm aa"
-                                            onChange={this.onChangeDate}></DatePicker>
-                                    </div>
-                                    <div className={classes.numeric_input}>
-                                        <NumericInput
-                                            className={'form-control'}
-                                            min={1}
-                                            max={100}
-                                        />
-                                    </div>
-                                    <div className={classes.numeric_input}>
-                                        <Form.Control
-                                            as="textarea"
-                                            placeholder="(max. 200 words)"
-                                            rows={5}
-                                            className={classes.description_area}
-                                        />
-                                    </div>
-                                </div>
-                            </Row>
-                            <div className={classes.button_box}>
-                                {/* Register Button */}
-                                <Button
-                                    variant="primary"
-                                    size="lg"
-                                    active
-                                    className={classes.button}
-                                    onClick={this.onRegister}>
-                                    Register
-                                </Button>
 
-                                {/* Cancel Button */}
-                                <Button
-                                    variant="secondary"
-                                    size="lg"
-                                    active
-                                    className={classes.button}
-                                    onClick={this.onCancel}>
-                                    Cancel
-                                </Button>
+        console.log(this.state.availableCourses);
+        return (
+            <div className="container">
+                <div className={classes.title}>Offer Course</div>
+                <Card className={classes.card}>
+                    <Form>
+                        <Row>
+                            {/** First Column with labels describin the right input */}
+                            <div className="col-sm-4">
+                                {labels.map((item, index) => (
+                                    <div>
+                                        <Form.Label className={classes.form_label}>
+                                            {item}
+                                        </Form.Label>
+                                    </div>
+                                ))}
                             </div>
-                        </Form>
-                    </Card>
-                </div>
+
+                            {/** Vertical Separator */}
+                            <div className="col-sm-0">
+                                <div className={classes.vl}></div>
+                            </div>
+                            <div className={`${classes.form_selectors} col-sm-3`}>
+                                {/** Right Form for selecting the unversity*/}
+                                <Form.Group
+                                    controlId="universityGroup"
+                                    className={classes.form_option}>
+                                    <Form.Control
+                                        as="select"
+                                        name="university"
+                                        onChange={this.onChangeUniversity}>
+                                        {this.state.availableUniversities.map((item, _) => (
+                                            <option value={item._id}>{item.name}</option>
+                                        ))}
+                                    </Form.Control>
+                                </Form.Group>
+
+                                {/** Right Form for selecting the corresponding faculty*/}
+                                <Form.Group
+                                    controlId="universityGroup"
+                                    className={classes.form_option}>
+                                    <Form.Control
+                                        as="select"
+                                        name="faculty"
+                                        onChange={this.onChangeFaculty}>
+                                        {this.state.availableFaculties.map((item, _) => (
+                                            <option value={item._id}>{item.name}</option>
+                                        ))}
+                                    </Form.Control>
+                                </Form.Group>
+
+                                {/** Right Form for selecting the corresponding course*/}
+                                <Form.Group
+                                    controlId="universityGroup"
+                                    className={classes.form_option}>
+                                    <Form.Control
+                                        as="select"
+                                        name="course"
+                                        onChange={this.onChange}>
+                                        {this.state.availableCourses.map((item, _) => (
+                                            <option value={item._id}>{item.name}</option>
+                                        ))}
+                                    </Form.Control>
+                                </Form.Group>
+                                <Form.Group className={classes.file_selector}>
+                                    <Form.File id="cvFile" />
+                                </Form.Group>
+                                <Form.Group className={classes.file_selector}>
+                                    <Form.File id="transcriptFile" />
+                                </Form.Group>
+                                <div className={classes.date_picker}>
+                                    <DatePicker
+                                        selected={this.state.date}
+                                        name="date"
+                                        showTimeSelect
+                                        dateFormat="MMMM d, yyyy h:mm aa"
+                                        onChange={this.onChangeDate}></DatePicker>
+                                </div>
+                                <div className={classes.numeric_input}>
+                                    <NumericInput className={'form-control'} min={1} max={100} />
+                                </div>
+                                <div className={classes.numeric_input}>
+                                    <Form.Control
+                                        as="textarea"
+                                        placeholder="(max. 200 words)"
+                                        rows={5}
+                                        className={classes.description_area}
+                                    />
+                                </div>
+                                <Row className={classes.padding_top}>
+                                    <div className="col-sm-4">
+                                        <div className={classes.checkmarks_left}>
+                                            <Form.Check name="terms" label="Remote" />
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-4">
+                                        <div className={classes.checkmarks_left}>
+                                            <Form.Check name="terms" label="Onsite" />
+                                        </div>
+                                    </div>
+                                </Row>
+                            </div>
+                        </Row>
+                        <div className={classes.button_box}>
+                            {/* Register Button */}
+                            <Button
+                                variant="primary"
+                                size="lg"
+                                active
+                                className={classes.button}
+                                onClick={this.onRegister}>
+                                Register
+                            </Button>
+
+                            {/* Cancel Button */}
+                            <Button
+                                variant="secondary"
+                                size="lg"
+                                active
+                                className={classes.button}
+                                onClick={this.onCancel}>
+                                Cancel
+                            </Button>
+                        </div>
+                    </Form>
+                </Card>
             </div>
         );
     }

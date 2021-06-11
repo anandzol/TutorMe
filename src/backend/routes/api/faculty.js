@@ -23,6 +23,7 @@ router.get('/', (req, res) => {
             res.status(404).json({ message: 'No available Faculties found' })
         );
 });
+
 /**
  * @route POST api/faculty/{payload}
  * @description
@@ -30,4 +31,10 @@ router.get('/', (req, res) => {
  */
 router.post('/', FacultyController.create);
 
+/**
+ * @route GET api/faculty/courses/:id
+ * @description
+ * @access Public
+ */
+router.get('/courses/:id', FacultyController.getCourses);
 module.exports = router;
