@@ -9,6 +9,8 @@ import CreateUniversity from './components/CreateUniversity';
 import CreateFaculty from './components/CreateFaculty';
 import CreateOffering from './components/CreateOffering';
 import NavigationBar from './components/NavigationBar';
+import LoginUser from './components/LoginUser';
+
 class App extends Component {
     render() {
         return (
@@ -22,6 +24,7 @@ class App extends Component {
                         <Route exact path="/create-university" component={CreateUniversity} />
                         <Route exact path="/create-faculty" component={CreateFaculty} />
                         <Route exact path="/create-offering" component={CreateOffering} />
+                        <Route exact path="/login-user" component={LoginUser} />
                     </div>
                 </Router>
             </div>

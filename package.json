@@ -20,7 +20,9 @@
         "nodemon": "^2.0.7",
         "react-datepicker": "^4.1.1",
         "react-numeric-input": "^2.2.3",
-        "validation": "0.0.1"
+        "react-validation": "^3.0.7",
+        "validation": "0.0.1",
+        "validator": "^13.6.0"
     },
     "devDependencies": {
         "eslint": "^7.27.0",

@@ -22,11 +22,6 @@ class HomeScreen extends Component {
                         </a>
                     </button>
                     <button>
-                        <a href="/login" className={classes.button__padding_top}>
-                            Login
-                        </a>
-                    </button>
-                    <button>
                         <a href="/show-offerings" className={classes.button__padding_top}>
                             Show Offerings
                         </a>
@@ -34,6 +29,11 @@ class HomeScreen extends Component {
                     <button>
                         <a href="create-offering" className={classes.button__padding_top}>
                             Create Offering
+                        </a>
+                    </button>
+                    <button>
+                        <a href="/login-user" className={classes.button__padding_top}>
+                            Login User
                         </a>
                     </button>
                 </div>

@@ -7,7 +7,6 @@ const User = require('../../models/user');
 
 /**
  * API controller for a user login
- * @route POST /api/routes/user/login/{payload}
  * @param {Object} req Request containing the payload with email and password
  * @param {Object} res Response wether the login was successful
  * @returns
@@ -75,18 +74,19 @@ const login = async (req, res) => {
 
 /**
  * API controller for user registration.
- * @route POST /api/routes/user/register/{payload}
  * @param {Object} req Request containing the payload with the user object
  * @param {Object} res Response wether the registration was successful
  * @returns
  */
 const register = async (req, res) => {
+    console.log('registering ');
     try {
         const hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
         let user = req.body;
         user.password = hashedPassword;
 
+        console.log(user);
         let retUser = await User.create(user);
 
         const token = jwt.sign(
@@ -121,7 +121,6 @@ const register = async (req, res) => {
 
 /**
  * API controller to retreive the email of the current user
- * @route GET /api/routes/user/me/{payload}
  * @param {Object} req Request containing the userId of the JWT
  * @param {Object} res Response wether the retreival was successful
  * @returns
@@ -148,7 +147,6 @@ const me = async (req, res) => {
 
 /**
  * API Controller to log the current user out
- * @route GET /api/routes/user/logout
  * @param {Object} req
  * @param {Object} res Response setting the token to null
  */

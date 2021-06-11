@@ -3,6 +3,7 @@ import axios from 'axios';
 import { withStyles } from '@material-ui/styles';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { isEmail } from 'validator';
 
 const styles = () => ({
     container: {
@@ -98,7 +99,7 @@ class RegisterUser extends Component {
     onRegister = e => {
         e.preventDefault();
 
-        if (this.validateInput() && this.validateEmail()) {
+        if (this.validateInput()) {
             const data = {
                 email: this.state.email,
                 firstName: this.state.firstName,
@@ -113,7 +114,7 @@ class RegisterUser extends Component {
             };
 
             axios
-                .post(`${SERVER_URL}/register`, data)
+                .post(`${SERVER_URL}/user/register`, data)
                 .then(res => {
                     this.setState(defaultState);
                     this.props.history.push('/');
