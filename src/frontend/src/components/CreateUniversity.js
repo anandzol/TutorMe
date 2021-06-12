@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button, Card } from 'react-bootstrap';
+import { Form, Card } from 'react-bootstrap';
 import axios from 'axios';
 
 import { withStyles } from '@material-ui/styles';
@@ -11,8 +11,9 @@ const defaultState = {
 
 const styles = () => ({
     button_box: {
-        position: 'relative',
-        paddingTop: '1rem'
+        position: 'absolute',
+        paddingTop: '2rem',
+        paddingLeft: '1rem'
     },
     padding_top: {
         paddingTop: '2rem'
@@ -116,29 +117,23 @@ class CreateUniversity extends Component {
                                             create!
                                         </Form.Text>
                                     </Form.Group>
-                                    <div className={classes.button_box}>
-                                        {/* Create Button */}
-                                        <Button
-                                            variant="primary"
-                                            size="lg"
-                                            active
-                                            className={classes.button}
-                                            onClick={this.onSubmit}>
-                                            Create
-                                        </Button>
-
-                                        {/* Cancel Button */}
-                                        <Button
-                                            variant="secondary"
-                                            size="lg"
-                                            active
-                                            className={classes.button}
-                                            onClick={this.onCancel}>
-                                            Cancel
-                                        </Button>
-                                    </div>
                                 </Form>
                             </Card>
+                        </div>
+                        <div className={classes.button_box}>
+                            {/* Register Button */}
+                            <div className="form-group">
+                                <button
+                                    className={`btn btn-primary btn-lg`}
+                                    onClick={this.onSubmit}>
+                                    Create
+                                </button>
+                                <button
+                                    className={`btn btn-primary btn-secondary btn-lg`}
+                                    onClick={this.onCancel}>
+                                    Cancel
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

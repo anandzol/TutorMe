@@ -1,6 +1,4 @@
 import { Component } from 'react';
-import { Tabs, Tab } from 'react-bootstrap';
-import NavigationBar from '../components/NavigationBar';
 import { withStyles } from '@material-ui/styles';
 
 const styles = theme => ({
@@ -9,6 +7,8 @@ const styles = theme => ({
     }
 });
 class HomeScreen extends Component {
+    onClick() {}
+
     render() {
         const { classes } = this.props;
         return (
@@ -36,6 +36,7 @@ class HomeScreen extends Component {
                             Login User
                         </a>
                     </button>
+                    <button onClick={this.onClick}>Test Button</button>
                 </div>
             </div>
         );

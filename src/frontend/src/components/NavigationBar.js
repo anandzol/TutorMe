@@ -52,6 +52,10 @@ class NavigationBar extends Component {
         super();
     }
 
+    onLogout() {
+        AuthService.logout();
+        this.props.history.push('/');
+    }
     render() {
         const { classes } = this.props;
         return (
@@ -90,7 +94,9 @@ class NavigationBar extends Component {
                             Create University
                         </NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item onClick={AuthService.logout}>Sign Out</NavDropdown.Item>
+                        <NavDropdown.Item href="/login-user" onClick={AuthService.logout}>
+                            Sign Out
+                        </NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
             </Navbar>

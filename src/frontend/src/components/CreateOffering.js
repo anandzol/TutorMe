@@ -14,10 +14,17 @@ const styles = () => ({
     title: {
         position: 'relative',
         paddingTop: '4rem',
-        fontSize: 'xx-large',
         paddingBottom: '1rem',
         fontWeight: 'bold',
         left: '-18rem'
+    },
+    component: {
+        position: 'relative',
+        backgroundColor: '#f0f2f5',
+        paddingTop: '10px',
+        paddingBottom: '10px',
+        minHeight: '100vh',
+        color: 'black'
     },
     card: {
         position: 'absolute',
@@ -242,7 +249,7 @@ class CreateOffering extends Component {
     }
 
     componentDidMount() {
-        // Set the tutor id to the user which is currently logged in (and is creating the session)
+        // Set the tutor id to the user which is currently logged in
         const currentUserToken = AuthService.getCurrentUser();
         const currentUserId = parseJwt(currentUserToken)._id;
         this.setState({ tutorId: currentUserId });
@@ -281,142 +288,148 @@ class CreateOffering extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <div className="container">
-                <div className={classes.title}>Offer Course</div>
-                <Card className={classes.card}>
-                    <Form>
-                        <Row>
-                            {/** First Column with labels describin the right input */}
-                            <div className="col-sm-4">
-                                {labels.map((item, index) => (
-                                    <div>
-                                        <Form.Label className={classes.form_label}>
-                                            {item}
-                                        </Form.Label>
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/** Vertical Separator */}
-                            <div className="col-sm-0">
-                                <div className={classes.vl}></div>
-                            </div>
-                            <div className={`${classes.form_selectors} col-sm-3`}>
-                                {/** Form for selecting the unversity*/}
-                                <Form.Group
-                                    controlId="universityGroup"
-                                    className={classes.form_option}>
-                                    <Form.Control
-                                        as="select"
-                                        name="university"
-                                        onChange={this.onChangeUniversity}>
-                                        {this.state.availableUniversities.map((item, _) => (
-                                            <option value={item._id}>{item.name}</option>
-                                        ))}
-                                    </Form.Control>
-                                </Form.Group>
-
-                                {/** Form for selecting the corresponding faculty*/}
-                                <Form.Group
-                                    controlId="universityGroup"
-                                    className={classes.form_option}>
-                                    <Form.Control
-                                        as="select"
-                                        name="faculty"
-                                        onChange={this.onChangeFaculty}>
-                                        {this.state.availableFaculties.map((item, _) => (
-                                            <option value={item._id}>{item.name}</option>
-                                        ))}
-                                    </Form.Control>
-                                </Form.Group>
-
-                                {/** Form for selecting the corresponding course*/}
-                                <Form.Group
-                                    controlId="universityGroup"
-                                    className={classes.form_option}>
-                                    <Form.Control
-                                        as="select"
-                                        name="course"
-                                        onChange={this.onChange}>
-                                        {this.state.availableCourses.map((item, _) => (
-                                            <option value={item._id}>{item.name}</option>
-                                        ))}
-                                    </Form.Control>
-                                </Form.Group>
-
-                                {/** Form for uploading a cv*/}
-                                <Form.Group className={classes.file_selector}>
-                                    <Form.File id="cvFile" />
-                                </Form.Group>
-
-                                {/** Right Form for selecting the corresponding course*/}
-                                <Form.Group className={classes.file_selector}>
-                                    <Form.File id="transcriptFile" />
-                                </Form.Group>
-                                <div className={classes.date_picker}>
-                                    <DatePicker
-                                        selected={this.state.date}
-                                        name="date"
-                                        showTimeSelect
-                                        dateFormat="MMMM d, yyyy h:mm aa"
-                                        onChange={this.onChangeDate}></DatePicker>
-                                </div>
-                                <div className={classes.numeric_input}>
-                                    <NumericInput className={'form-control'} min={1} max={100} />
-                                </div>
-                                <div className={classes.numeric_input}>
-                                    <Form.Control
-                                        as="textarea"
-                                        placeholder="(max. 200 words)"
-                                        rows={5}
-                                        className={classes.description_area}
-                                    />
-                                </div>
-                                <Row className={classes.padding_top}>
-                                    <div className="col-sm-4">
-                                        <div className={classes.checkmarks_left}>
-                                            <Form.Check
-                                                name="remote"
-                                                label="Remote"
-                                                onClick={this.onClickCheckmark}
-                                            />
+            <div className={classes.component}>
+                <div className={`container ${classes.padding_top}`}>
+                    <h2 className={`${classes.title}`}>Offer Course</h2>
+                    <Card className={classes.card}>
+                        <Form>
+                            <Row>
+                                {/** First Column with labels describin the right input */}
+                                <div className="col-sm-4">
+                                    {labels.map((item, index) => (
+                                        <div>
+                                            <Form.Label className={classes.form_label}>
+                                                {item}
+                                            </Form.Label>
                                         </div>
-                                    </div>
-                                    <div className="col-sm-4">
-                                        <div className={classes.checkmarks_left}>
-                                            <Form.Check
-                                                name="onsite"
-                                                label="Onsite"
-                                                onClick={this.onClickCheckmark}
-                                            />
-                                        </div>
-                                    </div>
-                                </Row>
-                            </div>
-                        </Row>
-                        <div className={classes.button_box}>
-                            {/* Register Button */}
-                            <Button
-                                variant="primary"
-                                size="lg"
-                                active
-                                className={classes.button}
-                                onClick={this.onClick}>
-                                Register
-                            </Button>
+                                    ))}
+                                </div>
 
-                            {/* Cancel Button */}
-                            <Button
-                                variant="secondary"
-                                size="lg"
-                                active
-                                className={classes.button}
-                                onClick={this.onCancel}>
-                                Cancel
-                            </Button>
-                        </div>
-                    </Form>
-                </Card>
+                                {/** Vertical Separator */}
+                                <div className="col-sm-0">
+                                    <div className={classes.vl}></div>
+                                </div>
+                                <div className={`${classes.form_selectors} col-sm-3`}>
+                                    {/** Form for selecting the unversity*/}
+                                    <Form.Group
+                                        controlId="universityGroup"
+                                        className={classes.form_option}>
+                                        <Form.Control
+                                            as="select"
+                                            name="university"
+                                            onChange={this.onChangeUniversity}>
+                                            {this.state.availableUniversities.map((item, _) => (
+                                                <option value={item._id}>{item.name}</option>
+                                            ))}
+                                        </Form.Control>
+                                    </Form.Group>
+
+                                    {/** Form for selecting the corresponding faculty*/}
+                                    <Form.Group
+                                        controlId="universityGroup"
+                                        className={classes.form_option}>
+                                        <Form.Control
+                                            as="select"
+                                            name="faculty"
+                                            onChange={this.onChangeFaculty}>
+                                            {this.state.availableFaculties.map((item, _) => (
+                                                <option value={item._id}>{item.name}</option>
+                                            ))}
+                                        </Form.Control>
+                                    </Form.Group>
+
+                                    {/** Form for selecting the corresponding course*/}
+                                    <Form.Group
+                                        controlId="universityGroup"
+                                        className={classes.form_option}>
+                                        <Form.Control
+                                            as="select"
+                                            name="course"
+                                            onChange={this.onChange}>
+                                            {this.state.availableCourses.map((item, _) => (
+                                                <option value={item._id}>{item.name}</option>
+                                            ))}
+                                        </Form.Control>
+                                    </Form.Group>
+
+                                    {/** Form for uploading a cv*/}
+                                    <Form.Group className={classes.file_selector}>
+                                        <Form.File id="cvFile" />
+                                    </Form.Group>
+
+                                    {/** Right Form for selecting the corresponding course*/}
+                                    <Form.Group className={classes.file_selector}>
+                                        <Form.File id="transcriptFile" />
+                                    </Form.Group>
+                                    <div className={classes.date_picker}>
+                                        <DatePicker
+                                            selected={this.state.date}
+                                            name="date"
+                                            showTimeSelect
+                                            dateFormat="MMMM d, yyyy h:mm aa"
+                                            onChange={this.onChangeDate}></DatePicker>
+                                    </div>
+                                    <div className={classes.numeric_input}>
+                                        <NumericInput
+                                            className={'form-control'}
+                                            min={1}
+                                            max={100}
+                                        />
+                                    </div>
+                                    <div className={classes.numeric_input}>
+                                        <Form.Control
+                                            as="textarea"
+                                            placeholder="(max. 200 words)"
+                                            rows={5}
+                                            className={classes.description_area}
+                                        />
+                                    </div>
+                                    <Row className={classes.padding_top}>
+                                        <div className="col-sm-4">
+                                            <div className={classes.checkmarks_left}>
+                                                <Form.Check
+                                                    name="remote"
+                                                    label="Remote"
+                                                    onClick={this.onClickCheckmark}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-4">
+                                            <div className={classes.checkmarks_left}>
+                                                <Form.Check
+                                                    name="onsite"
+                                                    label="Onsite"
+                                                    onClick={this.onClickCheckmark}
+                                                />
+                                            </div>
+                                        </div>
+                                    </Row>
+                                </div>
+                            </Row>
+                            <div className={classes.button_box}>
+                                {/* Register Button */}
+                                <Button
+                                    variant="primary"
+                                    size="lg"
+                                    active
+                                    className={classes.button}
+                                    onClick={this.onClick}>
+                                    Register
+                                </Button>
+
+                                {/* Cancel Button */}
+                                <Button
+                                    variant="secondary"
+                                    size="lg"
+                                    active
+                                    className={classes.button}
+                                    onClick={this.onCancel}>
+                                    Cancel
+                                </Button>
+                            </div>
+                        </Form>
+                    </Card>
+                </div>
             </div>
         );
     }

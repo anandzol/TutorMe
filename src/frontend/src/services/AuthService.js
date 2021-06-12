@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { parseJwt } from './auth-header';
 const API_URL = 'http://localhost:8082/api/user';
 
 class AuthService {
@@ -27,6 +27,28 @@ class AuthService {
 
     getCurrentUser() {
         return JSON.parse(localStorage.getItem('user'));
+    }
+
+    isLoggedIn() {
+        return localStorage.getItem('user') !== null;
+    }
+
+    isAdmin() {
+        if (this.isLoggedIn()) {
+            const currentUserToken = this.getCurrentUser();
+            const currentUser = parseJwt(currentUserToken);
+            return currentUser.role === 'admin';
+        }
+        return false;
+    }
+
+    isTutor() {
+        if (this.isLoggedIn()) {
+            const currentUserToken = this.getCurrentUser();
+            const currentUser = parseJwt(currentUserToken);
+            return currentUser.role === 'tutor' || currentUser.role === 'admin';
+        }
+        return false;
     }
 }
 

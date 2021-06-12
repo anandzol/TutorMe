@@ -48,7 +48,7 @@ const UserSchema = new mongoose.Schema({
     // towards an onsite tutorial session
     role: {
         type: String,
-        enum: ['student', 'tutor', 'moderator'],
+        enum: ['student', 'tutor', 'admin'],
         default: 'student'
     },
     university: {

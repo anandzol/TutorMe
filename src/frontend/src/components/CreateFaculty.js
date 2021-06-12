@@ -22,8 +22,7 @@ const styles = () => ({
         paddingTop: '1rem'
     },
     component: {
-        // backgroundColor: '#2c3e50',
-        backgroundColor: 'white',
+        backgroundColor: '#f0f2f5',
         paddingTop: '10px',
         paddingBottom: '10px',
         minHeight: '100vh',

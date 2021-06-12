@@ -1,6 +1,5 @@
 import React, { Component, useEffect } from 'react';
-import axios from 'axios';
-import { Card, Row } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
