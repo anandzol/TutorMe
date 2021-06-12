@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { parseJwt } from './auth-header';
+import { parseJwt } from './AuthHeader';
 const API_URL = 'http://localhost:8082/api/user';
 
 class AuthService {
