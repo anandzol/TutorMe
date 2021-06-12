@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.2425f866.chunk.css",
+    "main.js": "/static/js/main.6a0e79ef.chunk.js",
+    "main.js.map": "/static/js/main.6a0e79ef.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.a2991b22.js",
+    "runtime-main.js.map": "/static/js/runtime-main.a2991b22.js.map",
+    "static/css/2.4bd8e119.chunk.css": "/static/css/2.4bd8e119.chunk.css",
+    "static/js/2.bf46264a.chunk.js": "/static/js/2.bf46264a.chunk.js",
+    "static/js/2.bf46264a.chunk.js.map": "/static/js/2.bf46264a.chunk.js.map",
+    "static/js/3.0a157b7d.chunk.js": "/static/js/3.0a157b7d.chunk.js",
+    "static/js/3.0a157b7d.chunk.js.map": "/static/js/3.0a157b7d.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.4bd8e119.chunk.css.map": "/static/css/2.4bd8e119.chunk.css.map",
+    "static/css/main.2425f866.chunk.css.map": "/static/css/main.2425f866.chunk.css.map",
+    "static/js/2.bf46264a.chunk.js.LICENSE.txt": "/static/js/2.bf46264a.chunk.js.LICENSE.txt",
+    "static/media/graduation.162e2131.png": "/static/media/graduation.162e2131.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a2991b22.js",
+    "static/css/2.4bd8e119.chunk.css",
+    "static/js/2.bf46264a.chunk.js",
+    "static/css/main.2425f866.chunk.css",
+    "static/js/main.6a0e79ef.chunk.js"
+  ]
+}

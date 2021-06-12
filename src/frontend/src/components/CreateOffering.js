@@ -5,7 +5,7 @@ import '../App.css';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import NumericInput from 'react-numeric-input';
-import { parseJwt } from '../services/auth-header';
+import { parseJwt } from '../services/AuthHeader';
 import AuthService from '../services/AuthService';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -296,7 +296,7 @@ class CreateOffering extends Component {
                             <Row>
                                 {/** First Column with labels describin the right input */}
                                 <div className="col-sm-4">
-                                    {labels.map((item, index) => (
+                                    {labels.map((item, _) => (
                                         <div>
                                             <Form.Label className={classes.form_label}>
                                                 {item}

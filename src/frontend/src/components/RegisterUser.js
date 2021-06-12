@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { withStyles } from '@material-ui/styles';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import { isEmail } from 'validator';
 
 const styles = () => ({
     container: {
@@ -77,7 +75,7 @@ const roles = [
         tutor: 'Tutor'
     },
     {
-        moderator: 'Moderator'
+        admin: 'Admin'
     }
 ];
 
