@@ -1,9 +1,46 @@
 import React, { Component, useEffect } from 'react';
 import axios from 'axios';
+import { Card, Row } from 'react-bootstrap';
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
 import AuthService from '../services/AuthService';
+import { withStyles } from '@material-ui/styles';
+
+const styles = () => ({
+    card: {
+        left: '-1rem',
+        width: '30rem'
+    },
+    form: {
+        width: '60rem'
+    },
+    component: {
+        backgroundColor: '#f0f2f5',
+        paddingTop: '10px',
+        paddingBottom: '10px',
+        minHeight: '92vh',
+        color: 'black'
+    },
+    login_form: {
+        paddingTop: '2rem',
+        left: '12rem',
+        position: 'relative'
+    },
+    register_button: {
+        position: 'relative',
+        paddingTop: '2rem',
+        width: '20rem',
+        left: '8.5rem'
+    },
+    padding_button_top: { paddingTop: '1rem' },
+    form: {
+        paddingRight: '1rem',
+        paddingLeft: '1rem',
+        paddingTop: '1rem',
+        paddingBottom: '1rem'
+    }
+});
 
 class LoginUser extends Component {
     constructor(props) {
@@ -43,7 +80,6 @@ class LoginUser extends Component {
         if (this.checkBtn.context._errors.length === 0) {
             AuthService.login(this.state.email, this.state.password).then(
                 result => {
-                    console.log(result);
                     this.props.history.push('/');
                 },
                 error => {
@@ -66,71 +102,76 @@ class LoginUser extends Component {
     }
 
     render() {
+        const { classes } = this.props;
+
         return (
-            <div className="col-md-12">
-                <div className="card card-container">
-                    <img
-                        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                        alt="profile-img"
-                        className="profile-img-card"
-                    />
-
-                    <Form
-                        onSubmit={this.handleLogin}
-                        ref={c => {
-                            this.form = c;
-                        }}>
-                        <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <Input
-                                type="text"
-                                className="form-control"
-                                name="email"
-                                value={this.state.email}
-                                onChange={this.onChangeEmail}
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="password">Password</label>
-                            <Input
-                                type="password"
-                                className="form-control"
-                                name="password"
-                                value={this.state.password}
-                                onChange={this.onChangePassword}
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <button
-                                className="btn btn-primary btn-block"
-                                disabled={this.state.loading}>
-                                {this.state.loading && (
-                                    <span className="spinner-border spinner-border-sm"></span>
-                                )}
-                                <span>Login</span>
-                            </button>
-                        </div>
-
-                        {this.state.message && (
-                            <div className="form-group">
-                                <div className="alert alert-danger" role="alert">
-                                    {this.state.message}
+            <div className={classes.component}>
+                <div className={`container ${classes.login_form}`}>
+                    <h2>Login</h2>
+                    <div className={`${classes.form}`}>
+                        <Card className={`${classes.card}`}>
+                            <Form
+                                className={`${classes.form}`}
+                                onSubmit={this.handleLogin}
+                                ref={c => {
+                                    this.form = c;
+                                }}>
+                                <div className={`${classes.padding_button_top} form-group`}>
+                                    <Input
+                                        placeholder="Email"
+                                        type="text"
+                                        className="form-control"
+                                        name="email"
+                                        value={this.state.email}
+                                        onChange={this.onChangeEmail}
+                                    />
                                 </div>
-                            </div>
-                        )}
-                        <CheckButton
-                            style={{ display: 'none' }}
-                            ref={c => {
-                                this.checkBtn = c;
-                            }}
-                        />
-                    </Form>
+                                <div className="form-group">
+                                    <Input
+                                        placeholder="Password"
+                                        type="password"
+                                        className="form-control"
+                                        name="password"
+                                        value={this.state.password}
+                                        onChange={this.onChangePassword}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <button
+                                        className={`btn btn-primary btn-block `}
+                                        disabled={this.state.loading}>
+                                        {this.state.loading && (
+                                            <span className="spinner-border spinner-border-sm"></span>
+                                        )}
+                                        <span>Login</span>
+                                    </button>
+                                    <hr></hr>
+                                    <p className="text-muted">
+                                        Don't have an account yet ?{' '}
+                                        <a href="/register-user">Sign Up!</a>
+                                    </p>
+                                </div>
+                                {this.state.message && (
+                                    <div className="form-group">
+                                        <div className="alert alert-danger" role="alert">
+                                            {this.state.message}
+                                        </div>
+                                    </div>
+                                )}
+                                <CheckButton
+                                    style={{ display: 'none' }}
+                                    ref={c => {
+                                        this.checkBtn = c;
+                                    }}
+                                />
+                            </Form>
+                        </Card>
+                    </div>
                 </div>
             </div>
         );
     }
 }
 
-export default LoginUser;
+export default withStyles(styles)(LoginUser);

@@ -7,7 +7,7 @@ import { isEmail } from 'validator';
 
 const styles = () => ({
     container: {
-        paddingTop: '20px',
+        paddingTop: '2rem',
         paddingBottom: '10px'
     },
     row__padding_right: {
@@ -18,8 +18,14 @@ const styles = () => ({
     },
     button_box: {
         position: 'absolute',
-        left: '400px',
         paddingTop: '2rem'
+    },
+    component: {
+        backgroundColor: '#f0f2f5',
+        paddingTop: '10px',
+        paddingBottom: '10px',
+        minHeight: '90vh',
+        color: 'black'
     },
     button: {
         width: '10rem',
@@ -30,6 +36,9 @@ const styles = () => ({
     },
     row_padding_top: {
         paddingTop: '1rem'
+    },
+    title_padding_bottom: {
+        paddingBottom: '1rem'
     }
 });
 
@@ -183,10 +192,11 @@ class RegisterUser extends Component {
 
         var optionState = this.props.optionState;
         return (
-            <div>
+            <div className={classes.component}>
                 <div className="container">
                     <div className={classes.container}>
-                        <div className="card col-12 login-card mt-2 hv-cente">
+                        <h2 className={`${classes.title_padding_bottom}`}>Register User</h2>
+                        <div className={`card col-12 login-card mt-2 hv-center`}>
                             <form>
                                 <div className={classes.row_padding_top}>
                                     <div class="row row-cols-3">
@@ -365,24 +375,18 @@ class RegisterUser extends Component {
 
                                 <div className={classes.button_box}>
                                     {/* Register Button */}
-                                    <Button
-                                        variant="primary"
-                                        size="lg"
-                                        active
-                                        className={classes.button}
-                                        onClick={this.onRegister}>
-                                        Register
-                                    </Button>
-
-                                    {/* Cancel Button */}
-                                    <Button
-                                        variant="secondary"
-                                        size="lg"
-                                        active
-                                        className={classes.button}
-                                        onClick={this.onCancel}>
-                                        Cancel
-                                    </Button>
+                                    <div className="form-group">
+                                        <button
+                                            className={`btn btn-primary btn-lg`}
+                                            onClick={this.onRegister}>
+                                            Register
+                                        </button>
+                                        <button
+                                            className={`btn btn-primary btn-secondary btn-lg`}
+                                            onClick={this.onCancel}>
+                                            Cancel
+                                        </button>
+                                    </div>
                                 </div>
                             </form>
                         </div>

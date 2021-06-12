@@ -15,7 +15,10 @@ const styles = () => ({
         paddingTop: '1rem'
     },
     padding_top: {
-        paddingTop: '50px'
+        paddingTop: '2rem'
+    },
+    padding_card: {
+        paddingTop: '1rem'
     },
     card: {
         color: 'black',
@@ -23,8 +26,7 @@ const styles = () => ({
         fontSize: 'large'
     },
     component: {
-        // backgroundColor: '#2c3e50',
-        backgroundColor: 'white',
+        backgroundColor: '#f0f2f5',
         paddingTop: '10px',
         paddingBottom: '10px',
         minHeight: '100vh',
@@ -97,44 +99,47 @@ class CreateUniversity extends Component {
                 <div className={classes.component}>
                     <div className={`container ${classes.padding_top}`}>
                         <h2>Create University</h2>
-                        <Card className={classes.card}>
-                            <Form onSubmit={this.onSubmit} className={classes.form}>
-                                <Form.Group>
-                                    <Form.Label>University Name</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="name"
-                                        value={this.state.name}
-                                        onChange={this.onChange}
-                                        rows={1}></Form.Control>
-                                    <div className="text-danger">{this.state.errors.name}</div>
-                                    <Form.Text className="text-muted">
-                                        Enter the university name which you would like to create!
-                                    </Form.Text>
-                                </Form.Group>
-                                <div className={classes.button_box}>
-                                    {/* Create Button */}
-                                    <Button
-                                        variant="primary"
-                                        size="lg"
-                                        active
-                                        className={classes.button}
-                                        onClick={this.onSubmit}>
-                                        Create
-                                    </Button>
+                        <div className={`${classes.padding_card}`}>
+                            <Card className={classes.card}>
+                                <Form onSubmit={this.onSubmit} className={classes.form}>
+                                    <Form.Group>
+                                        <Form.Label>University Name</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="name"
+                                            value={this.state.name}
+                                            onChange={this.onChange}
+                                            rows={1}></Form.Control>
+                                        <div className="text-danger">{this.state.errors.name}</div>
+                                        <Form.Text className="text-muted">
+                                            Enter the university name which you would like to
+                                            create!
+                                        </Form.Text>
+                                    </Form.Group>
+                                    <div className={classes.button_box}>
+                                        {/* Create Button */}
+                                        <Button
+                                            variant="primary"
+                                            size="lg"
+                                            active
+                                            className={classes.button}
+                                            onClick={this.onSubmit}>
+                                            Create
+                                        </Button>
 
-                                    {/* Cancel Button */}
-                                    <Button
-                                        variant="secondary"
-                                        size="lg"
-                                        active
-                                        className={classes.button}
-                                        onClick={this.onCancel}>
-                                        Cancel
-                                    </Button>
-                                </div>
-                            </Form>
-                        </Card>
+                                        {/* Cancel Button */}
+                                        <Button
+                                            variant="secondary"
+                                            size="lg"
+                                            active
+                                            className={classes.button}
+                                            onClick={this.onCancel}>
+                                            Cancel
+                                        </Button>
+                                    </div>
+                                </Form>
+                            </Card>
+                        </div>
                     </div>
                 </div>
             </div>
