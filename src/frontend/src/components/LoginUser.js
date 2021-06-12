@@ -9,7 +9,7 @@ class LoginUser extends Component {
     constructor(props) {
         super(props);
         this.handleLogin = this.handleLogin.bind(this);
-        this.onChangeemail = this.onChangeemail.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
 
         this.state = {
@@ -20,7 +20,7 @@ class LoginUser extends Component {
         };
     }
 
-    onChangeemail(e) {
+    onChangeEmail(e) {
         this.setState({
             email: e.target.value
         });
@@ -44,7 +44,6 @@ class LoginUser extends Component {
             AuthService.login(this.state.email, this.state.password).then(
                 result => {
                     console.log(result);
-                    console.log('login successful!');
                     this.props.history.push('/');
                 },
                 error => {
@@ -88,7 +87,7 @@ class LoginUser extends Component {
                                 className="form-control"
                                 name="email"
                                 value={this.state.email}
-                                onChange={this.onChangeemail}
+                                onChange={this.onChangeEmail}
                             />
                         </div>
 

@@ -46,14 +46,21 @@ const login = async (req, res) => {
         );
 
         if (!isPasswordValid) {
-            return res.status(401).send({ token: null });
+            return res
+                .status(401)
+                .send({ token: null, message: 'Invalid password!' });
         }
 
         // If user is found and password is valid
         // create a token
-
         const token = jwt.sign(
-            { _id: user._id, mail: user.mail, role: user.role },
+            {
+                _id: user._id,
+                email: user.email,
+                role: user.role,
+                firstName: user.firstName,
+                lastName: user.lastName
+            },
             config.JwtSecret,
             {
                 // expires in 24 hours
@@ -79,7 +86,6 @@ const login = async (req, res) => {
  * @returns
  */
 const register = async (req, res) => {
-    console.log('registering ');
     try {
         const hashedPassword = bcrypt.hashSync(req.body.password, 8);
 

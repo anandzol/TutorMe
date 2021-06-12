@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import graduationIcon from '../assets/graduation.png';
 import { Nav, Navbar, NavDropdown, Row } from 'react-bootstrap';
-
+import AuthService from '../services/AuthService';
 // @Todo: Use Icons instead of labels for Calendar/List/Profile
 import { withStyles } from '@material-ui/styles';
 
@@ -90,7 +90,7 @@ class NavigationBar extends Component {
                             Create University
                         </NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item href="#action/3.4">Sign Out</NavDropdown.Item>
+                        <NavDropdown.Item onClick={AuthService.logout}>Sign Out</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
             </Navbar>

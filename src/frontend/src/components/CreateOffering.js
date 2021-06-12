@@ -5,7 +5,8 @@ import '../App.css';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import NumericInput from 'react-numeric-input';
-
+import { parseJwt } from '../services/auth-header';
+import AuthService from '../services/AuthService';
 import 'react-datepicker/dist/react-datepicker.css';
 
 // @todo: Refactor api calls to faculty/university service
@@ -126,6 +127,14 @@ class CreateOffering extends Component {
         });
     };
 
+    onClickCheckmark = e => {
+        this.setState({ [e.target.name]: e.target.checked });
+    };
+
+    onClick = e => {
+        console.log(this.state);
+    };
+
     // Refactor this to use university service
     onChangeUniversity = e => {
         const universityId = e.target.value;
@@ -224,7 +233,20 @@ class CreateOffering extends Component {
             });
     };
 
+    validateInput() {
+        let input = this.state;
+        if (input['university'] === '' || input['faculty'] === '' || input['course'] === '') {
+            return false;
+        }
+        return true;
+    }
+
     componentDidMount() {
+        // Set the tutor id to the user which is currently logged in (and is creating the session)
+        const currentUserToken = AuthService.getCurrentUser();
+        const currentUserId = parseJwt(currentUserToken)._id;
+        this.setState({ tutorId: currentUserId });
+
         axios
 
             // Get all the available universities to render the available options
@@ -353,12 +375,20 @@ class CreateOffering extends Component {
                                 <Row className={classes.padding_top}>
                                     <div className="col-sm-4">
                                         <div className={classes.checkmarks_left}>
-                                            <Form.Check name="terms" label="Remote" />
+                                            <Form.Check
+                                                name="remote"
+                                                label="Remote"
+                                                onClick={this.onClickCheckmark}
+                                            />
                                         </div>
                                     </div>
                                     <div className="col-sm-4">
                                         <div className={classes.checkmarks_left}>
-                                            <Form.Check name="terms" label="Onsite" />
+                                            <Form.Check
+                                                name="onsite"
+                                                label="Onsite"
+                                                onClick={this.onClickCheckmark}
+                                            />
                                         </div>
                                     </div>
                                 </Row>
@@ -371,7 +401,7 @@ class CreateOffering extends Component {
                                 size="lg"
                                 active
                                 className={classes.button}
-                                onClick={this.onRegister}>
+                                onClick={this.onClick}>
                                 Register
                             </Button>
 
