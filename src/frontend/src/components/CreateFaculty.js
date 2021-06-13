@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Button, Card } from 'react-bootstrap';
 import axios from 'axios';
 import { withStyles } from '@material-ui/styles';
+import { createUniversity, getAllUniversitiesSorted } from '../services/UniversityService';
 
 const defaultState = {
     name: '',
@@ -51,29 +52,23 @@ class createFaculty extends Component {
     }
 
     componentDidMount() {
-        axios
-
-            // Get all the available universities to render the available options
-            .get(`${SERVER_URL}/university`)
-            .then(response => {
-                const universitiesSorted = response.data.sort((a, b) =>
-                    a.name.localeCompare(b.name)
-                );
-
-                this.setState({
-                    universities: universitiesSorted
-                });
-
-                if (universitiesSorted.length > 0) {
-                    this.setState({
-                        university: universitiesSorted[0]._id
-                    });
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            });
+        this.getData();
+        // try {
+        //     const universities = await UniversityService.getAllUniversitiesSorted();
+        //     this.setState({
+        //         universities: universities
+        //     });
+        //     if (universities.length > 0) {
+        //         this.setState({
+        //             university: universities[0]._id
+        //         });
+        //     }
+        // } catch (error) {
+        //     console.error(error);
+        // }
     }
+
+    async getData() {}
 
     validateInput() {
         let input = this.state.name;
@@ -135,11 +130,7 @@ class createFaculty extends Component {
                                         <Form.Control
                                             as="select"
                                             name="university"
-                                            onChange={this.onChange}>
-                                            {this.state.universities.map((item, _) => (
-                                                <option value={item._id}>{item.name}</option>
-                                            ))}
-                                        </Form.Control>
+                                            onChange={this.onChange}></Form.Control>
                                         <Form.Text className="text-muted">
                                             Select the university of the faculty which you would
                                             like to create!
@@ -179,6 +170,14 @@ class createFaculty extends Component {
                                             className={classes.button}
                                             onClick={this.onCancel}>
                                             Cancel
+                                        </Button>
+                                        <Button
+                                            variant="secondary"
+                                            size="lg"
+                                            active
+                                            className={classes.button}
+                                            onClick={this.getData}>
+                                            Test
                                         </Button>
                                     </div>
                                 </Form>

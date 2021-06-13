@@ -1,102 +1,60 @@
 import axios from 'axios';
 
-export default class HttpService {
-    static async get(url, onSuccess, onError) {
-        let token = window.localStorage['jwtToken'];
-        let header = new Headers();
-        if (token) {
-            header.append('Authorization', `JWT ${token}`);
-        }
-        header.append('Content-Type', 'application/json');
-
-        let resp = await axios.get(url, {
-            headers: header
-        });
-
-        if (resp.error) {
-            onError(resp.error);
-        } else {
-            if (resp.hasOwnProperty('token')) {
-                window.localStorage['jwtToken'] = resp.token;
-                resp.user = this.extractUser(resp.token);
-            }
-            onSuccess(resp);
-        }
+class HttpService {
+    constructor() {
+        let service = axios.create();
+        service.interceptors.response.use(this.handleSuccess, this.handleError);
+        this.service = service;
     }
 
-    static async put(url, data, onSuccess, onError) {
-        let token = window.localStorage['jwtToken'];
-        let header = new Headers();
-        if (token) {
-            header.append('Authorization', `JWT ${token}`);
-        }
-        header.append('Content-Type', 'application/json');
-
-        let resp = await axios.put(url, data, {
-            headers: header
-        });
-
-        if (resp.error) {
-            onError(resp.error);
-        } else {
-            if (resp.hasOwnProperty('token')) {
-                window.localStorage['jwtToken'] = resp.token;
-                resp.user = this.extractUser(resp.token);
-            }
-            onSuccess(resp);
-        }
+    handleSuccess(response) {
+        return response;
     }
 
-    static async post(url, data, onSuccess, onError) {
-        let token = window.localStorage['jwtToken'];
-        let header = new Headers();
-        if (token) {
-            header.append('Authorization', `JWT ${token}`);
+    handleError = error => {
+        switch (error.response.status) {
+            case 401:
+                this.redirectTo(document, '/');
+                break;
+            case 404:
+                this.redirectTo(document, '/404');
+                break;
+            default:
+                this.redirectTo(document, '/500');
+                break;
         }
-        header.append('Content-Type', 'application/json');
+        return Promise.reject(error);
+    };
 
-        let resp = await axios.post(url, data, {
-            headers: header
-        });
+    redirectTo = (document, path) => {
+        document.location = path;
+    };
 
-        if (resp.error) {
-            onError(resp.error);
-        } else {
-            if (resp.hasOwnProperty('token')) {
-                window.localStorage['jwtToken'] = resp.token;
-                resp.user = this.extractUser(resp.token);
-            }
-            onSuccess(resp);
-        }
+    get(path, callback) {
+        return this.service.get(path).then(response => callback(response.status, response.data));
     }
 
-    static async remove(url, onSuccess, onError) {
-        let token = window.localStorage['jwtToken'];
-        let header = new Headers();
-        if (token) {
-            header.append('Authorization', `JWT ${token}`);
-        }
-        header.append('Content-Type', 'application/json');
-
-        let resp = await axios.delete(url, {
-            headers: header
-        });
-
-        if (resp.error) {
-            onError(resp.error);
-        } else {
-            if (resp.hasOwnProperty('token')) {
-                window.localStorage['jwtToken'] = resp.token;
-                resp.user = this.extractUser(resp.token);
-            }
-            onSuccess(resp);
-        }
+    patch(path, payload, callback) {
+        return this.service
+            .request({
+                method: 'PATCH',
+                url: path,
+                responseType: 'json',
+                data: payload
+            })
+            .then(response => callback(response.status, response.data));
     }
 
-    static checkIfUnauthorized(res) {
-        if (res.status === 401) {
-            return true;
-        }
-        return false;
+    post(path, payload, callback) {
+        return this.service
+            .request({
+                method: 'POST',
+                url: path,
+                responseType: 'json',
+                data: payload
+            })
+            .then(response => callback(response.status, response.data));
     }
 }
+
+export default new HttpService();

@@ -8,7 +8,7 @@ import NumericInput from 'react-numeric-input';
 import { parseJwt } from '../services/AuthHeader';
 import AuthService from '../services/AuthService';
 import 'react-datepicker/dist/react-datepicker.css';
-import UniversityService from '../services/UniversityService';
+import { getAllUniversitiesSorted } from '../services/UniversityService';
 // @todo: Refactor api calls to faculty/university service
 const styles = () => ({
     title: {
@@ -210,9 +210,7 @@ class CreateOffering extends Component {
     //         });
     // };
 
-    onChangeUniversity = e => {
-        UniversityService.getAllUniversitiesSorted();
-    };
+    async onChangeUniversity() {}
 
     onChangeFaculty = e => {
         const facultyId = e.target.value;
