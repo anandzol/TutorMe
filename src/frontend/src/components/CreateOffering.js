@@ -131,6 +131,9 @@ class CreateOffering extends Component {
         this.setState({ [e.target.name]: e.target.value });
     };
 
+    onChangeWage = e => {
+        this.setState({ wage: e + 1 });
+    };
     onChangeDate = e => {
         this.setState({
             date: Date.parse(e)
@@ -139,10 +142,6 @@ class CreateOffering extends Component {
 
     onClickCheckmark = e => {
         this.setState({ [e.target.name]: e.target.checked });
-    };
-
-    onClick = e => {
-        console.log(this.state);
     };
 
     onChangeUniversity = e => {
@@ -254,12 +253,12 @@ class CreateOffering extends Component {
                         coursesSorted => {
                             if (coursesSorted.length > 0) {
                                 this.setState({
-                                    courses: coursesSorted[0]._id,
+                                    course: coursesSorted[0]._id,
                                     availableCourses: coursesSorted
                                 });
                             } else {
                                 this.setState({
-                                    courses: '',
+                                    course: '',
                                     availableCourses: []
                                 });
                             }
@@ -363,13 +362,18 @@ class CreateOffering extends Component {
                                     <div className={classes.numeric_input}>
                                         <NumericInput
                                             className={'form-control'}
+                                            name="wage"
+                                            onChange={this.onChangeWage}
                                             min={1}
                                             max={100}
+                                            placeholder={1}
                                         />
                                     </div>
                                     <div className={classes.numeric_input}>
                                         <Form.Control
                                             as="textarea"
+                                            name="description"
+                                            onChange={this.onChange}
                                             placeholder="(max. 200 words)"
                                             rows={5}
                                             className={classes.description_area}
