@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Card } from 'react-bootstrap';
 import axios from 'axios';
-
+import UniversityService from '../services/UniversityService';
 import { withStyles } from '@material-ui/styles';
 
 const defaultState = {
@@ -72,7 +72,7 @@ class CreateUniversity extends Component {
         return true;
     }
 
-    onSubmit = e => {
+    onSubmit = async e => {
         e.preventDefault();
 
         if (this.validateInput()) {
@@ -80,15 +80,13 @@ class CreateUniversity extends Component {
                 name: this.state.name
             };
 
-            axios
-                .post(`${SERVER_URL}/university`, data)
-                .then(res => {
-                    this.setState(defaultState);
-                    this.props.history.push('/');
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+            try {
+                const resp = await UniversityService.createUniversity(data);
+                this.setState(defaultState);
+                this.props.history.push('/');
+            } catch (error) {
+                console.error(error);
+            }
         }
     };
 
