@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Card } from 'react-bootstrap';
+import { Form, Card, Button } from 'react-bootstrap';
 import { createUniversity } from '../services/UniversityService';
 import { withStyles } from '@material-ui/styles';
 
@@ -116,20 +116,28 @@ class CreateUniversity extends Component {
                                     </Form.Group>
                                 </Form>
                             </Card>
-                        </div>
-                        <div className={classes.button_box}>
-                            {/* Register Button */}
-                            <div className="form-group">
-                                <button
-                                    className={`btn btn-primary btn-lg`}
-                                    onClick={this.onSubmit}>
-                                    Create
-                                </button>
-                                <button
-                                    className={`btn btn-primary btn-secondary btn-lg`}
-                                    onClick={this.onCancel}>
-                                    Cancel
-                                </button>
+                            <div className={classes.button_box}>
+                                <div className="form-group">
+                                    {/* Register Button */}
+                                    <Button
+                                        variant="primary"
+                                        size="lg"
+                                        active
+                                        className={classes.button}
+                                        onClick={this.onSubmit}>
+                                        Create
+                                    </Button>
+
+                                    {/* Cancel Button */}
+                                    <Button
+                                        variant="secondary"
+                                        size="lg"
+                                        active
+                                        className={classes.button}
+                                        onClick={this.onCancel}>
+                                        Cancel
+                                    </Button>
+                                </div>
                             </div>
                         </div>
                     </div>

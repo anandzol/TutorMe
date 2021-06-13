@@ -101,7 +101,7 @@ class CreateCourse extends Component {
                 // Set the selected university to the first displayed university
                 if (facultiesSorted.length > 0) {
                     this.setState({
-                        faculty: facultiesSorted[0].id,
+                        faculty: facultiesSorted[0]._id,
                         availableFaculties: facultiesSorted
                     });
                 } else {
@@ -140,12 +140,16 @@ class CreateCourse extends Component {
                 university: this.state.university,
                 faculty: this.state.faculty
             };
-            createCourse(data, () => {
-                this.setState(defaultState);
-                this.props.history.push('/');
-            }).catch(error => {
-                console.error(error);
-            });
+            createCourse(
+                data,
+                () => {
+                    this.setState(defaultState);
+                    this.props.history.push('/');
+                },
+                error => {
+                    console.error(error);
+                }
+            );
         }
     };
 
@@ -182,7 +186,7 @@ class CreateCourse extends Component {
                                             name="faculty"
                                             onChange={this.onChange}>
                                             {this.state.availableFaculties.map((item, _) => (
-                                                <option value={item.id}>{item.name}</option>
+                                                <option value={item._id}>{item.name}</option>
                                             ))}
                                         </Form.Control>
                                         <Form.Text className="text-muted">
@@ -204,29 +208,29 @@ class CreateCourse extends Component {
                                         </Form.Text>
                                         <div className="text-danger">{this.state.errors.name}</div>
                                     </Form.Group>
-                                    <div className={classes.button_box}>
-                                        {/* Register Button */}
-                                        <Button
-                                            variant="primary"
-                                            size="lg"
-                                            active
-                                            className={classes.button}
-                                            onClick={this.onSubmit}>
-                                            Register
-                                        </Button>
-
-                                        {/* Cancel Button */}
-                                        <Button
-                                            variant="secondary"
-                                            size="lg"
-                                            active
-                                            className={classes.button}
-                                            onClick={this.onCancel}>
-                                            Cancel
-                                        </Button>
-                                    </div>
                                 </Form>
                             </Card>
+                            <div className={classes.button_box}>
+                                {/* Create Button */}
+                                <Button
+                                    variant="primary"
+                                    size="lg"
+                                    active
+                                    className={classes.button}
+                                    onClick={this.onSubmit}>
+                                    Create
+                                </Button>
+
+                                {/* Cancel Button */}
+                                <Button
+                                    variant="secondary"
+                                    size="lg"
+                                    active
+                                    className={classes.button}
+                                    onClick={this.onCancel}>
+                                    Cancel
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </div>

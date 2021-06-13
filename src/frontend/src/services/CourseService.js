@@ -1,6 +1,6 @@
 import axios from 'axios';
-
-const API_URL = 'http://localhost:8082/api/course';
+import { SERVER_API } from '../config';
+const API_URL = `${SERVER_API}/course`;
 
 /**
  * API Endpoint for creating a new create

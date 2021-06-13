@@ -85,7 +85,7 @@ class NavigationBar extends Component {
                         id="collasible-nav-dropdown">
                         <NavDropdown.Item href="/">Home</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.2">Edit Profile</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">Offer Course</NavDropdown.Item>
+                        <NavDropdown.Item href="/create-offering">Offer Course</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.4">Manage Course</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="/create-course">Create Course</NavDropdown.Item>

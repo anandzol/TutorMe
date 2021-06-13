@@ -33,6 +33,17 @@
                 "name": "Physics",
                 "university": "60bff011a5e1000beeddb38e",
                 "__v": 0
+            },
+            {
+                "courses": [
+                    "60c5a344c0adb4184aa5d8b6",
+                    "60c5a37fc0adb4184aa5d8b8",
+                    "60c5a44ac0adb4184aa5d8b9"
+                ],
+                "_id": "60c59c40c0adb4184aa5d8b0",
+                "name": "Electrical Engineering",
+                "university": "60bff011a5e1000beeddb38e",
+                "__v": 3
             }
         ],
         "courses": [
@@ -135,11 +146,39 @@
                 "createdAt": "2021-06-11T19:09:36.415Z",
                 "updatedAt": "2021-06-11T19:09:36.415Z",
                 "__v": 0
+            },
+            {
+                "sessions": [],
+                "_id": "60c5a278c0adb4184aa5d8b4",
+                "name": "Intro to Signal Processing 1",
+                "university": "60bff011a5e1000beeddb38e",
+                "createdAt": "2021-06-13T06:15:20.319Z",
+                "updatedAt": "2021-06-13T06:15:20.319Z",
+                "__v": 0
+            },
+            {
+                "sessions": [],
+                "_id": "60c5a31cc0adb4184aa5d8b5",
+                "name": "Intro to Signal Processing",
+                "university": "60bff011a5e1000beeddb38e",
+                "createdAt": "2021-06-13T06:18:04.991Z",
+                "updatedAt": "2021-06-13T06:18:04.991Z",
+                "__v": 0
+            },
+            {
+                "sessions": [],
+                "_id": "60c5a44ac0adb4184aa5d8b9",
+                "name": "Intro to Signal Processing",
+                "university": "60bff011a5e1000beeddb38e",
+                "faculty": "60c59c40c0adb4184aa5d8b0",
+                "createdAt": "2021-06-13T06:23:06.930Z",
+                "updatedAt": "2021-06-13T06:23:06.930Z",
+                "__v": 0
             }
         ],
         "_id": "60bff011a5e1000beeddb38e",
         "name": "Technical University Munich",
-        "__v": 13
+        "__v": 20
     },
     {
         "faculties": [],
@@ -171,11 +210,17 @@
                 "__v": 0
             },
             {
-                "courses": ["60c3ad8bb7175569638aa85f", "60c3ad94b7175569638aa862"],
+                "courses": [
+                    "60c3ad8bb7175569638aa85f",
+                    "60c3ad94b7175569638aa862",
+                    "60c5a1cac0adb4184aa5d8b1",
+                    "60c5a216c0adb4184aa5d8b2",
+                    "60c5a227c0adb4184aa5d8b3"
+                ],
                 "_id": "60c170f1e9f9407d74ff4160",
                 "name": "Biology",
                 "university": "60bff033a5e1000beeddb390",
-                "__v": 2
+                "__v": 5
             }
         ],
         "courses": [
@@ -198,17 +243,75 @@
                 "createdAt": "2021-06-11T18:38:12.374Z",
                 "updatedAt": "2021-06-11T18:38:12.374Z",
                 "__v": 0
+            },
+            {
+                "sessions": [],
+                "_id": "60c5a1cac0adb4184aa5d8b1",
+                "name": "Intro to Molecular Biology ",
+                "university": "60bff033a5e1000beeddb390",
+                "faculty": "60c170f1e9f9407d74ff4160",
+                "createdAt": "2021-06-13T06:12:26.464Z",
+                "updatedAt": "2021-06-13T06:12:26.464Z",
+                "__v": 0
+            },
+            {
+                "sessions": [],
+                "_id": "60c5a216c0adb4184aa5d8b2",
+                "name": "Intro to Biology",
+                "university": "60bff033a5e1000beeddb390",
+                "faculty": "60c170f1e9f9407d74ff4160",
+                "createdAt": "2021-06-13T06:13:42.261Z",
+                "updatedAt": "2021-06-13T06:13:42.261Z",
+                "__v": 0
+            },
+            {
+                "sessions": [],
+                "_id": "60c5a227c0adb4184aa5d8b3",
+                "name": "Test",
+                "university": "60bff033a5e1000beeddb390",
+                "faculty": "60c170f1e9f9407d74ff4160",
+                "createdAt": "2021-06-13T06:13:59.588Z",
+                "updatedAt": "2021-06-13T06:13:59.588Z",
+                "__v": 0
             }
         ],
         "_id": "60bff033a5e1000beeddb390",
         "name": "Hochschule München",
-        "__v": 6
+        "__v": 9
     },
     {
         "faculties": [],
         "courses": [],
         "_id": "60bfff4c148f60d402d3b006",
         "name": "University of Augsburg",
+        "__v": 0
+    },
+    {
+        "faculties": [],
+        "courses": [],
+        "_id": "60c57628c0adb4184aa5d8aa",
+        "name": "Technical University Berlin",
+        "__v": 0
+    },
+    {
+        "faculties": [],
+        "courses": [],
+        "_id": "60c5838ec0adb4184aa5d8ab",
+        "name": "University of Stuttgart",
+        "__v": 0
+    },
+    {
+        "faculties": [],
+        "courses": [],
+        "_id": "60c583ecc0adb4184aa5d8ad",
+        "name": "RWTH Aachen University",
+        "__v": 0
+    },
+    {
+        "faculties": [],
+        "courses": [],
+        "_id": "60c58439c0adb4184aa5d8ae",
+        "name": "University of Regensburg",
         "__v": 0
     }
 ]

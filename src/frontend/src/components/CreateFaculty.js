@@ -155,29 +155,29 @@ class createFaculty extends Component {
                                             Enter the faculty name which you would like to create!
                                         </Form.Text>
                                     </Form.Group>
-                                    <div className={classes.button_box}>
-                                        {/* Create Button */}
-                                        <Button
-                                            variant="primary"
-                                            size="lg"
-                                            active
-                                            className={classes.button}
-                                            onClick={this.onSubmit}>
-                                            Create
-                                        </Button>
-
-                                        {/* Cancel Button */}
-                                        <Button
-                                            variant="secondary"
-                                            size="lg"
-                                            active
-                                            className={classes.button}
-                                            onClick={this.onCancel}>
-                                            Cancel
-                                        </Button>
-                                    </div>
                                 </Form>
                             </Card>
+                            <div className={classes.button_box}>
+                                {/* Create Button */}
+                                <Button
+                                    variant="primary"
+                                    size="lg"
+                                    active
+                                    className={classes.button}
+                                    onClick={this.onSubmit}>
+                                    Create
+                                </Button>
+
+                                {/* Cancel Button */}
+                                <Button
+                                    variant="secondary"
+                                    size="lg"
+                                    active
+                                    className={classes.button}
+                                    onClick={this.onCancel}>
+                                    Cancel
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </div>

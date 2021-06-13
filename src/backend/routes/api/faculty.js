@@ -18,6 +18,7 @@ router.get('/test', (req, res) => res.send('university route testing!'));
  */
 router.get('/', (req, res) => {
     Faculty.find()
+        .populate('courses')
         .then(faculty => res.json(faculty))
         .catch(error =>
             res.status(404).json({ message: 'No available Faculties found' })

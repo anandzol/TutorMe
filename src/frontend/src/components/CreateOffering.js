@@ -236,17 +236,38 @@ class CreateOffering extends Component {
                 this.setState({
                     availableUniversities: universitiesSorted
                 });
-
-                if (universitiesSorted.length > 0 && universitiesSorted[0].faculties.length > 0) {
-                    const availableFacultiesSorted = universitiesSorted[0].faculties.sort((a, b) =>
+                const initialFaculty = universitiesSorted[0].faculties;
+                if (universitiesSorted.length > 0 && initialFaculty.length > 0) {
+                    const availableFacultiesSorted = initialFaculty.sort((a, b) =>
                         a.name.localeCompare(b.name)
                     );
 
+                    const initialFacultyId = availableFacultiesSorted[0]._id;
                     this.setState({
                         university: universitiesSorted[0]._id,
                         availableFaculties: availableFacultiesSorted,
                         faculty: availableFacultiesSorted[0]._id
                     });
+
+                    getFacultyCoursesSorted(
+                        initialFacultyId,
+                        coursesSorted => {
+                            if (coursesSorted.length > 0) {
+                                this.setState({
+                                    courses: coursesSorted[0]._id,
+                                    availableCourses: coursesSorted
+                                });
+                            } else {
+                                this.setState({
+                                    courses: '',
+                                    availableCourses: []
+                                });
+                            }
+                        },
+                        error => {
+                            console.error(error);
+                        }
+                    );
                 }
             },
             error => {
