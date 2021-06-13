@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { SERVER_API } from '../config';
+
 const API_URL = `${SERVER_API}/course`;
 
 /**

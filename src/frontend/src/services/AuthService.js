@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { parseJwt } from './AuthHeader';
-const API_URL = 'http://localhost:8082/api/user';
+import { SERVER_API } from '../config';
+
+const API_URL = `${SERVER_API}/user`;
 
 class AuthService {
     login(email, password) {

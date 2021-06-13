@@ -1,5 +1,8 @@
 import axios from 'axios';
-const API_URL = 'http://localhost:8082/api/university';
+
+import { SERVER_API } from '../config';
+
+const API_URL = `${SERVER_API}/university`;
 
 /**
  * API Endpoint for getting all universities
