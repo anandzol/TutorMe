@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import { Button, Form, Card, Row } from 'react-bootstrap';
 import { withStyles } from '@material-ui/styles';
 import '../App.css';
-import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import NumericInput from 'react-numeric-input';
 import { parseJwt } from '../services/AuthHeader';
 import AuthService from '../services/AuthService';
 import 'react-datepicker/dist/react-datepicker.css';
-import { getAllUniversitiesSorted } from '../services/UniversityService';
+import {
+    getUniversityFacultiesSorted,
+    getAllUniversitiesSorted
+} from '../services/UniversityService';
+
+import { getFacultyCoursesSorted } from '../services/FacultyService';
 // @todo: Refactor api calls to faculty/university service
 const styles = () => ({
     title: {
@@ -142,89 +146,60 @@ class CreateOffering extends Component {
         console.log(this.state);
     };
 
-    // Refactor this to use university service
-    // onChangeUniversity = e => {
-    //     const universityId = e.target.value;
-    //     this.setState({ [e.target.name]: universityId });
+    onChangeUniversity = e => {
+        const universityId = e.target.value;
+        this.setState({ university: universityId });
 
-    //     axios
-    //         Get all the available faculties to render the available options
-    //         .get(`${SERVER_URL}/university/${e.target.value}`)
-    //         .then(response => {
-    //             let facultiesSorted = [];
+        getUniversityFacultiesSorted(
+            universityId,
+            facultiesSorted => {
+                if (facultiesSorted.length > 0) {
+                    const facultyId = facultiesSorted[0]._id;
+                    this.setState({
+                        faculty: facultyId,
+                        availableFaculties: facultiesSorted
+                    });
 
-    //             Sort all universities by their name alphabetically
-    //             response.data.faculties
-    //                 .sort((a, b) => a.name.localeCompare(b.name))
-    //                 .forEach(item => {
-    //                     facultiesSorted.push({
-    //                         _id: item._id,
-    //                         name: item.name
-    //                     });
-    //                 });
-
-    //             Set the selected university to the first displayed university
-    //             if (facultiesSorted.length > 0) {
-    //                 this.setState({
-    //                     faculty: facultiesSorted[0]._id,
-    //                     availableFaculties: facultiesSorted
-    //                 });
-
-    //                 axios
-    //                     .get(`${SERVER_URL}/faculty/courses/${facultiesSorted[0]._id}`)
-    //                     .then(response => {
-    //                         let coursesSorted = [];
-
-    //                         response.data
-    //                             .sort((a, b) => a.name.localeCompare(b.name))
-    //                             .forEach(item => {
-    //                                 coursesSorted.push({ _id: item._id, name: item.name });
-    //                             });
-
-    //                         if (coursesSorted.length > 0) {
-    //                             this.setState({
-    //                                 course: coursesSorted[0]._id,
-    //                                 availableCourses: coursesSorted
-    //                             });
-    //                         } else {
-    //                             this.setState({
-    //                                 course: '',
-    //                                 availableCourses: []
-    //                             });
-    //                         }
-    //                     })
-    //                     .catch(error => {
-    //                         console.log(error);
-    //                     });
-    //             } else {
-    //                 this.setState({
-    //                     faculty: '',
-    //                     availableFaculties: [],
-    //                     course: '',
-    //                     availableCourses: []
-    //                 });
-    //             }
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //         });
-    // };
-
-    async onChangeUniversity() {}
+                    getFacultyCoursesSorted(
+                        facultyId,
+                        coursesSorted => {
+                            if (coursesSorted.length > 0) {
+                                this.setState({
+                                    courses: coursesSorted[0]._id,
+                                    availableCourses: coursesSorted
+                                });
+                            } else {
+                                this.setState({
+                                    courses: '',
+                                    availableCourses: []
+                                });
+                            }
+                        },
+                        error => {
+                            console.error(error);
+                        }
+                    );
+                } else {
+                    this.setState({
+                        faculty: '',
+                        availableFaculties: [],
+                        course: '',
+                        availableCourses: []
+                    });
+                }
+            },
+            error => {
+                console.error(error);
+            }
+        );
+    };
 
     onChangeFaculty = e => {
         const facultyId = e.target.value;
-        axios
-            .get(`${SERVER_URL}/faculty/courses/${facultyId}`)
-            .then(response => {
-                let coursesSorted = [];
 
-                response.data
-                    .sort((a, b) => a.name.localeCompare(b.name))
-                    .forEach(item => {
-                        coursesSorted.push({ _id: item._id, name: item.name });
-                    });
-
+        getFacultyCoursesSorted(
+            facultyId,
+            coursesSorted => {
                 if (coursesSorted.length > 0) {
                     this.setState({
                         course: coursesSorted[0]._id,
@@ -236,10 +211,11 @@ class CreateOffering extends Component {
                         availableCourses: []
                     });
                 }
-            })
-            .catch(error => {
+            },
+            error => {
                 console.log(error);
-            });
+            }
+        );
     };
 
     validateInput() {
@@ -256,16 +232,8 @@ class CreateOffering extends Component {
         const currentUserId = parseJwt(currentUserToken)._id;
         this.setState({ tutorId: currentUserId });
 
-        axios
-
-            // Get all the available universities to render the available options
-            .get(`${SERVER_URL}/university`)
-            .then(response => {
-                // Sort order of universities alphabetically
-                const universitiesSorted = response.data.sort((a, b) =>
-                    a.name.localeCompare(b.name)
-                );
-
+        getAllUniversitiesSorted(
+            universitiesSorted => {
                 this.setState({
                     availableUniversities: universitiesSorted
                 });
@@ -281,10 +249,12 @@ class CreateOffering extends Component {
                         faculty: availableFacultiesSorted[0]._id
                     });
                 }
-            })
-            .catch(error => {
-                console.log(error);
-            });
+                console.log(universitiesSorted);
+            },
+            error => {
+                console.error(error);
+            }
+        );
     }
 
     render() {

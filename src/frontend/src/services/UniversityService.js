@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { response } from 'express';
-import HttpService from './HttpService';
 const API_URL = 'http://localhost:8082/api/university';
 
 /**
  * API Endpoint for getting all universities
  * @return {Object} Array containing all universities
+ * @param {Function} callback function executed if request is successful
+ * @param {Function} errorcallback function executed if request is unsuccessful
  */
 export function getAllUniversities(callback, errorcallback) {
     axios
@@ -24,18 +24,22 @@ export function getAllUniversities(callback, errorcallback) {
 
 /**
  * API Endpoint for getting all universities, sorted by name alphabetically
- * @return {Object} Array containing all universities
+ * @param {Function} callback function executed if request is successful
+ * @param {Function} errorcallback function executed if request is unsuccessful
  */
 export function getAllUniversitiesSorted(callback, errorcallback) {
-    return axios
+    axios
         .get(`${API_URL}`)
         .then(response => {
             const data = response.data;
+
             let universitiesSorted = [];
             data.sort((a, b) => a.name.localeCompare(b.name)).forEach(item => {
                 universitiesSorted.push({
                     _id: item._id,
-                    name: item.name
+                    name: item.name,
+                    faculties: item.faculties,
+                    courses: item.courses
                 });
             });
 
@@ -53,7 +57,8 @@ export function getAllUniversitiesSorted(callback, errorcallback) {
 /**
  * API Endpoint for getting all faculties of a university
  * @param {String} universityId Id of the university for which all faculties should be returend
- * @return {Object} Array containing the faculties of a university
+ * @param {Function} callback function executed if request is successful
+ * @param {Function} errorcallback function executed if request is unsuccessful
  */
 export function getUniversityFaculties(universityId, callback, errorcallback) {
     axios
@@ -73,7 +78,8 @@ export function getUniversityFaculties(universityId, callback, errorcallback) {
 /**
  * API Endpoint for getting all faculties of a university, sorted by name alphabetically
  * @param {String} universityId Id of the university for which all faculties should be returend
- * @return {Object} Array containing the faculties of a unviersity
+ * @param {Function} callback function executed if request is successful
+ * @param {Function} errorcallback function executed if request is unsuccessful
  */
 export function getUniversityFacultiesSorted(universityId, callback, errorcallback) {
     axios
@@ -104,6 +110,8 @@ export function getUniversityFacultiesSorted(universityId, callback, errorcallba
 /**
  * API Endpoint for creating a new university
  * @param {Object} university
+ * @param {Function} callback function executed if request is successful
+ * @param {Function} errorcallback function executed if request is unsuccessful
  */
 export function createUniversity(university, callback, errorcallback) {
     axios

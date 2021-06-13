@@ -3,13 +3,13 @@ import AuthService from '../services/AuthService';
 import { Redirect, Route } from 'react-router-dom';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    const isLoggedIn = AuthService.isLoggedIn();
+    const isTutor = AuthService.isTutor();
 
     return (
         <Route
             {...rest}
             render={props =>
-                isLoggedIn ? (
+                isTutor ? (
                     <Component {...props} />
                 ) : (
                     <Redirect to={{ pathname: '/login-user', state: { from: props.location } }} />
