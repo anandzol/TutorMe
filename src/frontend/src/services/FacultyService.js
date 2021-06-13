@@ -81,13 +81,13 @@ export function getFacultyCoursesSorted(facultyId, callback, errorcallback) {
 
 /**
  * API Endpoint for creating a new faculty
- * @param {Object} faculty faculty which should be created
+ * @param {Object} payload faculty which should be created
  * @param {Function} callback function executed if request is successful
  * @param {Function} errorcallback function executed if request is unsuccessful
  */
-export function createFaculty(faculty, callback, errorcallback) {
+export function createFaculty(payload, callback, errorcallback) {
     axios
-        .post(`${API_URL}`, faculty)
+        .post(`${API_URL}`, payload)
         .then(response => {
             callback(response);
         })

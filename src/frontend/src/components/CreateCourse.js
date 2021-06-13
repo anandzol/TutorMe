@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { Button, Form, Card } from 'react-bootstrap';
 import { withStyles } from '@material-ui/styles';
 import '../App.css';
-import axios from 'axios';
+import {
+    getAllUniversitiesSorted,
+    getUniversityFacultiesSorted
+} from '../services/UniversityService';
+import {} from '../services/FacultyService';
+import { createCourse } from '../services/CourseService';
 
 const styles = () => ({
     button_box: {
@@ -44,8 +49,6 @@ const defaultState = {
     errors: []
 };
 
-const SERVER_URL = 'http://localhost:8082/api';
-
 // /components/CreateCourse.js
 class CreateCourse extends Component {
     constructor() {
@@ -54,20 +57,11 @@ class CreateCourse extends Component {
     }
 
     componentDidMount() {
-        axios
-
-            // Get all the available universities to render the available options
-            .get(`${SERVER_URL}/university`)
-            .then(response => {
-                // Sort order of universities alphabetically
-                const universitiesSorted = response.data.sort((a, b) =>
-                    a.name.localeCompare(b.name)
-                );
-
+        getAllUniversitiesSorted(
+            universitiesSorted => {
                 this.setState({
                     availableUniversities: universitiesSorted
                 });
-
                 if (universitiesSorted.length > 0 && universitiesSorted[0].faculties.length > 0) {
                     const availableFacultiesSorted = universitiesSorted[0].faculties.sort((a, b) =>
                         a.name.localeCompare(b.name)
@@ -79,10 +73,11 @@ class CreateCourse extends Component {
                         faculty: availableFacultiesSorted[0]._id
                     });
                 }
-            })
-            .catch(error => {
-                console.log(error);
-            });
+            },
+            error => {
+                console.error(error);
+            }
+        );
     }
 
     onChange = e => {
@@ -100,22 +95,9 @@ class CreateCourse extends Component {
         const universityId = e.target.value;
         this.setState({ [e.target.name]: universityId });
 
-        axios
-            // Get all the available universities to render the available options
-            .get(`${SERVER_URL}/university/${e.target.value}`)
-            .then(response => {
-                let facultiesSorted = [];
-
-                // Sort all universities by their name alphabetically
-                response.data.faculties
-                    .sort((a, b) => a.name.localeCompare(b.name))
-                    .forEach(item => {
-                        facultiesSorted.push({
-                            id: item._id,
-                            name: item.name
-                        });
-                    });
-
+        getUniversityFacultiesSorted(
+            universityId,
+            facultiesSorted => {
                 // Set the selected university to the first displayed university
                 if (facultiesSorted.length > 0) {
                     this.setState({
@@ -128,10 +110,11 @@ class CreateCourse extends Component {
                         availableFaculties: []
                     });
                 }
-            })
-            .catch(error => {
-                console.log(error);
-            });
+            },
+            error => {
+                console.error(error);
+            }
+        );
     };
 
     validateInput() {
@@ -157,16 +140,12 @@ class CreateCourse extends Component {
                 university: this.state.university,
                 faculty: this.state.faculty
             };
-
-            axios
-                .post(`${SERVER_URL}/course`, data)
-                .then(res => {
-                    this.setState(defaultState);
-                    this.props.history.push('/');
-                })
-                .catch(error => {
-                    console.log('Error in Create course');
-                });
+            createCourse(data, () => {
+                this.setState(defaultState);
+                this.props.history.push('/');
+            }).catch(error => {
+                console.error(error);
+            });
         }
     };
 

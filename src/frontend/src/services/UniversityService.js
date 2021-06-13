@@ -109,13 +109,13 @@ export function getUniversityFacultiesSorted(universityId, callback, errorcallba
 
 /**
  * API Endpoint for creating a new university
- * @param {Object} university
+ * @param {Object} payload
  * @param {Function} callback function executed if request is successful
  * @param {Function} errorcallback function executed if request is unsuccessful
  */
-export function createUniversity(university, callback, errorcallback) {
+export function createUniversity(payload, callback, errorcallback) {
     axios
-        .post(`${API_URL}`, university)
+        .post(`${API_URL}`, payload)
         .then(response => {
             if (callback != null) {
                 callback(response);

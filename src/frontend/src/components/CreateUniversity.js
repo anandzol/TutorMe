@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Form, Card } from 'react-bootstrap';
-import axios from 'axios';
 import { createUniversity } from '../services/UniversityService';
 import { withStyles } from '@material-ui/styles';
 
@@ -40,8 +39,6 @@ const styles = () => ({
         paddingBottom: '1rem'
     }
 });
-
-const SERVER_URL = 'http://localhost:8082/api';
 
 // /components/CreateUniversity.js
 class CreateUniversity extends Component {
