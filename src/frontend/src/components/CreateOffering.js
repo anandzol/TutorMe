@@ -120,7 +120,6 @@ const labels = [
     'Enter your hourly wage (€/h)',
     'Description'
 ];
-const SERVER_URL = 'http://localhost:8082/api';
 
 // /components/CreateOferring.js
 class CreateOffering extends Component {
@@ -249,7 +248,6 @@ class CreateOffering extends Component {
                         faculty: availableFacultiesSorted[0]._id
                     });
                 }
-                console.log(universitiesSorted);
             },
             error => {
                 console.error(error);

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Form, Button, Card } from 'react-bootstrap';
-import axios from 'axios';
 import { withStyles } from '@material-ui/styles';
-import { createUniversity, getAllUniversitiesSorted } from '../services/UniversityService';
-
+import { getAllUniversitiesSorted } from '../services/UniversityService';
+import { createFaculty as create } from '../services/FacultyService';
 const defaultState = {
     name: '',
     university: '',
@@ -42,8 +41,6 @@ const styles = () => ({
     }
 });
 
-const SERVER_URL = 'http://localhost:8082/api';
-
 // /components/CreateFaculty.js
 class createFaculty extends Component {
     constructor() {
@@ -52,23 +49,25 @@ class createFaculty extends Component {
     }
 
     componentDidMount() {
-        this.getData();
-        // try {
-        //     const universities = await UniversityService.getAllUniversitiesSorted();
-        //     this.setState({
-        //         universities: universities
-        //     });
-        //     if (universities.length > 0) {
-        //         this.setState({
-        //             university: universities[0]._id
-        //         });
-        //     }
-        // } catch (error) {
-        //     console.error(error);
-        // }
-    }
+        getAllUniversitiesSorted(
+            universitiesSorted => {
+                console.log(universitiesSorted);
+                this.setState({
+                    universities: universitiesSorted
+                });
 
-    async getData() {}
+                console.log(this.state);
+                if (universitiesSorted.length > 0) {
+                    this.setState({
+                        university: universitiesSorted[0]._id
+                    });
+                }
+            },
+            error => {
+                console.error(error);
+            }
+        );
+    }
 
     validateInput() {
         let input = this.state.name;
@@ -102,15 +101,16 @@ class createFaculty extends Component {
                 university: this.state.university
             };
 
-            axios
-                .post(`${SERVER_URL}/faculty`, data)
-                .then(res => {
+            create(
+                data,
+                response => {
                     this.setState(defaultState);
                     this.props.history.push('/');
-                })
-                .catch(error => {
-                    console.log('Error in create faculty');
-                });
+                },
+                error => {
+                    console.error(error);
+                }
+            );
         }
     };
 
@@ -130,7 +130,11 @@ class createFaculty extends Component {
                                         <Form.Control
                                             as="select"
                                             name="university"
-                                            onChange={this.onChange}></Form.Control>
+                                            onChange={this.onChange}>
+                                            {this.state.universities.map((item, _) => (
+                                                <option value={item._id}>{item.name}</option>
+                                            ))}
+                                        </Form.Control>
                                         <Form.Text className="text-muted">
                                             Select the university of the faculty which you would
                                             like to create!
@@ -170,14 +174,6 @@ class createFaculty extends Component {
                                             className={classes.button}
                                             onClick={this.onCancel}>
                                             Cancel
-                                        </Button>
-                                        <Button
-                                            variant="secondary"
-                                            size="lg"
-                                            active
-                                            className={classes.button}
-                                            onClick={this.getData}>
-                                            Test
                                         </Button>
                                     </div>
                                 </Form>
