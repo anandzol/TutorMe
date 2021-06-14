@@ -222,6 +222,8 @@ class CreateOffering extends Component {
         // Set the tutor id to the user which is currently logged in
         const currentUserToken = AuthService.getCurrentUser();
         const currentUserId = parseJwt(currentUserToken)._id;
+
+        // Set the tutor to the current logged in user
         this.setState({ tutorId: currentUserId });
 
         getAllUniversitiesSorted(
@@ -229,6 +231,8 @@ class CreateOffering extends Component {
                 this.setState({
                     availableUniversities: universitiesSorted
                 });
+
+                // Faculties of the first university selected
                 const initialFaculty = universitiesSorted[0].faculties;
                 if (universitiesSorted.length > 0 && initialFaculty.length > 0) {
                     const availableFacultiesSorted = initialFaculty.sort((a, b) =>
@@ -239,9 +243,10 @@ class CreateOffering extends Component {
                     this.setState({
                         university: universitiesSorted[0]._id,
                         availableFaculties: availableFacultiesSorted,
-                        faculty: availableFacultiesSorted[0]._id
+                        faculty: initialFacultyId
                     });
 
+                    // Courses of the first faculty selected
                     const initialCourses = initialFaculty[0].courses;
 
                     if (initialCourses.length > 0) {
@@ -347,6 +352,8 @@ class CreateOffering extends Component {
                                             dateFormat="MMMM d, yyyy h:mm aa"
                                             onChange={this.onChangeDate}></DatePicker>
                                     </div>
+
+                                    {/** Wage Input Form  */}
                                     <div className={classes.numeric_input}>
                                         <NumericInput
                                             className={'form-control'}
@@ -357,6 +364,8 @@ class CreateOffering extends Component {
                                             placeholder={1}
                                         />
                                     </div>
+
+                                    {/** Description Input Form  */}
                                     <div className={classes.numeric_input}>
                                         <Form.Control
                                             as="textarea"
@@ -368,6 +377,7 @@ class CreateOffering extends Component {
                                         />
                                     </div>
                                     <Row className={classes.padding_top}>
+                                        {/** Remote Checkmark */}
                                         <div className="col-sm-4">
                                             <div className={classes.checkmarks_left}>
                                                 <Form.Check
@@ -377,6 +387,8 @@ class CreateOffering extends Component {
                                                 />
                                             </div>
                                         </div>
+
+                                        {/** Onsite Checkmark */}
                                         <div className="col-sm-4">
                                             <div className={classes.checkmarks_left}>
                                                 <Form.Check
