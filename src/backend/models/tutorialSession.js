@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 
 const TutorialSessionSchema = new mongoose.Schema({
-    studentId: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+    studentId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
     tutorId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',

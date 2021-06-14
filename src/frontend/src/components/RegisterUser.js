@@ -127,7 +127,7 @@ class RegisterUser extends Component {
                     this.props.history.push('/home');
                 })
                 .catch(error => {
-                    console.log(error);
+                    console.error(error);
                 });
         }
     };

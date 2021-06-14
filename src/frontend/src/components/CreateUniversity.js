@@ -84,7 +84,7 @@ class CreateUniversity extends Component {
                     this.props.history.push('/home');
                 },
                 error => {
-                    console.log(error);
+                    console.error(error);
                 }
             );
         }

@@ -144,7 +144,6 @@ class CreateTutorialSession extends Component {
     };
 
     onCreate = e => {
-        console.log('create session');
         const payload = {
             university: this.state.university,
             faculty: this.state.faculty,
@@ -160,12 +159,9 @@ class CreateTutorialSession extends Component {
 
         createSession(
             payload,
-            () => {
-                console.log('success');
-            },
+            () => {},
             error => {
-                console.log('error');
-                console.log(error);
+                console.error(error);
             }
         );
     };
