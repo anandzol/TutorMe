@@ -1,8 +1,8 @@
-// models/session.js
+// models/offering.js
 
 const mongoose = require('mongoose');
 
-const SessionSchema = new mongoose.Schema({
+const TutorialSessionSchema = new mongoose.Schema({
     studentId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     tutorId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -34,9 +34,13 @@ const SessionSchema = new mongoose.Schema({
         required: true,
         enum: ['verified', 'pending', 'rejected'],
         default: 'pending'
-    }
+    },
+    url: String
 });
 
 SessionSchema.set('timestamps', true);
 
-module.exports = Session = mongoose.model('session', SessionSchema);
+module.exports = Session = mongoose.model(
+    'tutorialSession',
+    TutorialSessionSchema
+);

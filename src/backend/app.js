@@ -1,5 +1,5 @@
 // app.js
-// Entry point of the backend
+// Entry point of backend
 
 const express = require('express');
 const connectDB = require('./db');

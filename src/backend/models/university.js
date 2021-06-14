@@ -1,4 +1,4 @@
-// /models/University.js
+// /models/university.js
 
 const mongoose = require('mongoose');
 

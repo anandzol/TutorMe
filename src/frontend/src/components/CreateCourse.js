@@ -6,7 +6,6 @@ import {
     getAllUniversitiesSorted,
     getUniversityFacultiesSorted
 } from '../services/UniversityService';
-import {} from '../services/FacultyService';
 import { createCourse } from '../services/CourseService';
 
 const styles = () => ({
@@ -50,6 +49,7 @@ const defaultState = {
 };
 
 // /components/CreateCourse.js
+
 class CreateCourse extends Component {
     constructor() {
         super();
@@ -144,7 +144,7 @@ class CreateCourse extends Component {
                 data,
                 () => {
                     this.setState(defaultState);
-                    this.props.history.push('/');
+                    this.props.history.push('/home');
                 },
                 error => {
                     console.error(error);

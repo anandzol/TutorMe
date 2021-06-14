@@ -100,7 +100,7 @@ class RegisterUser extends Component {
 
     onCancel = e => {
         e.preventDefault();
-        this.props.history.push('');
+        this.props.history.push('/home');
     };
 
     onRegister = e => {
@@ -124,7 +124,7 @@ class RegisterUser extends Component {
                 .post(`${SERVER_URL}/user/register`, data)
                 .then(res => {
                     this.setState(defaultState);
-                    this.props.history.push('/');
+                    this.props.history.push('/home');
                 })
                 .catch(error => {
                     console.log(error);

@@ -42,6 +42,7 @@ const styles = () => ({
 });
 
 // /components/CreateFaculty.js
+
 class createFaculty extends Component {
     constructor() {
         super();
@@ -56,7 +57,6 @@ class createFaculty extends Component {
                     universities: universitiesSorted
                 });
 
-                console.log(this.state);
                 if (universitiesSorted.length > 0) {
                     this.setState({
                         university: universitiesSorted[0]._id
@@ -89,7 +89,7 @@ class createFaculty extends Component {
     };
 
     onCancel = e => {
-        this.props.history.push('/');
+        this.props.history.push('/home');
     };
 
     onSubmit = e => {
@@ -105,7 +105,7 @@ class createFaculty extends Component {
                 data,
                 res => {
                     this.setState(defaultState);
-                    this.props.history.push('/');
+                    this.props.history.push('/home');
                 },
                 error => {
                     console.error(error);

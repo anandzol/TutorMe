@@ -1,7 +1,7 @@
 // routes/controller/faculty.js
+
 const University = require('../../models/university');
 const Faculty = require('../../models/faculty');
-const faculty = require('../../models/faculty');
 
 /**
  * API Controller for creating a new faculty

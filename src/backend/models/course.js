@@ -8,8 +8,8 @@ const CourseSchema = new mongoose.Schema({
         required: true
     },
     faculty: { type: mongoose.Schema.Types.ObjectId, ref: 'faculty' },
-    university: { type: mongoose.Schema.Types.ObjectId, ref: 'faculty' },
-    sessions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'session' }],
+    university: { type: mongoose.Schema.Types.ObjectId, ref: 'university' },
+    offerings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'offering' }],
     program: {
         type: String,
         enumeration: ['bachelor', 'master']

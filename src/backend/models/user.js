@@ -26,9 +26,6 @@ const UserSchema = new mongoose.Schema({
         type: String,
         enum: ['male', 'female', 'undefined']
     },
-
-    // Semester of the student/tutor, can be used for
-    // recommended courses/tutorial sessions
     semester: {
         type: Number,
         min: 1,
@@ -44,8 +41,6 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    // We use the location in order to calculate e.g. distance
-    // towards an onsite tutorial session
     role: {
         type: String,
         enum: ['student', 'tutor', 'admin'],
@@ -54,7 +49,8 @@ const UserSchema = new mongoose.Schema({
     university: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'university'
-    }
+    },
+    offerings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'offering' }]
 });
 
 // adds createdAt, updatedAt properties which are fetched for profile information

@@ -41,6 +41,7 @@ const styles = () => ({
 });
 
 // /components/CreateUniversity.js
+
 class CreateUniversity extends Component {
     constructor() {
         super();
@@ -52,7 +53,7 @@ class CreateUniversity extends Component {
     };
 
     onCancel = e => {
-        this.props.history.push('/');
+        this.props.history.push('/home');
     };
 
     validateInput() {
@@ -80,7 +81,7 @@ class CreateUniversity extends Component {
             createUniversity(
                 data,
                 () => {
-                    this.props.history.push('/');
+                    this.props.history.push('/home');
                 },
                 error => {
                     console.log(error);

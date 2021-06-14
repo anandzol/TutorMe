@@ -2,7 +2,9 @@ import React from 'react';
 import AuthService from '../../services/AuthService';
 import { Redirect, Route } from 'react-router-dom';
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+// components/routes/TutorRoute.js
+
+const TutorRoute = ({ component: Component, ...rest }) => {
     const isTutor = AuthService.isTutor();
 
     return (
@@ -19,4 +21,4 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     );
 };
 
-export default PrivateRoute;
+export default TutorRoute;

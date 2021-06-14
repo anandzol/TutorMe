@@ -3,12 +3,12 @@ import RegisterUser from './components/RegisterUser';
 import HomeScreen from './components/HomeScreen';
 import CreateUniversity from './components/CreateUniversity';
 import CreateFaculty from './components/CreateFaculty';
-import CreateOffering from './components/CreateOffering';
+import CreateTutorialSession from './components/CreateTutorialSession';
 import LoginUser from './components/LoginUser';
 
 const routes = [
     {
-        path: '/',
+        path: '/home',
         component: HomeScreen
     },
     {
@@ -35,8 +35,8 @@ const routes = [
         permission: 'admin'
     },
     {
-        path: '/create-offering',
-        component: CreateOffering,
+        path: '/create-tutorial-session',
+        component: CreateTutorialSession,
         permission: 'admin'
     }
 ];

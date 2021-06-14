@@ -54,28 +54,28 @@ class NavigationBar extends Component {
 
     onLogout() {
         AuthService.logout();
-        this.props.history.push('/');
+        this.props.history.push('/home');
     }
     render() {
         const { classes } = this.props;
         return (
             <Navbar bg="primary" variant="dark">
-                <a href="/">
+                <a href="/home">
                     <img src={graduationIcon} className={classes.logo}></img>
                 </a>
-                <Navbar.Brand className={classes.bar} href="/">
+                <Navbar.Brand className={classes.bar} href="/home">
                     <Row>
                         <div className="col-sm-4">Tutor</div>
                         <div className={`${classes.title} col-sm-0`}>Me</div>
                     </Row>
                 </Navbar.Brand>
                 <Nav>
-                    <a href="/" className={classes.listButton}>
+                    <a href="/home" className={classes.listButton}>
                         List
                     </a>
                 </Nav>
                 <Nav>
-                    <a href="/" className={classes.calendarButton}>
+                    <a href="/home" className={classes.calendarButton}>
                         Calendar
                     </a>
                 </Nav>
@@ -83,9 +83,11 @@ class NavigationBar extends Component {
                     <NavDropdown
                         title={<span className={classes.profileButton__span}>Profile</span>}
                         id="collasible-nav-dropdown">
-                        <NavDropdown.Item href="/">Home</NavDropdown.Item>
+                        <NavDropdown.Item href="/home">Home</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.2">Edit Profile</NavDropdown.Item>
-                        <NavDropdown.Item href="/create-offering">Offer Course</NavDropdown.Item>
+                        <NavDropdown.Item href="/create-tutorial-session">
+                            Offer Session
+                        </NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.4">Manage Course</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="/create-course">Create Course</NavDropdown.Item>

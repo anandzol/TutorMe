@@ -22,13 +22,13 @@ class HomeScreen extends Component {
                         </a>
                     </button>
                     <button>
-                        <a href="/show-offerings" className={classes.button__padding_top}>
-                            Show Offerings
+                        <a href="/show-sessions" className={classes.button__padding_top}>
+                            Show Tutorial Sessions
                         </a>
                     </button>
                     <button>
-                        <a href="create-offering" className={classes.button__padding_top}>
-                            Create Offering
+                        <a href="/create-tutorial-session" className={classes.button__padding_top}>
+                            Create Tutorial Session
                         </a>
                     </button>
                     <button>

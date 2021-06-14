@@ -121,8 +121,9 @@ const labels = [
     'Description'
 ];
 
-// /components/CreateOferring.js
-class CreateOffering extends Component {
+// /components/CreateTutorialSession.js
+
+class CreateTutorialSession extends Component {
     constructor() {
         super();
         this.state = defaultState;
@@ -273,7 +274,7 @@ class CreateOffering extends Component {
         return (
             <div className={classes.component}>
                 <div className={`container ${classes.padding_top}`}>
-                    <h2 className={`${classes.title}`}>Offer Course</h2>
+                    <h2 className={`${classes.title}`}>Create Tutorial Session</h2>
                     <Card className={classes.card}>
                         <Form>
                             <Row>
@@ -430,4 +431,4 @@ class CreateOffering extends Component {
     }
 }
 
-export default withStyles(styles)(CreateOffering);
+export default withStyles(styles)(CreateTutorialSession);

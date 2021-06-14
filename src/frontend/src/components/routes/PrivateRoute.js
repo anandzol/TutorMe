@@ -2,6 +2,8 @@ import React from 'react';
 import AuthService from '../../services/AuthService';
 import { Redirect, Route } from 'react-router-dom';
 
+// components/routes/PrivateRoute.js
+
 const PrivateRoute = ({ component: Component, ...rest }) => {
     const isLoggedIn = AuthService.isLoggedIn();
 

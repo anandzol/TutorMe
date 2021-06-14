@@ -2,7 +2,9 @@ import React from 'react';
 import AuthService from '../../services/AuthService';
 import { Redirect, Route } from 'react-router-dom';
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+// components/routes/AdminRoute.js
+
+const AdminRoute = ({ component: Component, ...rest }) => {
     const isAdmin = AuthService.isAdmin();
 
     return (
@@ -19,4 +21,4 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     );
 };
 
-export default PrivateRoute;
+export default AdminRoute;
