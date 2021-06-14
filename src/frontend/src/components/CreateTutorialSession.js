@@ -11,6 +11,7 @@ import {
     getUniversityFacultiesSorted,
     getAllUniversitiesSorted
 } from '../services/UniversityService';
+import { createSession } from '../services/SessionService';
 
 import { getFacultyCoursesSorted } from '../services/FacultyService';
 // @todo: Refactor api calls to faculty/university service
@@ -98,7 +99,7 @@ const defaultState = {
     university: '',
     faculty: '',
     course: '',
-    wage: 1,
+    price: 1,
     remote: false,
     onsite: false,
     description: '',
@@ -117,7 +118,7 @@ const labels = [
     'Upload CV',
     'Upload relevant course transcripts',
     'Dates/Time offered',
-    'Enter your hourly wage (€/h)',
+    'Enter your hourly price (€/h)',
     'Description'
 ];
 
@@ -132,13 +133,41 @@ class CreateTutorialSession extends Component {
         this.setState({ [e.target.name]: e.target.value });
     };
 
-    onChangeWage = e => {
-        this.setState({ wage: e + 1 });
+    onChangePrice = e => {
+        this.setState({ price: e + 1 });
     };
+
     onChangeDate = e => {
         this.setState({
             date: Date.parse(e)
         });
+    };
+
+    onCreate = e => {
+        console.log('create session');
+        const payload = {
+            university: this.state.university,
+            faculty: this.state.faculty,
+            course: this.state.course,
+            tutorId: this.state.tutorId,
+            description: this.state.description,
+            onsite: this.state.onsite,
+            remote: this.state.remote,
+            date: this.state.date,
+            price: this.state.price,
+            status: 'verified'
+        };
+
+        createSession(
+            payload,
+            () => {
+                console.log('success');
+            },
+            error => {
+                console.log('error');
+                console.log(error);
+            }
+        );
     };
 
     onClickCheckmark = e => {
@@ -354,12 +383,12 @@ class CreateTutorialSession extends Component {
                                             onChange={this.onChangeDate}></DatePicker>
                                     </div>
 
-                                    {/** Wage Input Form  */}
+                                    {/** price Input Form  */}
                                     <div className={classes.numeric_input}>
                                         <NumericInput
                                             className={'form-control'}
-                                            name="wage"
-                                            onChange={this.onChangeWage}
+                                            name="price"
+                                            onChange={this.onChangePrice}
                                             min={1}
                                             max={100}
                                             placeholder={1}
@@ -409,7 +438,7 @@ class CreateTutorialSession extends Component {
                                     size="lg"
                                     active
                                     className={classes.button}
-                                    onClick={this.onClick}>
+                                    onClick={this.onCreate}>
                                     Register
                                 </Button>
 

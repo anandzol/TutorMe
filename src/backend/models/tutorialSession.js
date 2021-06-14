@@ -3,10 +3,10 @@
 const mongoose = require('mongoose');
 
 const TutorialSessionSchema = new mongoose.Schema({
-    studentId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    studentId: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
     tutorId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'user',
         required: true
     },
     course: {
@@ -32,15 +32,14 @@ const TutorialSessionSchema = new mongoose.Schema({
     status: {
         type: String,
         required: true,
-        enum: ['verified', 'pending', 'rejected'],
-        default: 'pending'
+        enum: ['verified', 'pending', 'rejected']
     },
     url: String
 });
 
-SessionSchema.set('timestamps', true);
+TutorialSessionSchema.set('timestamps', true);
 
-module.exports = Session = mongoose.model(
+module.exports = TutorialSession = mongoose.model(
     'tutorialSession',
     TutorialSessionSchema
 );

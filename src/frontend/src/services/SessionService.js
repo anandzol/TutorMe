@@ -11,11 +11,11 @@ const API_URL = `${SERVER_API}/session`;
  */
 export function createSession(payload, callback, errorcallback) {
     axios
-        .post(`${API_URL}, payload`)
+        .post(`${API_URL}/`, payload)
         .then(response => {
             callback(response);
         })
         .catch(error => {
-            errorcallback(response);
+            errorcallback(error);
         });
 }

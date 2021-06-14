@@ -11,6 +11,7 @@ const courses = require('./routes/api/course');
 const users = require('./routes/api/user');
 const universities = require('./routes/api/university');
 const faculties = require('./routes/api/faculty');
+const tutorialSessions = require('./routes/api/tutorialSession');
 connectDB();
 
 // Cors
@@ -26,7 +27,7 @@ app.use('/api/course', courses);
 app.use('/api/user', users);
 app.use('/api/university', universities);
 app.use('/api/faculty', faculties);
-
+app.use('/api/session', tutorialSessions);
 const port = process.env.PORT || 8082;
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
