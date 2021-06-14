@@ -103,7 +103,7 @@ class createFaculty extends Component {
 
             create(
                 data,
-                response => {
+                res => {
                     this.setState(defaultState);
                     this.props.history.push('/');
                 },

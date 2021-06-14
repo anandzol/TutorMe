@@ -38,11 +38,19 @@ export function getAllUniversitiesSorted(callback, errorcallback) {
 
             let universitiesSorted = [];
             data.sort((a, b) => a.name.localeCompare(b.name)).forEach(item => {
+                let coursesSorted = [];
+
+                item.courses
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .forEach(item => {
+                        coursesSorted.push(item);
+                    });
+
                 universitiesSorted.push({
                     _id: item._id,
                     name: item.name,
                     faculties: item.faculties,
-                    courses: item.courses
+                    courses: coursesSorted
                 });
             });
 
