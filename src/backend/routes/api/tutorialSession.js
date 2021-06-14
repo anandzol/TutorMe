@@ -32,14 +32,11 @@ router.get('/', (req, res) => {
  * @access Public
  */
 router.post('/', (req, res) => {
-    console.log(req.body);
     TutorialSession.create(req.body)
         .then(response => {
-            console.log(response);
             res.json({ message: 'Session created successfully' });
         })
         .catch(error => {
-            console.log(error);
             res.status(400).json({ message: error });
         });
 });

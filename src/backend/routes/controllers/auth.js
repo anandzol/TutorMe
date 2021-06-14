@@ -92,7 +92,6 @@ const register = async (req, res) => {
         let user = req.body;
         user.password = hashedPassword;
 
-        console.log(user);
         let retUser = await User.create(user);
 
         const token = jwt.sign(
