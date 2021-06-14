@@ -9,7 +9,13 @@ const University = require('../../models/university');
  */
 const getByName = (req, res) => {
     University.findOne({ name: req.params.name })
-        .populate('faculties', 'courses')
+        .populate({
+            path: 'faculties',
+            populate: {
+                path: 'courses'
+            }
+        })
+        .sort({ name: 1 })
         .then(uni => {
             res.json(uni);
         })
@@ -29,7 +35,13 @@ const getByName = (req, res) => {
  */
 const getFaculties = (req, res) => {
     University.findOne({ name: req.params.name })
-        .populate('faculties', 'courses')
+        .populate({
+            path: 'faculties',
+            populate: {
+                path: 'courses'
+            }
+        })
+        .sort({ name: 1 })
         .then(uni => {
             res.json(uni.faculties);
         })
@@ -49,7 +61,13 @@ const getFaculties = (req, res) => {
  */
 const getCourses = (req, res) => {
     University.findOne({ name: req.params.name })
-        .populate('faculties', 'courses')
+        .populate({
+            path: 'faculties',
+            populate: {
+                path: 'courses'
+            }
+        })
+        .sort({ name: 1 })
         .then(uni => {
             res.json(uni.courses);
         })

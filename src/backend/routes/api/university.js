@@ -18,7 +18,13 @@ router.get('/test', (req, res) => res.send('university route testing!'));
  */
 router.get('/', (req, res) => {
     University.find()
-        .populate('faculties courses')
+        .populate({
+            path: 'faculties courses',
+            populate: {
+                path: 'courses'
+            }
+        })
+        .sort({ name: 1 })
         .then(universities => res.json(universities))
         .catch(error =>
             res.status(404).json({
@@ -35,7 +41,13 @@ router.get('/', (req, res) => {
  */
 router.get('/:id', (req, res) => {
     University.findById(req.params.id)
-        .populate('faculties courses')
+        .populate({
+            path: 'faculties courses',
+            populate: {
+                path: 'courses'
+            }
+        })
+        .sort({ name: 1 })
         .then(course => res.json(course))
         .catch(error =>
             res

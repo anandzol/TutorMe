@@ -93,9 +93,17 @@ export function getUniversityFacultiesSorted(universityId, callback, errorcallba
             faculties
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .forEach(item => {
+                    let coursesSorted = [];
+                    item.courses
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .forEach(item => {
+                            coursesSorted.push(item);
+                        });
+
                     facultiesSorted.push({
                         _id: item._id,
-                        name: item.name
+                        name: item.name,
+                        courses: coursesSorted
                     });
                 });
 

@@ -2,12 +2,175 @@
     {
         "faculties": [
             {
+                "courses": [],
+                "_id": "60c16919e9f9407d74ff4158",
+                "name": "Mechanical Engineering",
+                "university": "60bff033a5e1000beeddb390",
+                "__v": 0
+            },
+            {
+                "courses": [],
+                "_id": "60c1692be9f9407d74ff415a",
+                "name": "Economics",
+                "university": "60bff033a5e1000beeddb390",
+                "__v": 0
+            },
+            {
+                "courses": [],
+                "_id": "60c1693be9f9407d74ff415b",
+                "name": "Chemistry",
+                "university": "60bff033a5e1000beeddb390",
+                "__v": 0
+            },
+            {
                 "courses": [
-                    "60c16d51e9f9407d74ff415d",
-                    "60c3a46a170d455c220bb865",
-                    "60c3a473170d455c220bb866",
-                    "60c3a47e170d455c220bb867",
-                    "60c3b4f0b7175569638aa86a"
+                    {
+                        "sessions": [],
+                        "_id": "60c3ad8bb7175569638aa85f",
+                        "name": "Intro to Biology 1",
+                        "university": "60bff033a5e1000beeddb390",
+                        "faculty": "60c170f1e9f9407d74ff4160",
+                        "createdAt": "2021-06-11T18:38:03.378Z",
+                        "updatedAt": "2021-06-11T18:38:03.378Z",
+                        "__v": 0
+                    },
+                    {
+                        "sessions": [],
+                        "_id": "60c3ad94b7175569638aa862",
+                        "name": "Intro to Biology 2",
+                        "university": "60bff033a5e1000beeddb390",
+                        "faculty": "60c170f1e9f9407d74ff4160",
+                        "createdAt": "2021-06-11T18:38:12.374Z",
+                        "updatedAt": "2021-06-11T18:38:12.374Z",
+                        "__v": 0
+                    },
+                    {
+                        "sessions": [],
+                        "_id": "60c5a1cac0adb4184aa5d8b1",
+                        "name": "Intro to Molecular Biology ",
+                        "university": "60bff033a5e1000beeddb390",
+                        "faculty": "60c170f1e9f9407d74ff4160",
+                        "createdAt": "2021-06-13T06:12:26.464Z",
+                        "updatedAt": "2021-06-13T06:12:26.464Z",
+                        "__v": 0
+                    }
+                ],
+                "_id": "60c170f1e9f9407d74ff4160",
+                "name": "Biology",
+                "university": "60bff033a5e1000beeddb390",
+                "__v": 5
+            }
+        ],
+        "courses": [
+            {
+                "sessions": [],
+                "_id": "60c3ad8bb7175569638aa85f",
+                "name": "Intro to Biology 1",
+                "university": "60bff033a5e1000beeddb390",
+                "faculty": "60c170f1e9f9407d74ff4160",
+                "createdAt": "2021-06-11T18:38:03.378Z",
+                "updatedAt": "2021-06-11T18:38:03.378Z",
+                "__v": 0
+            },
+            {
+                "sessions": [],
+                "_id": "60c3ad94b7175569638aa862",
+                "name": "Intro to Biology 2",
+                "university": "60bff033a5e1000beeddb390",
+                "faculty": "60c170f1e9f9407d74ff4160",
+                "createdAt": "2021-06-11T18:38:12.374Z",
+                "updatedAt": "2021-06-11T18:38:12.374Z",
+                "__v": 0
+            },
+            {
+                "sessions": [],
+                "_id": "60c5a1cac0adb4184aa5d8b1",
+                "name": "Intro to Molecular Biology ",
+                "university": "60bff033a5e1000beeddb390",
+                "faculty": "60c170f1e9f9407d74ff4160",
+                "createdAt": "2021-06-13T06:12:26.464Z",
+                "updatedAt": "2021-06-13T06:12:26.464Z",
+                "__v": 0
+            }
+        ],
+        "_id": "60bff033a5e1000beeddb390",
+        "name": "Hochschule München",
+        "__v": 9
+    },
+    {
+        "faculties": [],
+        "courses": [],
+        "_id": "60bff022a5e1000beeddb38f",
+        "name": "Ludwig Maximilian University Munich"
+    },
+    {
+        "faculties": [],
+        "courses": [],
+        "_id": "60c583ecc0adb4184aa5d8ad",
+        "name": "RWTH Aachen University",
+        "__v": 0
+    },
+    {
+        "faculties": [],
+        "courses": [],
+        "_id": "60c57628c0adb4184aa5d8aa",
+        "name": "Technical University Berlin",
+        "__v": 0
+    },
+    {
+        "faculties": [
+            {
+                "courses": [
+                    {
+                        "sessions": [],
+                        "_id": "60c16d51e9f9407d74ff415d",
+                        "name": "Intro to Quantum Computing",
+                        "university": "60bff011a5e1000beeddb38e",
+                        "faculty": "60c0448238411203bc1ad5dd",
+                        "createdAt": "2021-06-10T01:39:29.436Z",
+                        "updatedAt": "2021-06-10T01:39:29.436Z",
+                        "__v": 0
+                    },
+                    {
+                        "sessions": [],
+                        "_id": "60c3a46a170d455c220bb865",
+                        "name": "Intro to Informatics 1",
+                        "university": "60bff011a5e1000beeddb38e",
+                        "faculty": "60c0448238411203bc1ad5dd",
+                        "createdAt": "2021-06-11T17:59:06.124Z",
+                        "updatedAt": "2021-06-11T17:59:06.124Z",
+                        "__v": 0
+                    },
+                    {
+                        "sessions": [],
+                        "_id": "60c3a473170d455c220bb866",
+                        "name": "Intro to Informatics 2",
+                        "university": "60bff011a5e1000beeddb38e",
+                        "faculty": "60c0448238411203bc1ad5dd",
+                        "createdAt": "2021-06-11T17:59:15.075Z",
+                        "updatedAt": "2021-06-11T17:59:15.075Z",
+                        "__v": 0
+                    },
+                    {
+                        "sessions": [],
+                        "_id": "60c3a47e170d455c220bb867",
+                        "name": "Intro to Computer Architecture ",
+                        "university": "60bff011a5e1000beeddb38e",
+                        "faculty": "60c0448238411203bc1ad5dd",
+                        "createdAt": "2021-06-11T17:59:26.138Z",
+                        "updatedAt": "2021-06-11T17:59:26.138Z",
+                        "__v": 0
+                    },
+                    {
+                        "sessions": [],
+                        "_id": "60c3b4f0b7175569638aa86a",
+                        "name": "Intro to Software Engineering",
+                        "university": "60bff011a5e1000beeddb38e",
+                        "faculty": "60c0448238411203bc1ad5dd",
+                        "createdAt": "2021-06-11T19:09:36.415Z",
+                        "updatedAt": "2021-06-11T19:09:36.415Z",
+                        "__v": 0
+                    }
                 ],
                 "_id": "60c0448238411203bc1ad5dd",
                 "name": "Informatics",
@@ -16,11 +179,56 @@
             },
             {
                 "courses": [
-                    "60c3adadb7175569638aa863",
-                    "60c3adb5b7175569638aa865",
-                    "60c3adbeb7175569638aa866",
-                    "60c3adc5b7175569638aa867",
-                    "60c3adccb7175569638aa868"
+                    {
+                        "sessions": [],
+                        "_id": "60c3adadb7175569638aa863",
+                        "name": "Linear Algebra 1",
+                        "university": "60bff011a5e1000beeddb38e",
+                        "faculty": "60c1741ae9f9407d74ff4161",
+                        "createdAt": "2021-06-11T18:38:37.285Z",
+                        "updatedAt": "2021-06-11T18:38:37.285Z",
+                        "__v": 0
+                    },
+                    {
+                        "sessions": [],
+                        "_id": "60c3adb5b7175569638aa865",
+                        "name": "Linear Algebra 2",
+                        "university": "60bff011a5e1000beeddb38e",
+                        "faculty": "60c1741ae9f9407d74ff4161",
+                        "createdAt": "2021-06-11T18:38:45.697Z",
+                        "updatedAt": "2021-06-11T18:38:45.697Z",
+                        "__v": 0
+                    },
+                    {
+                        "sessions": [],
+                        "_id": "60c3adbeb7175569638aa866",
+                        "name": "Calculus 1",
+                        "university": "60bff011a5e1000beeddb38e",
+                        "faculty": "60c1741ae9f9407d74ff4161",
+                        "createdAt": "2021-06-11T18:38:54.311Z",
+                        "updatedAt": "2021-06-11T18:38:54.311Z",
+                        "__v": 0
+                    },
+                    {
+                        "sessions": [],
+                        "_id": "60c3adc5b7175569638aa867",
+                        "name": "Calculus 2",
+                        "university": "60bff011a5e1000beeddb38e",
+                        "faculty": "60c1741ae9f9407d74ff4161",
+                        "createdAt": "2021-06-11T18:39:01.526Z",
+                        "updatedAt": "2021-06-11T18:39:01.526Z",
+                        "__v": 0
+                    },
+                    {
+                        "sessions": [],
+                        "_id": "60c3adccb7175569638aa868",
+                        "name": "Calculus 3",
+                        "university": "60bff011a5e1000beeddb38e",
+                        "faculty": "60c1741ae9f9407d74ff4161",
+                        "createdAt": "2021-06-11T18:39:08.581Z",
+                        "updatedAt": "2021-06-11T18:39:08.581Z",
+                        "__v": 0
+                    }
                 ],
                 "_id": "60c1741ae9f9407d74ff4161",
                 "name": "Math",
@@ -36,9 +244,16 @@
             },
             {
                 "courses": [
-                    "60c5a344c0adb4184aa5d8b6",
-                    "60c5a37fc0adb4184aa5d8b8",
-                    "60c5a44ac0adb4184aa5d8b9"
+                    {
+                        "sessions": [],
+                        "_id": "60c5a44ac0adb4184aa5d8b9",
+                        "name": "Intro to Signal Processing",
+                        "university": "60bff011a5e1000beeddb38e",
+                        "faculty": "60c59c40c0adb4184aa5d8b0",
+                        "createdAt": "2021-06-13T06:23:06.930Z",
+                        "updatedAt": "2021-06-13T06:23:06.930Z",
+                        "__v": 0
+                    }
                 ],
                 "_id": "60c59c40c0adb4184aa5d8b0",
                 "name": "Electrical Engineering",
@@ -183,105 +398,6 @@
     {
         "faculties": [],
         "courses": [],
-        "_id": "60bff022a5e1000beeddb38f",
-        "name": "Ludwig Maximilian University Munich"
-    },
-    {
-        "faculties": [
-            {
-                "courses": [],
-                "_id": "60c16919e9f9407d74ff4158",
-                "name": "Mechanical Engineering",
-                "university": "60bff033a5e1000beeddb390",
-                "__v": 0
-            },
-            {
-                "courses": [],
-                "_id": "60c1692be9f9407d74ff415a",
-                "name": "Economics",
-                "university": "60bff033a5e1000beeddb390",
-                "__v": 0
-            },
-            {
-                "courses": [],
-                "_id": "60c1693be9f9407d74ff415b",
-                "name": "Chemistry",
-                "university": "60bff033a5e1000beeddb390",
-                "__v": 0
-            },
-            {
-                "courses": [
-                    "60c3ad8bb7175569638aa85f",
-                    "60c3ad94b7175569638aa862",
-                    "60c5a1cac0adb4184aa5d8b1",
-                    "60c5a216c0adb4184aa5d8b2",
-                    "60c5a227c0adb4184aa5d8b3"
-                ],
-                "_id": "60c170f1e9f9407d74ff4160",
-                "name": "Biology",
-                "university": "60bff033a5e1000beeddb390",
-                "__v": 5
-            }
-        ],
-        "courses": [
-            {
-                "sessions": [],
-                "_id": "60c3ad8bb7175569638aa85f",
-                "name": "Intro to Biology 1",
-                "university": "60bff033a5e1000beeddb390",
-                "faculty": "60c170f1e9f9407d74ff4160",
-                "createdAt": "2021-06-11T18:38:03.378Z",
-                "updatedAt": "2021-06-11T18:38:03.378Z",
-                "__v": 0
-            },
-            {
-                "sessions": [],
-                "_id": "60c3ad94b7175569638aa862",
-                "name": "Intro to Biology 2",
-                "university": "60bff033a5e1000beeddb390",
-                "faculty": "60c170f1e9f9407d74ff4160",
-                "createdAt": "2021-06-11T18:38:12.374Z",
-                "updatedAt": "2021-06-11T18:38:12.374Z",
-                "__v": 0
-            },
-            {
-                "sessions": [],
-                "_id": "60c5a1cac0adb4184aa5d8b1",
-                "name": "Intro to Molecular Biology ",
-                "university": "60bff033a5e1000beeddb390",
-                "faculty": "60c170f1e9f9407d74ff4160",
-                "createdAt": "2021-06-13T06:12:26.464Z",
-                "updatedAt": "2021-06-13T06:12:26.464Z",
-                "__v": 0
-            },
-            {
-                "sessions": [],
-                "_id": "60c5a216c0adb4184aa5d8b2",
-                "name": "Intro to Biology",
-                "university": "60bff033a5e1000beeddb390",
-                "faculty": "60c170f1e9f9407d74ff4160",
-                "createdAt": "2021-06-13T06:13:42.261Z",
-                "updatedAt": "2021-06-13T06:13:42.261Z",
-                "__v": 0
-            },
-            {
-                "sessions": [],
-                "_id": "60c5a227c0adb4184aa5d8b3",
-                "name": "Test",
-                "university": "60bff033a5e1000beeddb390",
-                "faculty": "60c170f1e9f9407d74ff4160",
-                "createdAt": "2021-06-13T06:13:59.588Z",
-                "updatedAt": "2021-06-13T06:13:59.588Z",
-                "__v": 0
-            }
-        ],
-        "_id": "60bff033a5e1000beeddb390",
-        "name": "Hochschule München",
-        "__v": 9
-    },
-    {
-        "faculties": [],
-        "courses": [],
         "_id": "60bfff4c148f60d402d3b006",
         "name": "University of Augsburg",
         "__v": 0
@@ -289,8 +405,8 @@
     {
         "faculties": [],
         "courses": [],
-        "_id": "60c57628c0adb4184aa5d8aa",
-        "name": "Technical University Berlin",
+        "_id": "60c58439c0adb4184aa5d8ae",
+        "name": "University of Regensburg",
         "__v": 0
     },
     {
@@ -298,20 +414,6 @@
         "courses": [],
         "_id": "60c5838ec0adb4184aa5d8ab",
         "name": "University of Stuttgart",
-        "__v": 0
-    },
-    {
-        "faculties": [],
-        "courses": [],
-        "_id": "60c583ecc0adb4184aa5d8ad",
-        "name": "RWTH Aachen University",
-        "__v": 0
-    },
-    {
-        "faculties": [],
-        "courses": [],
-        "_id": "60c58439c0adb4184aa5d8ae",
-        "name": "University of Regensburg",
         "__v": 0
     }
 ]
