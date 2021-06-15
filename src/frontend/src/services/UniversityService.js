@@ -71,7 +71,7 @@ export function getAllUniversitiesSorted(callback, errorcallback) {
  * @param {Function} callback function executed if request is successful
  * @param {Function} errorcallback function executed if request is unsuccessful
  */
-export function getUniversityFaculties(universityId, callback, errorcallback) {
+export function getUniversityById(universityId, callback, errorcallback) {
     axios
         .get(`${API_URL}/${universityId}`)
         .then(response => {

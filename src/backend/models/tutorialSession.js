@@ -14,6 +14,16 @@ const TutorialSessionSchema = new mongoose.Schema({
         ref: 'course',
         required: true
     },
+    university: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'university',
+        required: true
+    },
+    faculty: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'faculty',
+        required: true
+    },
     date: Date,
     duration: {
         type: Number,

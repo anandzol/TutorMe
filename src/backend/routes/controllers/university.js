@@ -5,7 +5,7 @@ const University = require('../../models/university');
 /**
  * API Controller for fetching a new university by its name
  * @param {Object} req
- * @param {*} res
+ * @param {Object} res
  * @returns
  */
 const getByName = (req, res) => {

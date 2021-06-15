@@ -42,9 +42,26 @@ export function getAllSessions(callback, errorcallback) {
  * @param {*} callback
  * @param {*} errorcallback
  */
-export function getAllSessionsByUniversity(payload, callback, errorcallback) {
+export function getAllSessionsByUniversity(universityId, callback, errorcallback) {
     axios
-        .get(`${API_URL}/university/${payload}`)
+        .get(`${API_URL}/university/${universityId}`)
+        .then(response => {
+            callback(response);
+        })
+        .catch(error => {
+            errorcallback(error);
+        });
+}
+
+/**
+ * API Endpoint for getting all verified sessions of a university
+ * @param {*} payload
+ * @param {*} callback
+ * @param {*} errorcallback
+ */
+export function getAllVerifiedSessionsByUniversity(universityId, callback, errorcallback) {
+    axios
+        .get(`${API_URL}/verified/university/${universityId}`)
         .then(response => {
             callback(response);
         })
