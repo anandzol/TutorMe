@@ -44,16 +44,6 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const defaultState = {
-    selectedFilters: [],
-    allSessions: [],
-    displayedSessions: [],
-    faculties: [],
-    selectedFaculty: '',
-    courses: [],
-    selectedCourses: []
-};
-
 const ShowTutorialSessions = () => {
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [allSessions, setAllSessions] = useState([]);
