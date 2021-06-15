@@ -22,8 +22,8 @@ export function createSession(payload, callback, errorcallback) {
 
 /**
  * API Endpoint for getting all available sessions
- * @param {Function} callback
- * @param {Function} errorcallback
+ * @param {Function} callback function executed if request is successful
+ * @param {Function} errorcallback function executed if request is unsuccessful
  */
 export function getAllSessions(callback, errorcallback) {
     axios
@@ -38,9 +38,9 @@ export function getAllSessions(callback, errorcallback) {
 
 /**
  * API Endpoint for getting all sessions of a university
- * @param {*} payload
- * @param {*} callback
- * @param {*} errorcallback
+ * @param {String} payload id of the university
+ * @param {Function} callback function executed if request is successful
+ * @param {Function} errorcallback function executed if request is unsuccessful
  */
 export function getAllSessionsByUniversity(universityId, callback, errorcallback) {
     axios
@@ -55,9 +55,9 @@ export function getAllSessionsByUniversity(universityId, callback, errorcallback
 
 /**
  * API Endpoint for getting all verified sessions of a university
- * @param {*} payload
- * @param {*} callback
- * @param {*} errorcallback
+ * @param {String} payload
+ * @param {Function} callback
+ * @param {Function} errorcallback
  */
 export function getAllVerifiedSessionsByUniversity(universityId, callback, errorcallback) {
     axios
