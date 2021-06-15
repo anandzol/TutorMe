@@ -164,6 +164,8 @@ class CreateTutorialSession extends Component {
                 console.error(error);
             }
         );
+
+        this.props.history.push('/home');
     };
 
     onClickCheckmark = e => {

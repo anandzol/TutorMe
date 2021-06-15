@@ -42,7 +42,6 @@ const styles = () => ({
 });
 
 // /components/CreateFaculty.js
-
 class createFaculty extends Component {
     constructor() {
         super();
@@ -52,7 +51,6 @@ class createFaculty extends Component {
     componentDidMount() {
         getAllUniversitiesSorted(
             universitiesSorted => {
-                console.log(universitiesSorted);
                 this.setState({
                     universities: universitiesSorted
                 });

@@ -11,7 +11,40 @@ const API_URL = `${SERVER_API}/session`;
  */
 export function createSession(payload, callback, errorcallback) {
     axios
-        .post(`${API_URL}/`, payload)
+        .post(API_URL, payload)
+        .then(response => {
+            callback(response);
+        })
+        .catch(error => {
+            errorcallback(error);
+        });
+}
+
+/**
+ * API Endpoint for getting all available sessions
+ * @param {Function} callback
+ * @param {Function} errorcallback
+ */
+export function getAllSessions(callback, errorcallback) {
+    axios
+        .get(API_URL)
+        .then(response => {
+            callback(response);
+        })
+        .catch(error => {
+            errorcallback(error);
+        });
+}
+
+/**
+ * API Endpoint for getting all sessions of a university
+ * @param {*} payload
+ * @param {*} callback
+ * @param {*} errorcallback
+ */
+export function getAllSessionsByUniversity(payload, callback, errorcallback) {
+    axios
+        .get(`${API_URL}/university/${payload}`)
         .then(response => {
             callback(response);
         })

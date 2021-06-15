@@ -1,0 +1,77 @@
+[
+    {
+        "studentId": [],
+        "_id": "60c6dc998471fc98133611ae",
+        "course": {
+            "offerings": [],
+            "_id": "60c3a46a170d455c220bb865",
+            "sessions": [],
+            "name": "Intro to Informatics 1",
+            "university": "60bff011a5e1000beeddb38e",
+            "faculty": "60c0448238411203bc1ad5dd",
+            "createdAt": "2021-06-11T17:59:06.124Z",
+            "updatedAt": "2021-06-11T17:59:06.124Z",
+            "__v": 0
+        },
+        "tutorId": "60c3ca689e6ee792973a8306",
+        "description": "test",
+        "onsite": true,
+        "remote": true,
+        "date": "2021-06-14T04:35:28.396Z",
+        "price": 11,
+        "status": "verified",
+        "createdAt": "2021-06-14T04:35:37.965Z",
+        "updatedAt": "2021-06-14T04:35:37.965Z",
+        "__v": 0
+    },
+    {
+        "studentId": [],
+        "_id": "60c82dd59c6306038125b902",
+        "course": {
+            "offerings": [],
+            "_id": "60c3a46a170d455c220bb865",
+            "sessions": [],
+            "name": "Intro to Informatics 1",
+            "university": "60bff011a5e1000beeddb38e",
+            "faculty": "60c0448238411203bc1ad5dd",
+            "createdAt": "2021-06-11T17:59:06.124Z",
+            "updatedAt": "2021-06-11T17:59:06.124Z",
+            "__v": 0
+        },
+        "tutorId": "60c3ca689e6ee792973a8306",
+        "description": "Lorem impsum",
+        "onsite": true,
+        "remote": true,
+        "date": "2021-06-15T04:34:16.335Z",
+        "price": 21,
+        "status": "verified",
+        "createdAt": "2021-06-15T04:34:29.114Z",
+        "updatedAt": "2021-06-15T04:34:29.114Z",
+        "__v": 0
+    },
+    {
+        "studentId": [],
+        "_id": "60c82e149c6306038125b903",
+        "course": {
+            "offerings": [],
+            "_id": "60c3a473170d455c220bb866",
+            "sessions": [],
+            "name": "Intro to Informatics 2",
+            "university": "60bff011a5e1000beeddb38e",
+            "faculty": "60c0448238411203bc1ad5dd",
+            "createdAt": "2021-06-11T17:59:15.075Z",
+            "updatedAt": "2021-06-11T17:59:15.075Z",
+            "__v": 0
+        },
+        "tutorId": "60c3ca689e6ee792973a8306",
+        "description": "Hello World",
+        "onsite": false,
+        "remote": false,
+        "date": "2021-06-15T04:35:21.254Z",
+        "price": 21,
+        "status": "verified",
+        "createdAt": "2021-06-15T04:35:32.824Z",
+        "updatedAt": "2021-06-15T04:35:32.824Z",
+        "__v": 0
+    }
+]

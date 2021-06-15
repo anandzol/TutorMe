@@ -5,7 +5,7 @@ import CreateUniversity from './components/CreateUniversity';
 import CreateFaculty from './components/CreateFaculty';
 import CreateTutorialSession from './components/CreateTutorialSession';
 import LoginUser from './components/LoginUser';
-
+import ShowTutorialSessions from './components/ShowTutorialSessions';
 const routes = [
     {
         path: '/home',
@@ -38,6 +38,10 @@ const routes = [
         path: '/create-tutorial-session',
         component: CreateTutorialSession,
         permission: 'admin'
+    },
+    {
+        path: '/show-sessions',
+        component: ShowTutorialSessions
     }
 ];
 
