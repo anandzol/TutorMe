@@ -79,6 +79,9 @@ export function getUniversityById(universityId, callback, errorcallback) {
             response.data.faculties.forEach(item => {
                 item.courses.sort((a, b) => a.name.localeCompare(b.name));
             });
+
+            // Sort order of faculties by name alphabetically
+            response.data.faculties.sort((a, b) => a.name.localeCompare(b.name));
             if (callback != null) {
                 callback(response);
             }
