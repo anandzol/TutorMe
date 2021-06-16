@@ -1,23 +1,20 @@
 import { withStyles } from '@material-ui/styles';
 import React, { Component, useEffect, useState } from 'react';
-import { Row, Col, Card } from 'react-bootstrap/';
+import { Row, Col, Card, Form } from 'react-bootstrap/';
 import SearchField from 'react-search-field';
-import TreeView from '@material-ui/lab/TreeView';
-import TreeItem from '@material-ui/lab/TreeItem';
+import { TreeView, TreeItem, Rating } from '@material-ui/lab/';
 import { makeStyles } from '@material-ui/styles';
 import { getUniversityById } from '../services/UniversityService';
 import { getAllVerifiedSessionsByUniversity } from '../services/SessionService';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { FormControlLabel, Checkbox } from '@material-ui/core/';
+import { CheckBoxIcon, CheckBoxOutlineBlankIcon } from '@material-ui/icons/';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Slider, Grid, FormGroup, Typography } from '@material-ui/core/';
+import DatePicker from 'react-datepicker';
 const useStyles = makeStyles(theme => ({
     component: {
-        paddingTop: '2rem',
+        paddingTop: '3rem',
         paddingLeft: '1rem'
     },
     treepane: {
@@ -68,11 +65,42 @@ const useStyles = makeStyles(theme => ({
         overflowY: 'scroll',
         overflowX: 'hidden'
     },
-    cardWrapper: {
+    card_wrapper: {
         paddingLeft: '1.5rem'
+    },
+    slider: {
+        width: 200,
+        paddingTop: '1rem'
+    },
+    ratingFilter: {
+        paddingTop: '0.4rem'
+    },
+    ratingFilter_wrapper: {
+        width: '10rem'
+    },
+    filterCol: {
+        paddingTop: '2rem'
+    },
+    datePicker: {
+        paddingTop: '2rem',
+        borderColor: '#ced4da'
     }
 }));
 
+function valuetext(value) {
+    return `${value}€`;
+}
+
+const marks = [
+    {
+        value: 1,
+        label: '1€'
+    },
+    {
+        value: 50,
+        label: '50€'
+    }
+];
 const ShowTutorialSessions = () => {
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [allSessions, setAllSessions] = useState([]);
@@ -81,6 +109,9 @@ const ShowTutorialSessions = () => {
     const [courses, setCourses] = useState([]);
     const [selectedCourses, setSelectedCourses] = useState({});
     const [selectedFaculty, setSelectedFaculty] = useState('');
+    const [price, setPriceFilter] = useState([1, 50]);
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
 
     // For development purposes, will need to be either fetched dynamically by user/ passed on by props of hoc
     const [university, setUniversity] = useState('60bff011a5e1000beeddb38e');
@@ -129,10 +160,20 @@ const ShowTutorialSessions = () => {
         setSelectedCourses({ ...selectedCourses, [e.target.name]: e.target.checked });
     };
 
+    const onChangeSlider = (e, newValue) => {
+        setPriceFilter(newValue);
+    };
+
+    const onChangeDate = dates => {
+        const [start, end] = dates;
+        setStartDate(start);
+        setEndDate(end);
+    };
+
     const classes = useStyles();
     return (
         <Row className={classes.component}>
-            <Col xs={3} className="col">
+            <Col xs={3} className={`col ${classes.filterCol}`}>
                 <div className={classes.searchField}>
                     <SearchField
                         placeholder="Search..."
@@ -141,7 +182,7 @@ const ShowTutorialSessions = () => {
                         classNames={classes.searchField}
                     />
                 </div>
-                <div className={classes.cardWrapper}>
+                <div className={classes.card_wrapper}>
                     <Card className={classes.card}>
                         <TreeView
                             onNodeSelect={onToggleNode}
@@ -187,6 +228,86 @@ const ShowTutorialSessions = () => {
                             })}
                         </TreeView>
                     </Card>
+                </div>
+            </Col>
+            <Col xs={8}>
+                <div>
+                    <Grid container spacing={4}>
+                        <Grid item xs={2}>
+                            <Typography id="range-slider" gutterBottom>
+                                Price range
+                            </Typography>
+                            <Slider
+                                value={price}
+                                min={1}
+                                max={50}
+                                name="price"
+                                valueLabelDisplay="auto"
+                                marks={marks}
+                                onChange={onChangeSlider}
+                                aria-labelledby="range-slider"
+                                getAriaValueText={valuetext}
+                                className={classes.slider}
+                            />
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Typography id="range-slider" gutterBottom>
+                                Minimum Rating
+                            </Typography>
+                            <Card className={classes.ratingFilter_wrapper}>
+                                <Rating
+                                    name="size-large"
+                                    defaultValue={2}
+                                    size="large"
+                                    precision={0.5}
+                                    className={classes.ratingFilter}
+                                />
+                            </Card>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Form.Group controlId="locationFormSelect">
+                                <Form.Label>Location</Form.Label>
+                                <Form.Control as="select">
+                                    <option>Onsite</option>
+                                    <option>Remote</option>
+                                    <option>Both</option>
+                                </Form.Control>
+                            </Form.Group>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Form.Group controlId="locationFormSelect">
+                                <Form.Label>Language</Form.Label>
+                                <Form.Control as="select">
+                                    <option>German</option>
+                                    <option>English</option>
+                                    <option>Both</option>
+                                </Form.Control>
+                            </Form.Group>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Form.Group controlId="locationFormSelect">
+                                <Form.Label>Experience</Form.Label>
+                                <Form.Control as="select">
+                                    <option>0-50</option>
+                                    <option>50-100</option>
+                                    <option>100-200</option>
+                                    <option>200+</option>
+                                </Form.Control>
+                            </Form.Group>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <div className={classes.datePicker}>
+                                <DatePicker
+                                    placeholder="Select a date range for your session"
+                                    selected={startDate}
+                                    onChange={onChangeDate}
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    selectsRange
+                                />
+                            </div>
+                        </Grid>
+                    </Grid>
                 </div>
             </Col>
         </Row>
