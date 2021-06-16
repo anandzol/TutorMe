@@ -41,6 +41,9 @@ const useStyles = makeStyles(theme => ({
         width: '25rem',
         paddingTop: '0rem',
         paddingBottom: '0rem'
+    },
+    height: {
+        height: '5rem'
     }
 }));
 
@@ -116,23 +119,25 @@ const ShowTutorialSessions = () => {
                                     nodeId={item._id}
                                     label={item.name}
                                     classes={{ label: classes.tree_item_label }}>
-                                    {item.courses.map((item, index) => {
-                                        const courseId = item._id;
-                                        return (
-                                            <FormControlLabel
-                                                control={
-                                                    <Checkbox
-                                                        checked={selectedCourses[courseId]}
-                                                        name={courseId}
-                                                        color="primary"
-                                                        onChange={onClick}
-                                                    />
-                                                }
-                                                classes={{ label: classes.check_box_label }}
-                                                label={item.name}
-                                            />
-                                        );
-                                    })}
+                                    <div>
+                                        {item.courses.map((item, index) => {
+                                            const courseId = item._id;
+                                            return (
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            checked={selectedCourses[courseId]}
+                                                            name={courseId}
+                                                            color="primary"
+                                                            onChange={onClick}
+                                                        />
+                                                    }
+                                                    classes={{ label: classes.check_box_label }}
+                                                    label={item.name}
+                                                />
+                                            );
+                                        })}
+                                    </div>
                                 </TreeItem>
                             </div>
                         );

@@ -75,6 +75,10 @@ export function getUniversityById(universityId, callback, errorcallback) {
     axios
         .get(`${API_URL}/${universityId}`)
         .then(response => {
+            // Sort courses of faculties by name alphabetically
+            response.data.faculties.forEach(item => {
+                item.courses.sort((a, b) => a.name.localeCompare(b.name));
+            });
             if (callback != null) {
                 callback(response);
             }
