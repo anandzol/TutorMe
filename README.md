@@ -2,7 +2,9 @@ Prerequisites:
 npm 
 
 Disclaimer: 
-The db credentials are hard coded into the backend code. It is currently hosted on a free mongodb atlas instance
+The db credentials are hard coded into the backend code. It is currently hosted on a free mongodb atlas instance. 
+
+
 An admin user (with pre-booked session) is available with following credentials: email: admin@test.com password:password
 
 To run the web app: 
