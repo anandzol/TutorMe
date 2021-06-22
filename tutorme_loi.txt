@@ -9,7 +9,6 @@ Priority 1 (highest) : Custom Date/Time Range selector (example when2meet.com) +
 			 Filtering: Rating/Experience/Language (Estimation 2h)
 			 Selection of University even if user is not logged in (Estimation 2h)
 			 Dynamic Fetching of User University (Estimation 15 min)
-			 Home Screen (Estimation: 2h) 
 Priority 2 (high): HomeScreen (Design, Frontend) (Estimation 3h)
 			 Admin Funcionality (Approving/Rejecting Course applications): Frontend, Put-API (3h)
 			 Editting Profiles: Frontend, Backend (3h)
