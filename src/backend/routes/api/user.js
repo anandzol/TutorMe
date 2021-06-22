@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 const AuthController = require('../controllers/auth');
+const UserController = require('../controllers/user');
 const User = require('../../models/user');
 /**
  * @route GET api/user/test
@@ -27,6 +28,28 @@ router.get('/', (req, res) => {
             })
         );
 });
+
+/**
+ * @route GET api/user/:id
+ * @description Get the user with the paramater id
+ * @access Public
+ */
+router.get('/:id', UserController.getUserById);
+
+/**
+ * @route GET api/user/session/:id
+ * @description Get the sessions of the user with the parameter id
+ * @access Public
+ */
+router.get('/sessions/:id', UserController.getUserSessionsById);
+
+/**
+ * @route POST api/user/book-session
+ * @description Book a session with the payload
+ * @access Public
+ */
+router.post('/book-session', UserController.bookSession);
+
 /**
  * @route POST api/user/login/{payload}
  * @description logs into an existing account

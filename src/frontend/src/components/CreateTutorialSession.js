@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Form, Card, Row } from 'react-bootstrap';
 import { withStyles } from '@material-ui/styles';
-import '../App.css';
 import DatePicker from 'react-datepicker';
+import DateTimePicker from 'react-datetime-picker';
 import NumericInput from 'react-numeric-input';
 import { parseJwt } from '../services/AuthHeader';
 import AuthService from '../services/AuthService';
@@ -11,10 +11,10 @@ import {
     getUniversityFacultiesSorted,
     getAllUniversitiesSorted
 } from '../services/UniversityService';
-import { createSession } from '../services/SessionService';
-
 import { getFacultyCoursesSorted } from '../services/FacultyService';
-// @todo: Refactor api calls to faculty/university service
+import { createSession } from '../services/SessionService';
+import './styles/styles.css';
+
 const styles = () => ({
     title: {
         position: 'relative',
@@ -373,12 +373,14 @@ class CreateTutorialSession extends Component {
                                         <Form.File id="transcriptFile" />
                                     </Form.Group>
                                     <div className={classes.date_picker}>
-                                        <DatePicker
+                                        <DateTimePicker
+                                            disableClock={true}
                                             selected={this.state.date}
                                             name="date"
                                             showTimeSelect
                                             dateFormat="MMMM d, yyyy h:mm aa"
-                                            onChange={this.onChangeDate}></DatePicker>
+                                            onChange={this.onChangeDate}
+                                            className="tutorialSession"></DateTimePicker>
                                     </div>
 
                                     {/** price Input Form  */}

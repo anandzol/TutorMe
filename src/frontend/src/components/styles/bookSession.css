@@ -1,0 +1,50 @@
+.react-datepicker {
+    font-size: 1em;
+}
+.react-datepicker__header {
+    padding-top: 0.8em;
+}
+.react-datepicker__month {
+    margin: 0.4em 1em;
+}
+.react-datepicker__day-name,
+.react-datepicker__day {
+    width: 6em;
+    line-height: 5.1em;
+    margin: 0.166em;
+}
+.react-datepicker__current-month {
+    font-size: 1em;
+}
+.react-datepicker__navigation {
+    top: 1em;
+    line-height: 1em;
+    border: 0.45 solid transparent;
+}
+.react-datepicker__navigation--previous {
+    border-right-color: #ccc;
+    left: 1em;
+}
+.react-datepicker__navigation--next {
+    border-left-color: #ccc;
+    right: 1em;
+}
+.react-datepicker__time-box {
+    width: 2rem;
+}
+.react-datepicker__time-container {
+    width: fit-content;
+}
+
+.react-datepicker__navigation--next--with-time:not(.react-datepicker__navigation--next--with-today-button) {
+    width: 120px;
+}
+
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box {
+    width: fit-content;
+    height: fit-content;
+}
+
+.react-datepicker__time-list {
+    height: 600px;
+}

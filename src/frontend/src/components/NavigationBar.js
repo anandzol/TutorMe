@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import graduationIcon from '../assets/graduation.png';
 import { Nav, Navbar, NavDropdown, Row } from 'react-bootstrap';
 import AuthService from '../services/AuthService';
-// @Todo: Use Icons instead of labels for Calendar/List/Profile
 import { withStyles } from '@material-ui/styles';
+import { BsJustify, BsCalendar, BsPersonFill } from 'react-icons/bs';
 
 const styles = () => ({
     bar: {
@@ -11,34 +11,33 @@ const styles = () => ({
     },
     listButton: {
         position: 'absolute',
-        right: '350px',
-        top: '31px',
+        right: '255px',
+        top: '27px',
         zIndex: 1000,
-        fontSize: 'xx-large',
+        fontSize: '54px',
         color: 'white'
     },
     calendarButton: {
         position: 'absolute',
-        right: '190px',
-        top: '31px',
+        right: '195px',
+        top: '34px',
         zIndex: 1000,
-        fontSize: 'xx-large',
+        fontSize: '38px',
         color: 'white'
     },
-    profileButton: {
-        position: 'absolute',
-        right: '50px',
-        top: '23px',
-        zIndex: 1000
-    },
+
     logo: {
         paddingRight: '10px',
         height: '70px',
         width: '70px'
     },
-    profileButton__span: {
+    profileButton: {
+        position: 'absolute',
+        right: '80px',
+        top: '15px',
+        zIndex: 1000,
         color: 'white',
-        fontSize: 'xx-large'
+        fontSize: 'xxx-large'
     },
     title: {
         position: 'relative',
@@ -56,7 +55,9 @@ class NavigationBar extends Component {
         AuthService.logout();
         this.props.history.push('/home');
     }
+
     render() {
+        const navDropDownTitle = <BsPersonFill></BsPersonFill>;
         const { classes } = this.props;
         return (
             <Navbar bg="primary" variant="dark">
@@ -70,19 +71,22 @@ class NavigationBar extends Component {
                     </Row>
                 </Navbar.Brand>
                 <Nav>
-                    <a href="/home" className={classes.listButton}>
-                        List
-                    </a>
+                    <div>
+                        <a href="/list-user-sessions">
+                            <BsJustify className={classes.listButton}></BsJustify>
+                        </a>
+                    </div>
                 </Nav>
                 <Nav>
-                    <a href="/home" className={classes.calendarButton}>
-                        Calendar
+                    <a href="/home">
+                        <BsCalendar className={classes.calendarButton}></BsCalendar>
                     </a>
                 </Nav>
                 <Nav className={classes.profileButton}>
                     <NavDropdown
-                        title={<span className={classes.profileButton__span}>Profile</span>}
-                        id="collasible-nav-dropdown">
+                        title={navDropDownTitle}
+                        id="collasible-nav-dropdown"
+                        className={classes.profileButton__span}>
                         <NavDropdown.Item href="/home">Home</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.2">Edit Profile</NavDropdown.Item>
                         <NavDropdown.Item href="/create-tutorial-session">

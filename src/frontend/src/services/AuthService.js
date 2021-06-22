@@ -23,8 +23,18 @@ class AuthService {
         localStorage.removeItem('user');
     }
 
-    register(user) {
-        return axios.post(`${API_URL}/register`, user);
+    register(user, callback, errorcallback) {
+        return axios
+            .post(`${API_URL}/register`, user)
+            .then(response => {
+                if (callback != null) {
+                    callback(response);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                errorcallback(error);
+            });
     }
 
     getCurrentUser() {

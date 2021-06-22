@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { withStyles } from '@material-ui/styles';
 import Form from 'react-bootstrap/Form';
-
+import AuthService from '../services/AuthService';
+import { getAllUniversitiesSorted } from '../services/UniversityService';
 const styles = () => ({
     container: {
         paddingTop: '2rem',
@@ -52,7 +53,9 @@ const defaultState = {
     lastOnline: new Date(),
     role: 'student',
     email: '',
-    errors: {}
+    errors: {},
+    universities: [],
+    university: ''
 };
 
 const semesterCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -79,7 +82,7 @@ const roles = [
     }
 ];
 
-const SERVER_URL = 'http://localhost:8082/api';
+const gender = [{ male: 'Male' }, { female: 'Female' }, { undefined: 'Undefined' }];
 
 // /components/RegisterUser.js
 class RegisterUser extends Component {
@@ -120,17 +123,45 @@ class RegisterUser extends Component {
                 role: this.state.role
             };
 
-            axios
-                .post(`${SERVER_URL}/user/register`, data)
-                .then(res => {
+            AuthService.register(
+                data,
+                response => {
                     this.setState(defaultState);
                     this.props.history.push('/home');
-                })
-                .catch(error => {
+                },
+                error => {
                     console.error(error);
-                });
+                }
+            );
         }
     };
+
+    componentDidMount() {
+        getAllUniversitiesSorted(
+            response => {
+                let universitiesMapped = [];
+                response.map((item, index) => {
+                    universitiesMapped.push({
+                        value: item._id,
+                        name: item.name
+                    });
+                });
+                this.setState({
+                    universities: universitiesMapped
+                });
+
+                if (universitiesMapped.length != 0) {
+                    this.setState({
+                        university: universitiesMapped[0].value
+                    });
+                }
+            },
+            error => {
+                console.log(error.response);
+                console.error(error);
+            }
+        );
+    }
 
     /**
      * Validates wether all user inputs are in the correct format/filled out
@@ -242,9 +273,11 @@ class RegisterUser extends Component {
                                                     name="gender"
                                                     as="select"
                                                     onChange={this.onChange}>
-                                                    <option values="male">Male</option>
-                                                    <option values="female">Female</option>
-                                                    <option>Undefined</option>
+                                                    {gender.map((item, _) => (
+                                                        <option value={Object.keys(item)[0]}>
+                                                            {Object.values(item)[0]}
+                                                        </option>
+                                                    ))}
                                                 </Form.Control>
                                             </Form.Group>
                                         </div>
@@ -310,12 +343,9 @@ class RegisterUser extends Component {
                                                 as="select"
                                                 name="university"
                                                 onChange={this.onChange}>
-                                                <option values={'tum'}>
-                                                    Technical University Munich
-                                                </option>
-                                                <option values={'lmu'}>
-                                                    Ludwig Maximilian University Munich
-                                                </option>
+                                                {this.state.universities.map((item, _) => (
+                                                    <option value={item.value}>{item.name}</option>
+                                                ))}
                                             </Form.Control>
                                         </Form.Group>
                                     </div>

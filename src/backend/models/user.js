@@ -50,7 +50,9 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'university'
     },
-    offerings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'offering' }]
+    offerings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'offering' }],
+    bookings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'booking' }],
+    bookedOfferings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'booking' }]
 });
 
 // adds createdAt, updatedAt properties which are fetched for profile information

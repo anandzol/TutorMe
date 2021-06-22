@@ -51,6 +51,11 @@ const login = async (req, res) => {
                 .send({ token: null, message: 'Invalid password!' });
         }
 
+        // Set the last online property to the current date
+        const currentTime = new Date();
+        user.lastOnline = currentTime;
+        await user.save();
+
         // If user is found and password is valid
         // create a token
         const token = jwt.sign(
@@ -87,6 +92,7 @@ const login = async (req, res) => {
  */
 const register = async (req, res) => {
     try {
+        console.log(req.body);
         const hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
         let user = req.body;

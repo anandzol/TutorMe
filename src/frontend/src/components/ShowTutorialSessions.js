@@ -1,5 +1,4 @@
-import { withStyles } from '@material-ui/styles';
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Card, Form } from 'react-bootstrap/';
 import SearchField from 'react-search-field';
 import { TreeView, TreeItem, Rating } from '@material-ui/lab/';
@@ -7,12 +6,12 @@ import { makeStyles } from '@material-ui/styles';
 import { getUniversityById } from '../services/UniversityService';
 import { getAllVerifiedSessionsByUniversity } from '../services/SessionService';
 import { FormControlLabel, Checkbox } from '@material-ui/core/';
-import { CheckBoxIcon, CheckBoxOutlineBlankIcon } from '@material-ui/icons/';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Slider, Grid, FormGroup, Typography } from '@material-ui/core/';
 import DatePicker from 'react-datepicker';
-import './styles.css';
+import TutorialSessionComponent from './TutorialSessionComponent';
+import './styles/styles.css';
 
 const useStyles = makeStyles(theme => ({
     component: {
@@ -50,7 +49,7 @@ const useStyles = makeStyles(theme => ({
     checkbox_wrapper: {
         maxHeight: '18rem',
         width: '26rem',
-        overflowY: 'scroll',
+        overflowY: 'auto',
         overflowX: 'hidden',
         paddingLeft: '0.5rem'
     },
@@ -62,9 +61,10 @@ const useStyles = makeStyles(theme => ({
         paddingTop: '1rem',
         paddingLeft: '1rem',
         paddingBottom: '1rem',
-        minHeight: '62rem',
+        height: '62rem',
+        minHeight: '20rem',
         maxHeight: '62rem',
-        overflowY: 'scroll',
+        overflowY: 'auto',
         overflowX: 'hidden'
     },
     card_wrapper: {
@@ -97,6 +97,10 @@ const useStyles = makeStyles(theme => ({
     },
     sessionCard: {
         height: '60rem',
+        maxHeight: '60rem',
+        minHeight: '10rem',
+        overflowY: 'auto',
+        overflowX: 'hidden',
         width: '103rem'
     }
 }));
@@ -116,67 +120,166 @@ const marks = [
     }
 ];
 const ShowTutorialSessions = () => {
-    const [selectedFilters, setSelectedFilters] = useState([]);
     const [allSessions, setAllSessions] = useState([]);
     const [displayedSessions, setDisplayedSessions] = useState([]);
+    const [courseFilteredSessions, setCourseFilteredSessions] = useState([]);
     const [faculties, setFaculties] = useState([]);
-    const [courses, setCourses] = useState([]);
-    const [selectedCourses, setSelectedCourses] = useState({});
-    const [selectedFaculty, setSelectedFaculty] = useState('');
+    const [selectedCourses, setSelectedCourses] = useState([]);
+    const [location, setLocation] = useState(1);
+    const [language, setLanguage] = useState('both');
+    const [experience, setExperience] = useState(0);
     const [price, setPriceFilter] = useState([1, 50]);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [sortValue, setSortValue] = useState(-1);
+    const [initialRender, setInitialRender] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     // For development purposes, will need to be either fetched dynamically by user/ passed on by props of hoc
     const [university, setUniversity] = useState('60bff011a5e1000beeddb38e');
 
     useEffect(() => {
-        getUniversityById(
-            university,
-            response => {
-                setFaculties(response.data.faculties);
+        setLoading(true);
+        // Prevent api calls everytime a value changes
+        if (initialRender) {
+            getUniversityById(
+                university,
+                response => {
+                    setFaculties(response.data.faculties);
 
-                let tmp = {};
-                response.data.courses.forEach((item, _) => {
-                    const courseId = item._id;
-                    tmp[courseId] = false;
-                });
-                setSelectedCourses(tmp);
-            },
-            error => {
-                console.error(error);
-            }
-        );
+                    let tmp = [];
+                    response.data.courses.forEach((item, _) => {
+                        const course = {
+                            id: item._id,
+                            selected: false
+                        };
+                        tmp.push(course);
+                    });
 
-        getAllVerifiedSessionsByUniversity(
-            university,
-            response => {
-                // Initially display all sessions of the university
+                    setSelectedCourses(tmp);
+                },
+                error => {
+                    console.error(error);
+                }
+            );
 
-                setAllSessions(response.data);
-                setDisplayedSessions(response.data);
-            },
-            error => {
-                console.error(error);
-            }
-        );
-    }, []);
+            getAllVerifiedSessionsByUniversity(
+                university,
+                response => {
+                    // Initially display all sessions of the university
 
-    const onToggleNode = e => {
-        console.log(e);
-    };
+                    setAllSessions(response.data);
+                    setCourseFilteredSessions(response.data);
+                    setDisplayedSessions(response.data);
+                },
+                error => {
+                    console.error(error);
+                }
+            );
+            setInitialRender(false);
+        }
 
-    const onChange = e => {
+        filterSessions();
+        setLoading(false);
+    }, [location, price]);
+
+    const onToggleNode = e => {};
+
+    const onSearch = e => {
         console.log(selectedCourses);
     };
 
-    const onClick = e => {
-        setSelectedCourses({ ...selectedCourses, [e.target.name]: e.target.checked });
+    const onChangeLocation = e => {
+        setLocation(e.target.value);
     };
 
     const onChangeSlider = (e, newValue) => {
         setPriceFilter(newValue);
+    };
+
+    const filterSessions = () => {
+        // Filter by minimum price range first
+        const minimumPrice = price[0];
+        const maximumPrice = price[1];
+        let sessions = courseFilteredSessions;
+        sessions = courseFilteredSessions.filter(
+            session => session.price >= minimumPrice && session.price <= maximumPrice
+        );
+
+        // Filter by location
+        switch (location) {
+            case '1':
+                sessions = sessions;
+                break;
+
+            case '2':
+                console.log(sessions);
+                sessions = sessions.filter(session => session.onsite === true);
+                console.log(sessions);
+
+                break;
+            case '3':
+                sessions = sessions.filter(session => session.remote === true);
+                break;
+            default:
+                sessions = sessions;
+        }
+        setDisplayedSessions(sessions);
+    };
+
+    const onClickCheckbox = e => {
+        const course = {
+            id: e.target.name,
+            selected: e.target.checked
+        };
+
+        const index = selectedCourses.findIndex(item => item.id === e.target.name);
+        let currentCourses = selectedCourses;
+        currentCourses[index] = course;
+        setSelectedCourses(currentCourses);
+
+        // Get all courses which are currently selected
+        let filteredCourses = selectedCourses
+            .filter(course => course.selected)
+            .map(course => course.id);
+
+        // Filter all displayed sessions based on wether their course is selected in the checkbox
+        let sessions = allSessions.filter(session => filteredCourses.includes(session.course._id));
+
+        // If there are no selected courses, display all sessions
+        if (filteredCourses === undefined || filteredCourses.length === 0) {
+            setDisplayedSessions(allSessions);
+            setCourseFilteredSessions(allSessions);
+        } else {
+            setCourseFilteredSessions(sessions);
+            setDisplayedSessions(sessions);
+        }
+    };
+
+    const onSort = e => {
+        setSortValue(e.target.value);
+        switch (e.target.value) {
+            case '1':
+                setDisplayedSessions(displayedSessions.sort((a, b) => a.price - b.price));
+                break;
+            case '2':
+                setDisplayedSessions(displayedSessions.sort((a, b) => b.price - a.price));
+                break;
+            case '3':
+                setDisplayedSessions(
+                    displayedSessions.sort(
+                        (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+                    )
+                );
+                break;
+            case '4':
+                setDisplayedSessions(
+                    displayedSessions.sort((a, b) => a.course.name.localeCompare(b.course.name))
+                );
+                break;
+            default:
+                console.error('no available sort option');
+        }
     };
 
     const onChangeDate = dates => {
@@ -192,7 +295,7 @@ const ShowTutorialSessions = () => {
                 <div className={classes.searchField}>
                     <SearchField
                         placeholder="Search..."
-                        onChange={onChange}
+                        onChange={onSearch}
                         searchText=""
                         classNames={classes.searchField}
                     />
@@ -225,7 +328,7 @@ const ShowTutorialSessions = () => {
                                                                         }
                                                                         name={courseId}
                                                                         color="primary"
-                                                                        onChange={onClick}
+                                                                        onChange={onClickCheckbox}
                                                                     />
                                                                 }
                                                                 classes={{
@@ -284,10 +387,13 @@ const ShowTutorialSessions = () => {
                         <Grid item xs={2}>
                             <Form.Group controlId="locationFormSelect">
                                 <Form.Label>Location</Form.Label>
-                                <Form.Control as="select">
-                                    <option>Onsite</option>
-                                    <option>Remote</option>
-                                    <option>Both</option>
+                                <Form.Control
+                                    as="select"
+                                    value={location}
+                                    onChange={onChangeLocation}>
+                                    <option value={1}>Both</option>
+                                    <option value={2}>Onsite</option>
+                                    <option value={3}>Remote</option>
                                 </Form.Control>
                             </Form.Group>
                         </Grid>
@@ -303,7 +409,7 @@ const ShowTutorialSessions = () => {
                         </Grid>
                         <Grid item xs={2}>
                             <Form.Group controlId="locationFormSelect">
-                                <Form.Label>Experience</Form.Label>
+                                <Form.Label>Minimum Experience</Form.Label>
                                 <Form.Control as="select">
                                     <option>0-50 </option>
                                     <option>50-100 </option>
@@ -329,26 +435,34 @@ const ShowTutorialSessions = () => {
                             </div>
                             <div className={classes.sortSessions}>
                                 <Form.Group>
-                                    <Form.Control
-                                        as="select"
-                                        value={sortValue}
-                                        onChange={e => {
-                                            setSortValue(e.target.value);
-                                        }}>
+                                    <Form.Control as="select" value={sortValue} onChange={onSort}>
                                         <option value={-1} disabled>
                                             Sort By
                                         </option>
                                         <option value={1}>Price Ascending</option>
                                         <option value={2}>Price Descending</option>
                                         <option value={3}>New In</option>
-                                        <option value={4}>Last seen</option>
+                                        <option value={4}>Alphabetically</option>
                                     </Form.Control>
                                 </Form.Group>
                             </div>
                         </Grid>
                     </Grid>
                 </div>
-                <Card className={classes.sessionCard}></Card>
+                <Card className={classes.sessionCard}>
+                    {displayedSessions.map((item, _) => {
+                        return (
+                            <TutorialSessionComponent
+                                tutorId={item.tutorId}
+                                remote={item.remote}
+                                onsite={item.onsite}
+                                price={item.price}
+                                description={item.description}
+                                id={item._id}
+                                name={item.course.name}></TutorialSessionComponent>
+                        );
+                    })}
+                </Card>
             </Col>
         </Row>
     );

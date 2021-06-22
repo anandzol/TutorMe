@@ -1,13 +1,15 @@
 import { Component } from 'react';
 import { withStyles } from '@material-ui/styles';
-
+import AuthService from '../services/AuthService';
 const styles = theme => ({
     button__padding_top: {
         paddingTop: '20px'
     }
 });
 class HomeScreen extends Component {
-    onClick() {}
+    onClick() {
+        console.log(AuthService.getCurrentUser());
+    }
 
     render() {
         const { classes } = this.props;

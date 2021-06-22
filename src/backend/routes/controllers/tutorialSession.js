@@ -88,10 +88,29 @@ const getAllRejectedByUniversityId = (req, res) => {
             })
         );
 };
+
+/**
+ * API Controller for getting a specific session by id
+ * @param {Object} req
+ * @param {Object} res
+ */
+const getSessionById = (req, res) => {
+    TutorialSession.findOne({ _id: req.params.id })
+        .populate('course')
+        .then(session => res.json(session))
+        .catch(error => {
+            res.status(404).json({
+                error: 'No available session found',
+                message: error.message
+            });
+        });
+};
+
 module.exports = {
     getByUniversityId,
     getAllVerifiedByUniversityId,
     getAllRejectedByUniversityId,
     getAllPendingByUniversityId,
-    getAllPending
+    getAllPending,
+    getSessionById
 };

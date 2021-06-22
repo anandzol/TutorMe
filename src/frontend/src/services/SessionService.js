@@ -69,3 +69,20 @@ export function getAllVerifiedSessionsByUniversity(universityId, callback, error
             errorcallback(error);
         });
 }
+
+/**
+ * API Endpoint for getting a specific session by id
+ * @param {String} sessionId
+ * @param {Function} callback
+ * @param {Function} errorcallback
+ */
+export function getSessionById(sessionId, callback, errorcallback) {
+    axios
+        .get(`${API_URL}/${sessionId}`)
+        .then(response => {
+            callback(response);
+        })
+        .catch(error => {
+            errorcallback(error);
+        });
+}

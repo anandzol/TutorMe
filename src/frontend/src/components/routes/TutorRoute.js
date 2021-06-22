@@ -6,12 +6,15 @@ import { Redirect, Route } from 'react-router-dom';
 
 const TutorRoute = ({ component: Component, ...rest }) => {
     const isTutor = AuthService.isTutor();
+    const isAdmin = AuthService.isAdmin();
+
+    const isTutorOrAdmin = isTutor || isAdmin;
 
     return (
         <Route
             {...rest}
             render={props =>
-                isTutor ? (
+                isTutorOrAdmin ? (
                     <Component {...props} />
                 ) : (
                     <Redirect to={{ pathname: '/login-user', state: { from: props.location } }} />

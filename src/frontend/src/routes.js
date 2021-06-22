@@ -6,6 +6,8 @@ import CreateFaculty from './components/CreateFaculty';
 import CreateTutorialSession from './components/CreateTutorialSession';
 import LoginUser from './components/LoginUser';
 import ShowTutorialSessions from './components/ShowTutorialSessions';
+import BookSession from './components/BookSession';
+import ListUserSessions from './components/ListUserSessions';
 const routes = [
     {
         path: '/home',
@@ -37,11 +39,19 @@ const routes = [
     {
         path: '/create-tutorial-session',
         component: CreateTutorialSession,
-        permission: 'admin'
+        permission: 'tutor'
     },
     {
         path: '/show-sessions',
         component: ShowTutorialSessions
+    },
+    {
+        path: '/book-session/:id',
+        component: BookSession
+    },
+    {
+        path: '/list-user-sessions',
+        component: ListUserSessions
     }
 ];
 
