@@ -3,6 +3,7 @@ import { Card, Button, Container, Col, Row, Form } from 'react-bootstrap';
 import { withStyles } from '@material-ui/styles';
 import { getTutorById } from '../services/TutorService';
 import ReactStars from 'react-rating-stars-component';
+import { withRouter } from 'react-router';
 
 const styles = () => ({
     card: {
@@ -71,6 +72,7 @@ class PreviousSessionCard extends Component {
     constructor(props) {
         super();
         this.state = props.session;
+        console.log(this.state);
     }
 
     componentDidMount() {
@@ -87,7 +89,9 @@ class PreviousSessionCard extends Component {
         );
     }
 
-    onBookAgain() {}
+    onBookAgain = e => {
+        this.props.history.push(`/book-session/${this.state.sessionId}`);
+    };
 
     render() {
         const { classes } = this.props;
@@ -101,7 +105,11 @@ class PreviousSessionCard extends Component {
                         <div className={classes.description}>
                             {this.state.description}
                             <div className={classes.cancelButtonWrapper}>
-                                <button className={classes.bookAgainButton}>Book Again</button>
+                                <button
+                                    onClick={this.onBookAgain}
+                                    className={classes.bookAgainButton}>
+                                    Book Again
+                                </button>
                             </div>
                         </div>
                         <hr />
@@ -125,4 +133,4 @@ class PreviousSessionCard extends Component {
     }
 }
 
-export default withStyles(styles)(PreviousSessionCard);
+export default withRouter(withStyles(styles)(PreviousSessionCard));

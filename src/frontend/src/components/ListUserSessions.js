@@ -4,8 +4,10 @@ import AuthService from '../services/AuthService';
 import { parseJwt } from '../services/AuthHeader';
 import { getAllBookingsByUserId } from '../services/BookingService';
 import { withStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import PreviousSessionCard from './PreviousSessionCard';
 import UpcomingSessionCard from './UpcomingSessionCard';
+import { withRouter } from 'react-router';
 
 const defaultState = {
     userId: '',
@@ -58,9 +60,24 @@ const styles = () => ({
     sessionColumn: {
         width: '30rem',
         minWidth: '30rem',
-        maxWidth: '40rem',
+        maxWidth: '30rem',
         paddingLeft: '4rem',
         paddingTop: '1rem'
+    },
+    sessionColumnWrapper: {
+        paddingLeft: '2rem',
+        paddingRight: '2rem',
+        paddingBottom: '1rem',
+        paddingTop: '1rem'
+    },
+    sessionColumnCard: {
+        height: '25rem',
+        minHeight: '20rem',
+        maxHeight: '30rem',
+        minWidth: '145rem',
+        maxWidth: '145rem',
+        width: '145rem',
+        overflowX: 'auto'
     }
 });
 
@@ -69,12 +86,9 @@ class ListUserSessions extends Component {
     constructor() {
         super();
         this.state = defaultState;
-        console.log(this.state);
     }
 
-    onClick() {
-        console.log(this.state);
-    }
+    onClick() {}
 
     componentDidMount() {
         const currentUserJwt = AuthService.getCurrentUser();
@@ -87,7 +101,6 @@ class ListUserSessions extends Component {
         getAllBookingsByUserId(
             currentUserId,
             response => {
-                console.log(response.data);
                 const currentDate = new Date();
                 const upcomingSessions = response.data.filter(
                     session => currentDate < new Date(session.startDate)
@@ -97,15 +110,11 @@ class ListUserSessions extends Component {
                     session => currentDate >= new Date(session.startDate)
                 );
 
-                console.log(upcomingSessions);
-                console.log(previousSessions);
                 this.setState({
                     previousSessions: previousSessions,
                     upcomingSessions: upcomingSessions,
                     bookings: response.data
                 });
-
-                console.log(this.state.bookings);
             },
             error => {
                 console.error(error);
@@ -141,11 +150,13 @@ class ListUserSessions extends Component {
                         </div>
                         <Row className={classes.previousSessionRow}>
                             {this.state.previousSessions.map((item, index) => (
-                                <Col className={classes.sessionColumn}>
-                                    <PreviousSessionCard
-                                        value={index}
-                                        session={item}></PreviousSessionCard>
-                                </Col>
+                                <div className={classes.sessionColumnWrapper}>
+                                    <Col className={classes.sessionColumn}>
+                                        <PreviousSessionCard
+                                            value={index}
+                                            session={item}></PreviousSessionCard>
+                                    </Col>
+                                </div>
                             ))}
                         </Row>
                     </Card>
@@ -155,4 +166,4 @@ class ListUserSessions extends Component {
     }
 }
 
-export default withStyles(styles)(ListUserSessions);
+export default withRouter(withStyles(styles)(ListUserSessions));

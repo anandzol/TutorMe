@@ -28,6 +28,13 @@ router.get('/', (req, res) => {
 });
 
 /**
+ * @route GET /api/session/:id
+ * @description Get a session by its id
+ * @access Public
+ */
+router.get('/:id', TutorialSessionController.getSessionById);
+
+/**
  * @route POST /api/session/{payload}
  * @description
  * @access Public
@@ -85,12 +92,5 @@ router.get(
     '/rejected/university/:id',
     TutorialSessionController.getAllRejectedByUniversityId
 );
-
-/**
- * @route GET /api/session/:d
- * @description Get a session by id
- * @access Public
- */
-router.get('/:id', TutorialSessionController.getSessionById);
 
 module.exports = router;

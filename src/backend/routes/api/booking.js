@@ -17,4 +17,25 @@ router.post('/book-session', BookingController.bookSession);
  * @access
  */
 router.get('/student/:id', BookingController.getBookingsByStudentId);
+
+/**
+ * @route GET /api/session/test
+ * @description test route
+ * @access Public
+ */
+router.get('/test', (req, res) => res.send('session route testing!'));
+
+/**
+ * @route GET api/course
+ * @description Get all available courses
+ * @access Public
+ */
+router.get('/', (req, res) => {
+    Booking.find()
+        .then(bookings => res.json(bookings))
+        .catch(error =>
+            res.status(404).json({ message: 'No available Bookings found' })
+        );
+});
+
 module.exports = router;

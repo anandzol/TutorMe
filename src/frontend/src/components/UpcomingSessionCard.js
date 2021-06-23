@@ -67,7 +67,6 @@ class UpcomingSessionCard extends Component {
     }
 
     componentDidMount() {
-        console.log(this.state);
         getTutorById(
             this.state.tutorId,
             response => {

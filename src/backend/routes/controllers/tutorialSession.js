@@ -95,9 +95,12 @@ const getAllRejectedByUniversityId = (req, res) => {
  * @param {Object} res
  */
 const getSessionById = (req, res) => {
+    console.log(req.params.id);
     TutorialSession.findOne({ _id: req.params.id })
         .populate('course')
-        .then(session => res.json(session))
+        .then(session => {
+            res.json(session);
+        })
         .catch(error => {
             res.status(404).json({
                 error: 'No available session found',

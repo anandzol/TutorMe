@@ -82,7 +82,6 @@ const styles = () => ({
     }
 });
 
-const converted = {};
 // components/BookSession.js
 class BookSession extends Component {
     constructor() {
@@ -98,7 +97,6 @@ class BookSession extends Component {
 
     componentDidMount() {
         const sessionId = this.props.match.params.id;
-
         const currentUserJWT = AuthService.getCurrentUser();
 
         const currentUser = parseJwt(currentUserJWT);

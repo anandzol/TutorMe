@@ -213,13 +213,11 @@ const ShowTutorialSessions = () => {
                 break;
 
             case '2':
-                console.log(sessions);
-                sessions = sessions.filter(session => session.onsite === true);
-                console.log(sessions);
+                sessions = sessions.filter(session => session.onsite);
 
                 break;
             case '3':
-                sessions = sessions.filter(session => session.remote === true);
+                sessions = sessions.filter(session => session.remote);
                 break;
             default:
                 sessions = sessions;

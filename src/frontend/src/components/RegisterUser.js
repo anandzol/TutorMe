@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { withStyles } from '@material-ui/styles';
 import Form from 'react-bootstrap/Form';
 import AuthService from '../services/AuthService';
@@ -157,7 +156,6 @@ class RegisterUser extends Component {
                 }
             },
             error => {
-                console.log(error.response);
                 console.error(error);
             }
         );

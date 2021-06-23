@@ -49,7 +49,6 @@ const defaultState = {
 };
 
 // /components/CreateCourse.js
-
 class CreateCourse extends Component {
     constructor() {
         super();
