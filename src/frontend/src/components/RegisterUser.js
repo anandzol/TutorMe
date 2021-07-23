@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/styles';
-import Form from 'react-bootstrap/Form';
+import { Row, Col, Form, Toast } from 'react-bootstrap/';
 import AuthService from '../services/AuthService';
 import { getAllUniversitiesSorted } from '../services/UniversityService';
+import DatePicker from 'react-date-picker';
+import Select from 'react-select';
+import PasswordStrengthBar from 'react-password-strength-bar';
+
+import './styles/styles.css';
+
 const styles = () => ({
-    container: {
-        paddingTop: '2rem',
-        paddingBottom: '10px'
-    },
     row__padding_right: {
         paddingRight: '20px'
     },
@@ -19,11 +21,14 @@ const styles = () => ({
         paddingTop: '2rem'
     },
     component: {
+        position: 'absolute',
         backgroundColor: '#f0f2f5',
         paddingTop: '10px',
         paddingBottom: '10px',
-        minHeight: '90vh',
-        color: 'black'
+        height: '90%',
+        width: '100%',
+        color: 'black',
+        overflow: 'hidden'
     },
     button: {
         width: '10rem',
@@ -37,6 +42,29 @@ const styles = () => ({
     },
     title_padding_bottom: {
         paddingBottom: '1rem'
+    },
+    datePicker: {
+        color: '#495057',
+        borderColor: '#495057'
+    },
+    datePickerWrapper: {
+        display: 'block',
+        width: '30%',
+        padding: '.375rem .75rem',
+        fontSize: '1rem',
+        lineHeight: '1.5',
+        color: '#495057',
+        backgroundColor: '#fff',
+        backgroundClip: 'padding-box',
+        border: '1px solid #ced4da',
+        borderRadius: '.25rem',
+        transition: 'border-color .15s ease-in-out,box-shadow .15s ease-in-out'
+    },
+    passwordStrengthBar: {
+        height: '1rem'
+    },
+    card: {
+        height: '47rem'
     }
 });
 
@@ -54,7 +82,11 @@ const defaultState = {
     email: '',
     errors: {},
     universities: [],
-    university: ''
+    languages: [],
+    university: '',
+    duplicateEmail: false,
+    postalCode: '',
+    adress: ''
 };
 
 const semesterCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -81,6 +113,11 @@ const roles = [
     }
 ];
 
+const languages = [
+    { value: 'German', label: 'German' },
+    { value: 'English', label: 'English' },
+    { value: 'French', label: 'French' }
+];
 const gender = [{ male: 'Male' }, { female: 'Female' }, { undefined: 'Undefined' }];
 
 // /components/RegisterUser.js
@@ -105,8 +142,13 @@ class RegisterUser extends Component {
         this.props.history.push('/home');
     };
 
+    onChangeDatePicker = e => {
+        this.setState({ dateOfBirth: e });
+    };
+
     onRegister = e => {
         e.preventDefault();
+        console.log(this.state);
 
         if (this.validateInput()) {
             const data = {
@@ -119,9 +161,11 @@ class RegisterUser extends Component {
                 program: this.state.program,
                 dateOfBirth: this.state.dateOfBirth,
                 lastOnline: this.state.lastOnline,
+                postalCode: this.state.postalCode,
+                adress: this.state.adress,
+                languages: this.state.languages,
                 role: this.state.role
             };
-
             AuthService.register(
                 data,
                 response => {
@@ -129,6 +173,9 @@ class RegisterUser extends Component {
                     this.props.history.push('/home');
                 },
                 error => {
+                    if (error.response.data && error.response.status === 400) {
+                        this.setState({ duplicateEmail: true });
+                    }
                     console.error(error);
                 }
             );
@@ -142,7 +189,7 @@ class RegisterUser extends Component {
                 response.map((item, index) => {
                     universitiesMapped.push({
                         value: item._id,
-                        name: item.name
+                        label: item.name
                     });
                 });
                 this.setState({
@@ -160,6 +207,13 @@ class RegisterUser extends Component {
             }
         );
     }
+
+    onChangeLanguages = e => {
+        let languages = e.map(language => language.label);
+        this.setState({
+            languages: languages
+        });
+    };
 
     /**
      * Validates wether all user inputs are in the correct format/filled out
@@ -223,7 +277,7 @@ class RegisterUser extends Component {
                 <div className="container">
                     <div className={classes.container}>
                         <h2 className={`${classes.title_padding_bottom}`}>Register User</h2>
-                        <div className={`card col-12 login-card mt-2 hv-center`}>
+                        <div className={`card col-12 login-card mt-2 hv-center ${classes.card}`}>
                             <form>
                                 <div className={classes.row_padding_top}>
                                     <div class="row row-cols-3">
@@ -298,10 +352,80 @@ class RegisterUser extends Component {
                                         We'll never share your email with anyone else.
                                     </small>
                                     <div className="text-danger">{this.state.errors.email}</div>
+                                    <div className="text-danger">
+                                        {this.state.duplicateEmail
+                                            ? 'Email already exists, try logging on with this email!'
+                                            : ''}
+                                    </div>
+                                </div>
+
+                                {/** Date of birth input */}
+                                <div class={`${classes.label__padding_top}`}>
+                                    <div class={`row row-cols-2`}></div>
+                                    <Row>
+                                        <Col>
+                                            <label>Date of birth</label>
+                                            <Row />
+                                            <div className={classes.datePickerWrapper}>
+                                                <DatePicker
+                                                    wrapperClassName="datePicker"
+                                                    disableCalendar
+                                                    clearIcon
+                                                    format={'dd-MM-y'}
+                                                    onChange={this.onChangeDatePicker}
+                                                    calendarAriaLabel={'Date of birth'}
+                                                    required={true}
+                                                    isClearable={false}
+                                                    value={new Date()}></DatePicker>
+                                            </div>
+                                        </Col>
+                                        <Col>
+                                            <label>Languages</label>
+                                            <Select
+                                                isMulti
+                                                options={languages}
+                                                onChange={this.onChangeLanguages}
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Row></Row>
+                                </div>
+                                <div class={`${classes.label__padding_top}`}>
+                                    <div class={`row row-cols-2`}></div>
+                                    <Row>
+                                        <Col>
+                                            <label>Postal Code</label>
+                                            <input
+                                                type="number"
+                                                name="postalCode"
+                                                className="form-control"
+                                                min="10000"
+                                                max="99999"
+                                                id="postalCode"
+                                                placeholder=""
+                                                value={this.state.postalCode}
+                                                onChange={this.onChange}
+                                            />
+                                            <Row />
+                                        </Col>
+                                        <Col>
+                                            <label>Adress</label>
+                                            <input
+                                                type="text"
+                                                name="adress"
+                                                className="form-control"
+                                                id="adress"
+                                                placeholder="Adress"
+                                                value={this.state.adress}
+                                                onChange={this.onChange}
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Row></Row>
                                 </div>
 
                                 {/* Password input */}
-                                <div className="form-group text-left">
+                                <div className={`text-left ${classes.label__padding_top}`}>
                                     <label htmlFor="exampleInputPassword1">Password</label>
                                     <input
                                         type="password"
@@ -312,6 +436,7 @@ class RegisterUser extends Component {
                                         value={this.state.password}
                                         onChange={this.onChange}
                                     />
+                                    <PasswordStrengthBar password={this.state.password} />
                                     <div className="text-danger">{this.state.errors.password}</div>
                                 </div>
 
@@ -332,7 +457,7 @@ class RegisterUser extends Component {
                                     </div>
                                 </div>
 
-                                <div class={classes.container + ' ' + 'row row-cols-4'}>
+                                <div class={`${classes.container} row row-cols-4`}>
                                     {/* University input option */}
                                     <div class="col">
                                         <Form.Group controlId="university">
@@ -342,7 +467,7 @@ class RegisterUser extends Component {
                                                 name="university"
                                                 onChange={this.onChange}>
                                                 {this.state.universities.map((item, _) => (
-                                                    <option value={item.value}>{item.name}</option>
+                                                    <option value={item.value}>{item.label}</option>
                                                 ))}
                                             </Form.Control>
                                         </Form.Group>
@@ -405,12 +530,12 @@ class RegisterUser extends Component {
                                         <button
                                             className={`btn btn-primary btn-lg`}
                                             onClick={this.onRegister}>
-                                            Register
+                                            <span>Register</span>
                                         </button>
                                         <button
                                             className={`btn btn-primary btn-secondary btn-lg`}
                                             onClick={this.onCancel}>
-                                            Cancel
+                                            <span>Cancel</span>
                                         </button>
                                     </div>
                                 </div>

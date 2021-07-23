@@ -47,8 +47,14 @@ const TutorialSessionSchema = new mongoose.Schema({
     url: String
 });
 
-TutorialSessionSchema.set('timestamps', true);
+TutorialSessionSchema.pre('findOne', function (next) {
+    this.populate('tutorId', 'averageRating experience bookedOfferings');
+    next();
+});
 
+TutorialSessionSchema.set('timestamps', true);
+TutorialSessionSchema.set('toObject', { virtuals: true });
+TutorialSessionSchema.set('toJSON', { virtuals: true });
 module.exports = TutorialSession = mongoose.model(
     'tutorialSession',
     TutorialSessionSchema

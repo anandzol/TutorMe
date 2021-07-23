@@ -9,9 +9,15 @@ const BookingSchema = new mongoose.Schema({
     courseName: String,
     description: String,
     onsite: Boolean,
+    remote: Boolean,
     price: Number,
     inquiry: String,
-    startDate: Date
+    startDate: Date,
+    rating: {
+        type: Number,
+        min: 1,
+        max: 5
+    }
 });
 
 module.exports = Booking = mongoose.model('booking', BookingSchema);

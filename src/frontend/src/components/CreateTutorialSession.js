@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, Card, Row } from 'react-bootstrap';
 import { withStyles } from '@material-ui/styles';
-import DatePicker from 'react-datepicker';
 import DateTimePicker from 'react-datetime-picker';
 import NumericInput from 'react-numeric-input';
 import { parseJwt } from '../services/AuthHeader';
@@ -18,37 +17,33 @@ import './styles/styles.css';
 const styles = () => ({
     title: {
         position: 'relative',
-        paddingTop: '4rem',
-        paddingBottom: '1rem',
         fontWeight: 'bold',
-        left: '-18rem'
+        paddingTop: '1rem'
     },
     component: {
-        position: 'relative',
+        display: 'flex',
+        position: 'absolute',
         backgroundColor: '#f0f2f5',
-        paddingTop: '10px',
-        paddingBottom: '10px',
-        minHeight: '100vh',
-        color: 'black'
+        height: '100%',
+        width: '100%',
+        margin: '0',
+        overflow: 'hidden'
     },
     card: {
-        position: 'absolute',
-        paddingTop: '1rem',
-        left: '400px',
-        width: '90rem',
-        height: '55rem'
+        position: 'relative',
+        width: '100%',
+        height: '100%'
     },
     vl: {
         borderLeft: '1px solid #dfdfdf',
-        height: '52rem',
-        position: 'relative',
-        left: '50%',
-        marginLeft: '-3px',
-        paddingTop: '10px'
+        height: '90%',
+        position: 'absolute',
+        left: '35%',
+        paddingTop: '2rem'
     },
     form_option: {
         paddingTop: '1.1rem',
-        paddingLeft: '20px',
+        paddingLeft: '1.1rem',
         width: '20rem'
     },
     form_label: {
@@ -62,36 +57,51 @@ const styles = () => ({
         width: '20rem'
     },
     form_selectors: {
-        paddingTop: '8px',
+        paddingTop: '1rem',
         paddingLeft: '5rem'
     },
     date_picker: {
-        paddingLeft: '20px',
+        paddingLeft: '1.1rem',
         width: '20rem',
-        paddingTop: '1.1rem'
+        paddingTop: '2.8rem'
     },
     numeric_input: {
-        paddingTop: '2.2rem',
-        paddingLeft: '20px'
+        paddingTop: '2rem',
+        paddingLeft: '1.1rem'
     },
     checkmarks_left: {
-        paddingTop: '2.2rem',
-        paddingLeft: '20px'
+        paddingTop: '1rem',
+        paddingLeft: '2rem'
+    },
+    checkmarks_right: {
+        paddingTop: '1rem',
+        paddingLeft: '6rem'
     },
     description_area: {
-        width: '40rem'
+        width: '275%'
     },
     padding_top: {
         paddingTop: '1rem'
     },
     button_box: {
-        position: 'absolute',
-        right: '1rem',
-        paddingTop: '5rem'
+        position: 'relative',
+        left: '70%',
+        bottom: '0',
+        paddingBottom: '2rem'
     },
     button: {
         width: '10rem',
         height: '3rem'
+    },
+    cardWrapper: {
+        paddingTop: '2rem'
+    },
+    vlWrapper: {
+        paddingTop: '2rem'
+    },
+    rowButton_box: {
+        left: '20rem',
+        paddingLeft: '20rem'
     }
 });
 
@@ -123,7 +133,6 @@ const labels = [
 ];
 
 // /components/CreateTutorialSession.js
-
 class CreateTutorialSession extends Component {
     constructor() {
         super();
@@ -141,6 +150,10 @@ class CreateTutorialSession extends Component {
         this.setState({
             date: Date.parse(e)
         });
+    };
+
+    onCancel = e => {
+        this.props.history.push('/home');
     };
 
     onCreate = e => {
@@ -256,6 +269,7 @@ class CreateTutorialSession extends Component {
 
         getAllUniversitiesSorted(
             universitiesSorted => {
+                console.log(universitiesSorted);
                 this.setState({
                     availableUniversities: universitiesSorted
                 });
@@ -302,144 +316,142 @@ class CreateTutorialSession extends Component {
             <div className={classes.component}>
                 <div className={`container ${classes.padding_top}`}>
                     <h2 className={`${classes.title}`}>Create Tutorial Session</h2>
-                    <Card className={classes.card}>
-                        <Form>
-                            <Row>
-                                {/** First Column with labels describin the right input */}
-                                <div className="col-sm-4">
-                                    {labels.map((item, _) => (
-                                        <div>
-                                            <Form.Label className={classes.form_label}>
-                                                {item}
-                                            </Form.Label>
+                    <div className={classes.cardWrapper}>
+                        <Card className={`${classes.card} d-flex`}>
+                            <Form>
+                                <Row>
+                                    {/** First Column with labels describin the right input */}
+                                    <div className="col-sm-4">
+                                        {labels.map((item, _) => (
+                                            <div>
+                                                <Form.Label className={classes.form_label}>
+                                                    {item}
+                                                </Form.Label>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/** Vertical Separator */}
+                                    <div className={`${classes.vlWrapper} col-sm-0`}>
+                                        <div className={classes.vl}></div>
+                                    </div>
+                                    <div className={`${classes.form_selectors} col-sm-3`}>
+                                        {/** Form for selecting the unversity*/}
+                                        <Form.Group
+                                            controlId="universityGroup"
+                                            className={classes.form_option}>
+                                            <Form.Control
+                                                as="select"
+                                                name="university"
+                                                onChange={this.onChangeUniversity}>
+                                                {this.state.availableUniversities.map((item, _) => (
+                                                    <option value={item._id}>{item.name}</option>
+                                                ))}
+                                            </Form.Control>
+                                        </Form.Group>
+
+                                        {/** Form for selecting the corresponding faculty*/}
+                                        <Form.Group
+                                            controlId="universityGroup"
+                                            className={classes.form_option}>
+                                            <Form.Control
+                                                as="select"
+                                                name="faculty"
+                                                onChange={this.onChangeFaculty}>
+                                                {this.state.availableFaculties.map((item, _) => (
+                                                    <option value={item._id}>{item.name}</option>
+                                                ))}
+                                            </Form.Control>
+                                        </Form.Group>
+
+                                        {/** Form for selecting the corresponding course*/}
+                                        <Form.Group
+                                            controlId="universityGroup"
+                                            className={classes.form_option}>
+                                            <Form.Control
+                                                as="select"
+                                                name="course"
+                                                onChange={this.onChange}>
+                                                {this.state.availableCourses.map((item, _) => (
+                                                    <option value={item._id}>{item.name}</option>
+                                                ))}
+                                            </Form.Control>
+                                        </Form.Group>
+
+                                        {/** Form for uploading a cv*/}
+                                        <Form.Group className={classes.file_selector}>
+                                            <Form.File id="cvFile" />
+                                        </Form.Group>
+
+                                        {/** Right Form for selecting the corresponding course*/}
+                                        <Form.Group className={classes.file_selector}>
+                                            <Form.File id="transcriptFile" />
+                                        </Form.Group>
+                                        <div className={classes.date_picker}>
+                                            <DateTimePicker
+                                                disableClock={true}
+                                                selected={this.state.date}
+                                                name="date"
+                                                showTimeSelect
+                                                dateFormat="MMMM d, yyyy h:mm aa"
+                                                onChange={this.onChangeDate}
+                                                className="tutorialSession"></DateTimePicker>
                                         </div>
-                                    ))}
-                                </div>
 
-                                {/** Vertical Separator */}
-                                <div className="col-sm-0">
-                                    <div className={classes.vl}></div>
-                                </div>
-                                <div className={`${classes.form_selectors} col-sm-3`}>
-                                    {/** Form for selecting the unversity*/}
-                                    <Form.Group
-                                        controlId="universityGroup"
-                                        className={classes.form_option}>
-                                        <Form.Control
-                                            as="select"
-                                            name="university"
-                                            onChange={this.onChangeUniversity}>
-                                            {this.state.availableUniversities.map((item, _) => (
-                                                <option value={item._id}>{item.name}</option>
-                                            ))}
-                                        </Form.Control>
-                                    </Form.Group>
+                                        {/** price Input Form  */}
+                                        <div className={classes.numeric_input}>
+                                            <NumericInput
+                                                className={'form-control'}
+                                                name="price"
+                                                onChange={this.onChangePrice}
+                                                min={1}
+                                                max={100}
+                                                placeholder={1}
+                                            />
+                                        </div>
 
-                                    {/** Form for selecting the corresponding faculty*/}
-                                    <Form.Group
-                                        controlId="universityGroup"
-                                        className={classes.form_option}>
-                                        <Form.Control
-                                            as="select"
-                                            name="faculty"
-                                            onChange={this.onChangeFaculty}>
-                                            {this.state.availableFaculties.map((item, _) => (
-                                                <option value={item._id}>{item.name}</option>
-                                            ))}
-                                        </Form.Control>
-                                    </Form.Group>
-
-                                    {/** Form for selecting the corresponding course*/}
-                                    <Form.Group
-                                        controlId="universityGroup"
-                                        className={classes.form_option}>
-                                        <Form.Control
-                                            as="select"
-                                            name="course"
-                                            onChange={this.onChange}>
-                                            {this.state.availableCourses.map((item, _) => (
-                                                <option value={item._id}>{item.name}</option>
-                                            ))}
-                                        </Form.Control>
-                                    </Form.Group>
-
-                                    {/** Form for uploading a cv*/}
-                                    <Form.Group className={classes.file_selector}>
-                                        <Form.File id="cvFile" />
-                                    </Form.Group>
-
-                                    {/** Right Form for selecting the corresponding course*/}
-                                    <Form.Group className={classes.file_selector}>
-                                        <Form.File id="transcriptFile" />
-                                    </Form.Group>
-                                    <div className={classes.date_picker}>
-                                        <DateTimePicker
-                                            disableClock={true}
-                                            selected={this.state.date}
-                                            name="date"
-                                            showTimeSelect
-                                            dateFormat="MMMM d, yyyy h:mm aa"
-                                            onChange={this.onChangeDate}
-                                            className="tutorialSession"></DateTimePicker>
-                                    </div>
-
-                                    {/** price Input Form  */}
-                                    <div className={classes.numeric_input}>
-                                        <NumericInput
-                                            className={'form-control'}
-                                            name="price"
-                                            onChange={this.onChangePrice}
-                                            min={1}
-                                            max={100}
-                                            placeholder={1}
-                                        />
-                                    </div>
-
-                                    {/** Description Input Form  */}
-                                    <div className={classes.numeric_input}>
-                                        <Form.Control
-                                            as="textarea"
-                                            name="description"
-                                            onChange={this.onChange}
-                                            placeholder="(max. 200 words)"
-                                            rows={5}
-                                            className={classes.description_area}
-                                        />
-                                    </div>
-                                    <Row className={classes.padding_top}>
-                                        {/** Remote Checkmark */}
-                                        <div className="col-sm-4">
-                                            <div className={classes.checkmarks_left}>
+                                        {/** Description Input Form  */}
+                                        <div className={classes.numeric_input}>
+                                            <Form.Control
+                                                as="textarea"
+                                                name="description"
+                                                onChange={this.onChange}
+                                                placeholder="(max. 200 words)"
+                                                rows={5}
+                                                className={classes.description_area}
+                                            />
+                                        </div>
+                                        <Row className={classes.padding_top}>
+                                            {/** Remote Checkmark */}
+                                            <div className={`col-sm-4 ${classes.checkmarks_left}`}>
                                                 <Form.Check
                                                     name="remote"
                                                     label="Remote"
                                                     onClick={this.onClickCheckmark}
                                                 />
                                             </div>
-                                        </div>
 
-                                        {/** Onsite Checkmark */}
-                                        <div className="col-sm-4">
-                                            <div className={classes.checkmarks_left}>
+                                            {/** Onsite Checkmark */}
+                                            <div className={`col-sm-4 ${classes.checkmarks_right}`}>
                                                 <Form.Check
                                                     name="onsite"
                                                     label="Onsite"
                                                     onClick={this.onClickCheckmark}
                                                 />
                                             </div>
-                                        </div>
-                                    </Row>
-                                </div>
-                            </Row>
+                                        </Row>
+                                    </div>
+                                </Row>
+                            </Form>
                             <div className={classes.button_box}>
-                                {/* Register Button */}
+                                {/* Create Button */}
                                 <Button
                                     variant="primary"
                                     size="lg"
                                     active
-                                    className={classes.button}
+                                    className={`btn btn-lg ml-auto ${classes.button}`}
                                     onClick={this.onCreate}>
-                                    Register
+                                    Create
                                 </Button>
 
                                 {/* Cancel Button */}
@@ -447,13 +459,13 @@ class CreateTutorialSession extends Component {
                                     variant="secondary"
                                     size="lg"
                                     active
-                                    className={classes.button}
+                                    className={`btn  btn-lg ml-auto ${classes.button}`}
                                     onClick={this.onCancel}>
                                     Cancel
                                 </Button>
                             </div>
-                        </Form>
-                    </Card>
+                        </Card>
+                    </div>
                 </div>
             </div>
         );

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Card } from 'react-bootstrap/';
 import Grid from '@material-ui/core/Grid';
-import { getTutorById } from '../services/TutorService';
+import { getTutorById, getBookedOfferingsByUserId } from '../services/TutorService';
 import { Rating } from '@material-ui/lab/';
 import { useHistory } from 'react-router';
 
@@ -10,14 +10,14 @@ const useStyles = makeStyles(theme => ({
     component: {
         paddingLeft: '1rem',
         paddingRight: '1rem',
-        paddingTop: '1rem',
+        paddingTop: '2rem',
         paddingBottom: '1rem'
     },
     card: {
         height: '22rem',
-        minHeight: '8rem',
+        minHeight: '10rem',
         maxHeight: '22rem',
-        paddingBottom: '1rem'
+        paddingBottom: '2rem'
     },
     header_wrapper: {
         paddingTop: '0.2rem',
@@ -85,14 +85,14 @@ const useStyles = makeStyles(theme => ({
 
 function TutorialSessionComponent(props) {
     const [name, setName] = useState('');
-    const [gender, setGender] = useState('');
     const [lastOnline, setLastOnline] = useState('');
     const [age, setAge] = useState('');
-    const [ratings, setRatings] = useState([]);
-    const [location, setLocation] = useState([]);
+    const [rating, setRating] = useState(0);
     const [onsite, setOnsite] = useState(false);
     const [remote, setRemote] = useState(false);
-
+    const [experience, setExperience] = useState(0);
+    const [languages, setLanguages] = useState([]);
+    const [postalCode, setPostalCode] = useState('');
     const history = useHistory();
 
     function OnClickButton(e) {
@@ -103,32 +103,27 @@ function TutorialSessionComponent(props) {
     }
 
     useEffect(() => {
-        getTutorById(
-            props.tutorId,
-            response => {
-                const tutor = response.data;
-                setName(tutor.name);
-                setGender(tutor.gender);
-                const differenceInHours = (new Date() - new Date(tutor.lastOnline)) / 36e5;
-                let dateDifference = 0;
+        setName(props.tutor.firstName);
+        const differenceInHours = (new Date() - new Date(props.lastOnline)) / 36e5;
+        let dateDifference = 0;
 
-                if (differenceInHours > 24) {
-                    dateDifference = `${Math.floor(differenceInHours / 24)} days ago`;
-                } else if (Math.floor(differenceInHours) === 0) {
-                    dateDifference = `${Math.floor(differenceInHours * 60)} minutes ago`;
-                } else {
-                    dateDifference = `${Math.floor(differenceInHours)} hours ago`;
-                }
-                const ageDifference = new Date(new Date() - new Date(tutor.dateOfBirth));
-                const age = `${Math.abs(ageDifference.getUTCFullYear() - 1970)} years old`;
+        if (differenceInHours > 24) {
+            dateDifference = `${Math.floor(differenceInHours / 24)} days ago`;
+        } else if (Math.floor(differenceInHours) === 0) {
+            dateDifference = `${Math.floor(differenceInHours * 60)} minutes ago`;
+        } else {
+            dateDifference = `${Math.floor(differenceInHours)} hours ago`;
+        }
+        const ageDifference = new Date(new Date() - new Date(props.tutor.dateOfBirth));
+        const age = `${Math.abs(ageDifference.getUTCFullYear() - 1970)} years old`;
 
-                setLastOnline(dateDifference);
-                setAge(age);
-            },
-            error => {
-                console.error(error);
-            }
-        );
+        setLastOnline(dateDifference);
+        setAge(age);
+        setRating(props.tutor.averageRating);
+        setExperience(props.tutor.experience);
+        setLanguages(props.tutor.languages);
+        setPostalCode(props.tutor.postalCode);
+
         if (props.remote) {
             setRemote(true);
         }
@@ -136,11 +131,8 @@ function TutorialSessionComponent(props) {
         if (props.onsite) {
             setOnsite(true);
         }
-    }, [onsite, remote]);
+    }, [onsite, remote, name, lastOnline, experience, rating]);
 
-    const onClickTest = e => {
-        console.log(props);
-    };
     const classes = useStyles();
 
     return (
@@ -156,7 +148,7 @@ function TutorialSessionComponent(props) {
                         <Grid item xs={2}>
                             <div className={classes.button_wrapper}>
                                 <button className={classes.button} onClick={OnClickButton}>
-                                    Book Now
+                                    <span>Book Now</span>
                                 </button>
                             </div>
                         </Grid>
@@ -185,7 +177,7 @@ function TutorialSessionComponent(props) {
                             Price: {`${props.price}€/h`}
                         </Grid>
                         <Grid item xs={4}>
-                            Languages: English, German
+                            Languages: {languages.join(', ')}
                         </Grid>
                         <Grid item xs={4}>
                             Name: {name}
@@ -196,7 +188,7 @@ function TutorialSessionComponent(props) {
                 <div className={classes.row_wrapper}>
                     <Grid container spacing={2}>
                         <Grid item xs={4}>
-                            Experience: 121 Sessions
+                            {`Experience: ${experience} sessions`}
                         </Grid>
                         <Grid item xs={4}>
                             Location:
@@ -214,8 +206,10 @@ function TutorialSessionComponent(props) {
                         <Grid item xs={4}>
                             <Rating
                                 name="size-large"
-                                defaultValue={4}
+                                value={rating}
                                 size="large"
+                                readOnly
+                                precision={0.5}
                                 className={classes.rating}
                             />
                         </Grid>
@@ -223,7 +217,7 @@ function TutorialSessionComponent(props) {
                             Last Online: {lastOnline}
                         </Grid>
                         <Grid item xs={4}>
-                            Postal Code: 85748
+                            Postal Code: {postalCode}
                         </Grid>
                     </Grid>
                 </div>

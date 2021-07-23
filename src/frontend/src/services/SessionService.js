@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { SERVER_API } from '../config';
-
+import { getBookedOfferingsByUserId } from '../services/TutorService';
 const API_URL = `${SERVER_API}/session`;
 
 /**
@@ -55,19 +55,23 @@ export function getAllSessionsByUniversity(universityId, callback, errorcallback
 
 /**
  * API Endpoint for getting all verified sessions of a university
- * @param {String} payload
+ * @param {String} universityId
  * @param {Function} callback
  * @param {Function} errorcallback
  */
-export function getAllVerifiedSessionsByUniversity(universityId, callback, errorcallback) {
-    axios
-        .get(`${API_URL}/verified/university/${universityId}`)
-        .then(response => {
-            callback(response);
-        })
-        .catch(error => {
-            errorcallback(error);
-        });
+export async function getAllVerifiedSessionsByUniversity(universityId, callback, errorcallback) {
+    try {
+        axios
+            .get(`${API_URL}/verified/university/${universityId}`)
+            .then(response => {
+                callback(response);
+            })
+            .catch(error => {
+                errorcallback(error);
+            });
+    } catch (error) {
+        errorcallback(error);
+    }
 }
 
 /**

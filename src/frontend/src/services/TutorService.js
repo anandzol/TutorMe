@@ -24,3 +24,24 @@ export function getTutorById(tutorId, callback, errorcallback) {
             }
         });
 }
+
+/**
+ * API Endpoint for getting all booked offerings of a tutor
+ * @param {String} tutorId
+ * @param {Function} callback
+ * @param {Function} errorcallback
+ */
+export function getBookedOfferingsByUserId(tutorId, callback, errorcallback) {
+    axios
+        .get(`${API_URL}/booked-offerings/${tutorId}`)
+        .then(response => {
+            if (callback != null) {
+                callback(response);
+            }
+        })
+        .catch(error => {
+            if (errorcallback != null) {
+                errorcallback(error);
+            }
+        });
+}

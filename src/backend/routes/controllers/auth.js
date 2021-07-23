@@ -30,7 +30,7 @@ const login = async (req, res) => {
         let user = await User.findOne({
             email: req.body.email
         }).exec();
-
+        2;
         // Check if the user is valid
         if (!user) {
             return res.status(404).json({
@@ -92,14 +92,18 @@ const login = async (req, res) => {
  */
 const register = async (req, res) => {
     try {
-        console.log(req.body);
         const hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
         let user = req.body;
         user.password = hashedPassword;
 
+        let existingUser = await User.findOne({ email: user.email });
+        if (existingUser) {
+            return res.status(400).send('Email already exists');
+        }
+        console.log(user);
         let retUser = await User.create(user);
-
+        console.log(retUser);
         const token = jwt.sign(
             {
                 _id: retUser._id,

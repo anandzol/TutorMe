@@ -6,26 +6,36 @@ import { makeStyles } from '@material-ui/styles';
 import { getUniversityById } from '../services/UniversityService';
 import { getAllVerifiedSessionsByUniversity } from '../services/SessionService';
 import { FormControlLabel, Checkbox } from '@material-ui/core/';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { Slider, Grid, FormGroup, Typography } from '@material-ui/core/';
+import { Slider, Grid, Typography } from '@material-ui/core/';
 import DatePicker from 'react-datepicker';
 import TutorialSessionComponent from './TutorialSessionComponent';
+import Select from 'react-select';
+import Pagination from '@material-ui/lab/Pagination';
+
 import './styles/styles.css';
 
 const useStyles = makeStyles(theme => ({
     component: {
+        display: 'flex',
+        height: '100%',
+        width: '100%',
+        position: 'relative',
         paddingTop: '3rem',
-        paddingLeft: '1rem'
+        paddingLeft: '1rem',
+        marginRight: '0px',
+        margin: '0'
     },
     treepane: {
         paddingTop: '1rem',
         paddingLeft: '1rem'
     },
     searchField: {
-        height: '5rem',
-        width: '30rem',
-        paddingLeft: '1.5rem',
+        height: '4.5rem',
+        width: '100%',
+        paddingLeft: '1rem',
         paddingBottom: '2rem'
     },
     padding_top: {
@@ -37,7 +47,7 @@ const useStyles = makeStyles(theme => ({
     tree_item_label: {
         fontWeight: '550',
         minWidth: '26rem',
-        fontSize: '19px',
+        fontSize: '17px',
         width: '26rem',
         paddingBottom: '0.2rem',
         paddingTop: '0.2rem'
@@ -57,35 +67,32 @@ const useStyles = makeStyles(theme => ({
         height: '2rem'
     },
     card: {
-        width: '30rem',
+        width: '100%',
         paddingTop: '1rem',
         paddingLeft: '1rem',
         paddingBottom: '1rem',
-        height: '62rem',
-        minHeight: '20rem',
-        maxHeight: '62rem',
+        height: '50rem',
+        minHeight: '15rem',
+        maxHeight: '60rem',
         overflowY: 'auto',
         overflowX: 'hidden'
     },
     card_wrapper: {
-        paddingLeft: '1.5rem'
+        paddingLeft: '1rem'
     },
     slider: {
-        width: 200,
+        width: '100%',
         paddingTop: '1rem'
     },
     slider_wrapper: {
         paddingLeft: '2rem'
     },
     ratingFilter: {
-        paddingTop: '0.4rem'
+        paddingTop: '0.2rem'
     },
     ratingFilter_wrapper: {
-        width: '8rem',
-        paddingLeft: '3rem'
-    },
-    filterCol: {
-        paddingTop: '2rem'
+        width: '7rem',
+        paddingLeft: '1rem'
     },
     datePicker: {
         paddingTop: '0.3rem',
@@ -96,12 +103,34 @@ const useStyles = makeStyles(theme => ({
         paddingTop: '2rem'
     },
     sessionCard: {
-        height: '60rem',
-        maxHeight: '60rem',
-        minHeight: '10rem',
+        height: '100%',
         overflowY: 'auto',
         overflowX: 'hidden',
-        width: '103rem'
+        width: '110%'
+    },
+    filterBar: {
+        width: '105%'
+    },
+    breadCrumb: {
+        paddingLeft: '0.5rem',
+        width: '85%',
+        paddingBottom: '0.5rem',
+        fontSize: 'large'
+    },
+    breadCrumbItem: {
+        backgroundColor: 'white'
+    },
+    paginationComponent: {
+        paddingTop: '1rem',
+        position: 'absolute'
+    },
+    dateFilter: {
+        width: '13rem',
+        paddingLeft: '1rem'
+    },
+    sortSessionWrapper: {
+        paddingLeft: '1rem',
+        width: '13rem'
     }
 }));
 
@@ -119,32 +148,67 @@ const marks = [
         label: '50€'
     }
 ];
+const locationFilter = [
+    { value: 1, label: 'Both' },
+    { value: 2, label: 'Onsite' },
+    { value: 3, label: 'Remote' }
+];
+const languages = [
+    { value: 'German', label: 'German' },
+    { value: 'English', label: 'English' },
+    { value: 'French', label: 'French' }
+];
+const experienceFilter = [
+    { value: 1, label: '0-50' },
+    { value: 2, label: '50-100' },
+    { value: 3, label: '100-200' },
+    { value: 4, label: '200+' }
+];
+const sortingValues = [
+    { value: 1, label: 'Price Ascending' },
+    { value: 2, label: 'Price Descending' },
+    { value: 3, label: 'New In' },
+    { value: 4, label: 'Alphabetically' }
+];
+
 const ShowTutorialSessions = () => {
+    // All sessions are all sessions which are queried based on university
     const [allSessions, setAllSessions] = useState([]);
+
+    // Displayed sessions are sessions which are displayed taking pagination into account
     const [displayedSessions, setDisplayedSessions] = useState([]);
-    const [courseFilteredSessions, setCourseFilteredSessions] = useState([]);
+
+    // Filtered sessions are sessions based on all filter criteria (price, rating, course, etc.)
+    const [filteredSessions, setFilteredSessions] = useState([]);
+    const [filteredCourses, setFilteredCourses] = useState([]);
     const [faculties, setFaculties] = useState([]);
     const [selectedCourses, setSelectedCourses] = useState([]);
     const [location, setLocation] = useState(1);
-    const [language, setLanguage] = useState('both');
+    const [language, setLanguage] = useState([]);
     const [experience, setExperience] = useState(0);
     const [price, setPriceFilter] = useState([1, 50]);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [sortValue, setSortValue] = useState(-1);
     const [initialRender, setInitialRender] = useState(true);
-    const [loading, setLoading] = useState(false);
+    const [isLoading, setLoading] = useState(false);
+    const [rating, setRating] = useState(0);
+    const [searchKeyword, setSearchKeyword] = useState('');
+    const [activePage, setActivePage] = useState(1);
+    const [numberOfPages, setNumberOfPages] = useState(1);
 
     // For development purposes, will need to be either fetched dynamically by user/ passed on by props of hoc
     const [university, setUniversity] = useState('60bff011a5e1000beeddb38e');
-
-    useEffect(() => {
+    const [universityName, setUniversityName] = useState('');
+    useEffect(async () => {
         setLoading(true);
-        // Prevent api calls everytime a value changes
+
+        // Prevent api call everytime a value changes
         if (initialRender) {
             getUniversityById(
                 university,
                 response => {
+                    setUniversityName(response.data.name);
                     setFaculties(response.data.faculties);
 
                     let tmp = [];
@@ -162,15 +226,14 @@ const ShowTutorialSessions = () => {
                     console.error(error);
                 }
             );
-
-            getAllVerifiedSessionsByUniversity(
+            await getAllVerifiedSessionsByUniversity(
                 university,
                 response => {
                     // Initially display all sessions of the university
-
                     setAllSessions(response.data);
-                    setCourseFilteredSessions(response.data);
-                    setDisplayedSessions(response.data);
+                    setFilteredSessions(response.data);
+                    setDisplayedSessions(response.data.slice(0, 2));
+                    setNumberOfPages(Math.ceil(response.data.length / 2));
                 },
                 error => {
                     console.error(error);
@@ -178,19 +241,16 @@ const ShowTutorialSessions = () => {
             );
             setInitialRender(false);
         }
-
         filterSessions();
         setLoading(false);
-    }, [location, price]);
-
-    const onToggleNode = e => {};
+    }, [location, price, experience, language, rating, filteredCourses, searchKeyword, activePage]);
 
     const onSearch = e => {
-        console.log(selectedCourses);
+        setSearchKeyword(e);
     };
 
     const onChangeLocation = e => {
-        setLocation(e.target.value);
+        setLocation(e.value);
     };
 
     const onChangeSlider = (e, newValue) => {
@@ -198,31 +258,120 @@ const ShowTutorialSessions = () => {
     };
 
     const filterSessions = () => {
-        // Filter by minimum price range first
+        let filteredSessions = [];
+        // Filter by selected courses
+        // If no checkbox is selected, we display all courses
+        if (filteredCourses.length === 0) {
+            filteredSessions = allSessions;
+        } else {
+            filteredSessions = allSessions.filter(session =>
+                filteredCourses.includes(session.course._id)
+            );
+        }
+
+        // Filter by minimum price range
         const minimumPrice = price[0];
         const maximumPrice = price[1];
-        let sessions = courseFilteredSessions;
-        sessions = courseFilteredSessions.filter(
+        filteredSessions = filteredSessions.filter(
             session => session.price >= minimumPrice && session.price <= maximumPrice
         );
 
         // Filter by location
         switch (location) {
-            case '1':
-                sessions = sessions;
+            case 1:
+                filteredSessions = filteredSessions;
                 break;
 
-            case '2':
-                sessions = sessions.filter(session => session.onsite);
+            case 2:
+                filteredSessions = filteredSessions.filter(session => session.onsite);
 
                 break;
-            case '3':
-                sessions = sessions.filter(session => session.remote);
+            case 3:
+                filteredSessions = filteredSessions.filter(session => session.remote);
                 break;
             default:
-                sessions = sessions;
+                filteredSessions = filteredSessions;
         }
-        setDisplayedSessions(sessions);
+
+        // Filter by rating
+        filteredSessions = filteredSessions.filter(
+            session => session.tutorId.averageRating >= rating
+        );
+
+        // Filter by minimum experience
+        switch (experience) {
+            case 1:
+                filteredSessions = filteredSessions.filter(
+                    session => session.tutorId.experience > 0 && session.tutorId.experience < 50
+                );
+                break;
+            case 2:
+                filteredSessions = filteredSessions.filter(
+                    session => session.tutorId.experience > 50 && session.tutorId.experience < 100
+                );
+                break;
+            case 3:
+                filteredSessions = filteredSessions.filter(
+                    session => session.tutorId.experience > 100 && session.tutorId.experience < 200
+                );
+                break;
+            case 4:
+                filteredSessions = filteredSessions.filter(
+                    session => session.tutorId.experience > 200
+                );
+                break;
+            default:
+                filteredSessions = filteredSessions;
+                break;
+        }
+
+        // Filter by language
+        if (language.length !== 0) {
+            filteredSessions = filteredSessions.filter(session =>
+                session.tutorId.languages.some(lang => language.includes(lang))
+            );
+        }
+
+        //Filter by search keyword
+        filteredSessions = filteredSessions.filter(
+            session =>
+                session.description.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+                session.course.name.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+                session.tutorId.firstName.toLowerCase().includes(searchKeyword.toLowerCase())
+        );
+
+        let allFilteredSessions = filteredSessions;
+
+        // We display 2 offerings per page
+        setNumberOfPages(Math.ceil(allFilteredSessions.length / 2));
+        if (sortValue !== -1) {
+            switch (sortValue) {
+                case 1:
+                    filteredSessions = filteredSessions.sort((a, b) => a.price - b.price);
+                    break;
+                case 2:
+                    filteredSessions = filteredSessions.sort((a, b) => b.price - a.price);
+                    break;
+                case 3:
+                    filteredSessions = filteredSessions.sort(
+                        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                    );
+                    break;
+                case 4:
+                    filteredSessions = filteredSessions.sort((a, b) =>
+                        a.course.name.localeCompare(b.course.name)
+                    );
+                    break;
+                default:
+                    console.error('no available sort option');
+            }
+        }
+        setFilteredSessions(filteredSessions);
+        const startIndex = activePage * 2 - 2;
+        const endIndex = activePage * 2;
+        let clonedArray = filteredSessions.slice();
+        clonedArray = clonedArray.slice(startIndex, endIndex);
+        setDisplayedSessions(clonedArray);
     };
 
     const onClickCheckbox = e => {
@@ -230,7 +379,6 @@ const ShowTutorialSessions = () => {
             id: e.target.name,
             selected: e.target.checked
         };
-
         const index = selectedCourses.findIndex(item => item.id === e.target.name);
         let currentCourses = selectedCourses;
         currentCourses[index] = course;
@@ -241,43 +389,40 @@ const ShowTutorialSessions = () => {
             .filter(course => course.selected)
             .map(course => course.id);
 
-        // Filter all displayed sessions based on wether their course is selected in the checkbox
-        let sessions = allSessions.filter(session => filteredCourses.includes(session.course._id));
-
-        // If there are no selected courses, display all sessions
-        if (filteredCourses === undefined || filteredCourses.length === 0) {
-            setDisplayedSessions(allSessions);
-            setCourseFilteredSessions(allSessions);
-        } else {
-            setCourseFilteredSessions(sessions);
-            setDisplayedSessions(sessions);
-        }
+        setFilteredCourses(filteredCourses);
     };
 
     const onSort = e => {
-        setSortValue(e.target.value);
-        switch (e.target.value) {
-            case '1':
-                setDisplayedSessions(displayedSessions.sort((a, b) => a.price - b.price));
+        setSortValue(e.value);
+        setActivePage(1);
+        let sortedSessions = filteredSessions;
+        switch (e.value) {
+            case 1:
+                sortedSessions = filteredSessions.sort((a, b) => a.price - b.price);
                 break;
-            case '2':
-                setDisplayedSessions(displayedSessions.sort((a, b) => b.price - a.price));
+            case 2:
+                sortedSessions = filteredSessions.sort((a, b) => b.price - a.price);
                 break;
-            case '3':
-                setDisplayedSessions(
-                    displayedSessions.sort(
-                        (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-                    )
+            case 3:
+                sortedSessions = filteredSessions.sort(
+                    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
                 );
                 break;
-            case '4':
-                setDisplayedSessions(
-                    displayedSessions.sort((a, b) => a.course.name.localeCompare(b.course.name))
+            case 4:
+                sortedSessions = filteredSessions.sort((a, b) =>
+                    a.course.name.localeCompare(b.course.name)
                 );
                 break;
             default:
                 console.error('no available sort option');
         }
+
+        setNumberOfPages(Math.ceil(sortedSessions.length / 2));
+        setDisplayedSessions(sortedSessions.slice(0, 2));
+    };
+
+    const onFilterRating = e => {
+        setRating(e.target.value);
     };
 
     const onChangeDate = dates => {
@@ -286,10 +431,56 @@ const ShowTutorialSessions = () => {
         setEndDate(end);
     };
 
+    const onChangeExperience = e => {
+        setExperience(e.value);
+    };
+
+    const onChangeLanguages = e => {
+        setLanguage(e.map(language => language.value));
+    };
+
+    const handlePageChange = (e, value) => {
+        setActivePage(value);
+    };
+
+    function renderTutorialSessionComponents() {
+        if (!isLoading) {
+            return (
+                <div>
+                    {displayedSessions.map(item => {
+                        return (
+                            <div>
+                                <TutorialSessionComponent
+                                    key={item._id}
+                                    name={item.tutorId.firstName}
+                                    lastOnline={item.tutorId.lastOnline}
+                                    tutor={item.tutorId}
+                                    remote={item.remote}
+                                    onsite={item.onsite}
+                                    price={item.price}
+                                    description={item.description}
+                                    id={item._id}
+                                    name={item.course.name}></TutorialSessionComponent>
+                            </div>
+                        );
+                    })}
+                </div>
+            );
+        } else {
+            return <div></div>;
+        }
+    }
+
     const classes = useStyles();
     return (
         <Row className={classes.component}>
-            <Col xs={3} className={`col ${classes.filterCol}`}>
+            <Col xs={3} className={`col`}>
+                <div className={classes.breadCrumb}>
+                    <Breadcrumb>
+                        <Breadcrumb.Item href="http://localhost:3000/home">Home</Breadcrumb.Item>
+                        <Breadcrumb.Item active>{universityName}</Breadcrumb.Item>
+                    </Breadcrumb>
+                </div>
                 <div className={classes.searchField}>
                     <SearchField
                         placeholder="Search..."
@@ -301,7 +492,6 @@ const ShowTutorialSessions = () => {
                 <div className={classes.card_wrapper}>
                     <Card className={classes.card}>
                         <TreeView
-                            onNodeSelect={onToggleNode}
                             defaultCollapseIcon={<ExpandMoreIcon />}
                             defaultExpandIcon={<ChevronRightIcon />}>
                             {faculties.map((item, index) => {
@@ -347,7 +537,7 @@ const ShowTutorialSessions = () => {
                 </div>
             </Col>
             <Col xs={8}>
-                <div>
+                <div className={classes.filterBar}>
                     <Grid container spacing={4}>
                         <Grid item xs={2}>
                             <div className={classes.slider_wrapper}>
@@ -375,92 +565,92 @@ const ShowTutorialSessions = () => {
                                 </Typography>
                                 <Rating
                                     name="size-large"
-                                    defaultValue={2}
+                                    defaultValue={0}
+                                    value={rating}
                                     size="large"
                                     precision={0.5}
+                                    onChange={onFilterRating}
                                     className={classes.ratingFilter}
                                 />
                             </div>
                         </Grid>
                         <Grid item xs={2}>
-                            <Form.Group controlId="locationFormSelect">
-                                <Form.Label>Location</Form.Label>
-                                <Form.Control
-                                    as="select"
-                                    value={location}
-                                    onChange={onChangeLocation}>
-                                    <option value={1}>Both</option>
-                                    <option value={2}>Onsite</option>
-                                    <option value={3}>Remote</option>
-                                </Form.Control>
-                            </Form.Group>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Form.Group controlId="locationFormSelect">
-                                <Form.Label>Language</Form.Label>
-                                <Form.Control as="select">
-                                    <option>German</option>
-                                    <option>English</option>
-                                    <option>Both</option>
-                                </Form.Control>
-                            </Form.Group>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Form.Group controlId="locationFormSelect">
-                                <Form.Label>Minimum Experience</Form.Label>
-                                <Form.Control as="select">
-                                    <option>0-50 </option>
-                                    <option>50-100 </option>
-                                    <option>100-200 </option>
-                                    <option>200+</option>
-                                </Form.Control>
-                            </Form.Group>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Typography id="range-slider" gutterBottom>
-                                Available Dates
-                            </Typography>
-                            <div className={classes.datePicker}>
-                                <DatePicker
-                                    placeholderText="  Select a date range"
-                                    selected={startDate}
-                                    onChange={onChangeDate}
-                                    startDate={startDate}
-                                    endDate={endDate}
-                                    selectsRange
-                                    wrapperClassName="datePicker"
-                                />
-                            </div>
-                            <div className={classes.sortSessions}>
-                                <Form.Group>
-                                    <Form.Control as="select" value={sortValue} onChange={onSort}>
-                                        <option value={-1} disabled>
-                                            Sort By
-                                        </option>
-                                        <option value={1}>Price Ascending</option>
-                                        <option value={2}>Price Descending</option>
-                                        <option value={3}>New In</option>
-                                        <option value={4}>Alphabetically</option>
-                                    </Form.Control>
+                            <div className={classes.selectWrapper}>
+                                <Form.Group controlId="locationFormSelect">
+                                    <Form.Label>Location</Form.Label>
+                                    <Select
+                                        options={locationFilter}
+                                        placeholder="Location"
+                                        onChange={onChangeLocation}></Select>
                                 </Form.Group>
+                            </div>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <div>
+                                <Form.Group controlId="locationFormSelect">
+                                    <Form.Label>Language</Form.Label>
+                                    <Select
+                                        isMulti
+                                        options={languages}
+                                        placeholder="Language"
+                                        onChange={onChangeLanguages}
+                                    />
+                                </Form.Group>
+                            </div>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <div>
+                                <Form.Group controlId="locationFormSelect">
+                                    <Form.Label>Minimum Experience</Form.Label>
+                                    <Select
+                                        options={experienceFilter}
+                                        placeholder="Sessions"
+                                        onChange={onChangeExperience}></Select>
+                                </Form.Group>
+                            </div>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <div className={classes.dateFilter}>
+                                <Typography id="range-slider" gutterBottom>
+                                    Available Dates
+                                </Typography>
+                                <div className={classes.datePicker}>
+                                    <DatePicker
+                                        placeholderText="  Select a date range"
+                                        selected={startDate}
+                                        onChange={onChangeDate}
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        selectsRange
+                                        wrapperClassName="datePicker"
+                                    />
+                                </div>
+                            </div>
+                            <div className={classes.sortSessionWrapper}>
+                                <div className={classes.sortSessions}>
+                                    <Form.Group>
+                                        <Select
+                                            options={sortingValues}
+                                            placeholder="Sort By"
+                                            onChange={onSort}></Select>
+                                    </Form.Group>
+                                </div>
                             </div>
                         </Grid>
                     </Grid>
                 </div>
-                <Card className={classes.sessionCard}>
-                    {displayedSessions.map((item, _) => {
-                        return (
-                            <TutorialSessionComponent
-                                tutorId={item.tutorId}
-                                remote={item.remote}
-                                onsite={item.onsite}
-                                price={item.price}
-                                description={item.description}
-                                id={item._id}
-                                name={item.course.name}></TutorialSessionComponent>
-                        );
-                    })}
-                </Card>
+                <div>
+                    <Card className={classes.sessionCard}>{renderTutorialSessionComponents()}</Card>
+                    <div className={classes.paginationComponent}>
+                        <Pagination
+                            count={numberOfPages}
+                            page={activePage}
+                            onChange={handlePageChange}
+                            color="primary"
+                            variant="outlined"
+                            size="large"></Pagination>
+                    </div>
+                </div>
             </Col>
         </Row>
     );

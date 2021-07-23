@@ -41,7 +41,6 @@ const styles = () => ({
 });
 
 // /components/CreateUniversity.js
-
 class CreateUniversity extends Component {
     constructor() {
         super();

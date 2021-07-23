@@ -4,9 +4,9 @@ import { withStyles } from '@material-ui/styles';
 import { getTutorById } from '../services/TutorService';
 const styles = () => ({
     card: {
-        minHeight: '21rem',
-        maxHeight: '21rem',
-        height: '21rem',
+        minHeight: '20rem',
+        height: '20rem',
+        minWidth: '30rem',
         overFlowY: 'auto'
     },
     headerWrapper: {
@@ -20,22 +20,27 @@ const styles = () => ({
         fontWeight: 500
     },
     inquiry: {
-        minHeight: '7rem',
-        maxHeight: '7rem',
+        paddingTop: '0.5rem',
+        paddingLeft: '0.5rem',
+        paddingRight: '0.5rem',
+        minHeight: '6rem',
+        maxHeight: '6rem',
         overFlowY: 'auto',
-        height: '7rem'
+        height: '6rem',
+        textAlign: 'left'
     },
     date: {
         paddingLeft: '1rem',
-        minHeight: '1rem',
-        maxHeight: '1rem'
+        minHeight: '1.5rem',
+        maxHeight: '1.5rem'
+    },
+    dateWrapper: {
+        height: '1.5rem'
     },
     cancelButtonWrapper: {
-        float: 'right',
-        paddingRight: '2rem',
-        position: 'relative',
-        bottom: '-70px',
-        paddingBottom: '0.5rem'
+        right: '1rem',
+        paddingTop: '10.7rem',
+        position: 'absolute'
     },
     cancelButton: {
         height: '40px',
@@ -47,16 +52,20 @@ const styles = () => ({
         marginBottom: '0.7rem'
     },
     location: {
-        paddingLeft: '1rem'
+        paddingLeft: '1rem',
+        height: '1.5rem',
+        minHeight: '1.5rem',
+        maxHeight: '1.5rem'
     },
     name: {
         paddingLeft: '1rem',
-        paddingBottom: '0.5rem'
+        minHeight: '1.5rem',
+        height: '1.5rem'
     },
     price: {
         float: 'right',
         paddingRight: '1rem',
-        paddingBottom: '0.5rem'
+        paddingBottom: '0rem'
     }
 });
 // components/UpcomingSessionCard.js
@@ -64,20 +73,6 @@ class UpcomingSessionCard extends Component {
     constructor(props) {
         super();
         this.state = props.session;
-    }
-
-    componentDidMount() {
-        getTutorById(
-            this.state.tutorId,
-            response => {
-                this.setState({
-                    tutorName: response.data.name
-                });
-            },
-            error => {
-                console.error(error);
-            }
-        );
     }
 
     render() {
@@ -89,22 +84,22 @@ class UpcomingSessionCard extends Component {
                         <div className={classes.headerWrapper}>
                             <div className={classes.header}>{this.state.courseName}</div>
                         </div>
-                        <div className={classes.inquiry}>
-                            {this.state.inquiry}
-                            <div className={classes.cancelButtonWrapper}>
-                                <button className={classes.cancelButton}>Cancel</button>
-                            </div>
-                        </div>
-                        <hr />
+                        <div className={classes.inquiry}>{this.state.inquiry}</div>
+                        <hr className={classes.divider} />
                         <div className={classes.date}>{this.state.startDate}</div>
+                        <div className={classes.cancelButtonWrapper}>
+                            <button className={classes.cancelButton}>Cancel</button>
+                        </div>
+
                         <hr className={classes.divider} />
                         <div className={classes.location}>
-                            {this.state.onsite ? 'Onsite' : ''} {this.state.remove ? 'Remote' : ''}
+                            Location: {this.state.onsite ? 'Onsite' : ''}{' '}
+                            {this.state.remote ? 'Remote' : ''}
                         </div>
                         <hr />
                         <div className={classes.name}>
-                            {this.state.tutorName}
-                            <div className={classes.price}>{`${this.state.price} €/h`}</div>
+                            {`Tutor: ${this.state.tutorId.firstName}`}
+                            <div className={classes.price}>{`Price: ${this.state.price} €/h`}</div>
                         </div>
                     </Card>
                 </div>

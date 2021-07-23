@@ -5,6 +5,7 @@ import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
 import AuthService from '../services/AuthService';
 import { withStyles } from '@material-ui/styles';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 const styles = () => ({
     card: {
@@ -38,6 +39,12 @@ const styles = () => ({
         paddingLeft: '1rem',
         paddingTop: '1rem',
         paddingBottom: '1rem'
+    },
+    passWordToggle: {
+        position: 'absolute',
+        top: '6rem',
+        right: '7%',
+        color: 'grey'
     }
 });
 
@@ -47,12 +54,14 @@ class LoginUser extends Component {
         this.handleLogin = this.handleLogin.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
+        this.onTogglePassword = this.onTogglePassword.bind(this);
 
         this.state = {
             email: '',
             password: '',
             loading: false,
-            message: ''
+            message: '',
+            passwordToggle: false
         };
     }
 
@@ -65,6 +74,12 @@ class LoginUser extends Component {
     onChangePassword(e) {
         this.setState({
             password: e.target.value
+        });
+    }
+
+    onTogglePassword(e) {
+        this.setState({
+            passwordToggle: !this.state.passwordToggle
         });
     }
 
@@ -126,14 +141,19 @@ class LoginUser extends Component {
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <Input
-                                        placeholder="Password"
-                                        type="password"
-                                        className="form-control"
-                                        name="password"
-                                        value={this.state.password}
-                                        onChange={this.onChangePassword}
-                                    />
+                                    <div>
+                                        <Input
+                                            placeholder="Password"
+                                            type={this.state.passwordToggle ? 'text' : 'password'}
+                                            className="form-control"
+                                            name="password"
+                                            value={this.state.password}
+                                            onChange={this.onChangePassword}
+                                        />
+                                        <VisibilityIcon
+                                            onClick={this.onTogglePassword}
+                                            className={classes.passWordToggle}></VisibilityIcon>
+                                    </div>
                                 </div>
 
                                 <div className="form-group">

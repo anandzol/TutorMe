@@ -107,7 +107,7 @@ class BookSession extends Component {
         getSessionById(
             sessionId,
             response => {
-                const tutorId = response.data.tutorId;
+                const tutorId = response.data.tutorId.id;
                 getTutorById(
                     tutorId,
                     tutor => {
