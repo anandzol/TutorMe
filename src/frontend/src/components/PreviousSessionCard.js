@@ -116,6 +116,7 @@ class PreviousSessionCard extends Component {
         const { classes } = this.props;
         const isStudent = this.state.isStudent;
         let ratings;
+        let button;
         if (isStudent) {
             ratings = (
                 <ReactStars
@@ -124,6 +125,13 @@ class PreviousSessionCard extends Component {
                     value={this.state.rating}
                     activeColor="#ffd700"
                     onChange={this.onRatingsChanged}></ReactStars>
+            );
+            button = (
+                <button
+                    onClick={this.onBookAgain}
+                    className={`${classes.bookAgainButton} btn btn-success`}>
+                    Book Again
+                </button>
             );
         } else {
             ratings = (
@@ -135,6 +143,7 @@ class PreviousSessionCard extends Component {
                     activeColor="#ffd700"></ReactStars>
             );
         }
+
         return (
             <div>
                 <div>
@@ -145,13 +154,7 @@ class PreviousSessionCard extends Component {
                         <div className={classes.description}>{this.state.description}</div>
                         <hr />
                         <div className={classes.date}>{this.state.dateFormatted}</div>
-                        <div className={classes.cancelButtonWrapper}>
-                            <button
-                                onClick={this.onBookAgain}
-                                className={`${classes.bookAgainButton} btn btn-success`}>
-                                Book Again
-                            </button>
-                        </div>
+                        <div className={classes.cancelButtonWrapper}>{button}</div>
                         <hr className={classes.divider} />
                         <div className={classes.location}>
                             Rating:
