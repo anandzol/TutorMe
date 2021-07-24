@@ -140,15 +140,40 @@ const getSessionById = (req, res) => {
  * @param {Object} res
  */
 const getSessionsByTutorId = (req, res) => {
-    console.log(req.params.id);
     TutorialSession.find({ tutorId: req.params.id })
         .populate({
             path: 'course university'
         })
+        .sort({ createdAt: -1 })
         .then(result => res.status(200).json(result))
         .catch(error => {
             res.status(404).json({
                 error: 'No available sessions found',
+                message: error.message
+            });
+        });
+};
+
+/**
+ * API Controller for deleting a session by its id
+ * @param {Object} req
+ * @param {Object} res
+ */
+const deleteSessionById = (req, res) => {
+    const sessionId = req.params.id;
+
+    TutorialSession.findOneAndDelete({ _id: sessionId })
+        .then(
+            response => {
+                res.status(200).message('Session deleted successfully');
+            },
+            error => {
+                res.status(404).message('Session not found');
+            }
+        )
+        .catch(error => {
+            res.status(404).json({
+                error: 'Session not found',
                 message: error.message
             });
         });
@@ -161,5 +186,6 @@ module.exports = {
     getAllPendingByUniversityId,
     getAllPending,
     getSessionById,
-    getSessionsByTutorId
+    getSessionsByTutorId,
+    deleteSessionById
 };

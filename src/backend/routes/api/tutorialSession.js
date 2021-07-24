@@ -113,4 +113,11 @@ router.put('/:id', (req, res) => {
         );
 });
 
+/**
+ * @route DELETE /api/session/:id
+ * @description Delete a session by its id
+ * @access Public
+ */
+router.delete('/:id', TutorialSessionController.deleteSessionById);
+
 module.exports = router;

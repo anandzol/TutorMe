@@ -110,3 +110,20 @@ export async function getAllSessionsByTutorId(userId, callback, errorcallback) {
         errorcallback(error);
     }
 }
+
+/**
+ *
+ * @param {*} sessionId
+ * @param {*} callback
+ * @param {*} errorcallback
+ */
+export function deleteSessionById(sessionId, callback, errorcallback) {
+    axios.delete(`${API_URL}/${sessionId}`).then(
+        response => {
+            callback(response);
+        },
+        error => {
+            errorcallback(error);
+        }
+    );
+}
