@@ -3,6 +3,7 @@ const router = express.Router();
 
 const TutorialSession = require('../../models/tutorialSession');
 const TutorialSessionController = require('../controllers/tutorialSession');
+
 /**
  * @route GET /api/session/test
  * @description test route
@@ -91,6 +92,22 @@ router.get(
 router.get(
     '/rejected/university/:id',
     TutorialSessionController.getAllRejectedByUniversityId
+);
+
+/**
+ * @route PUT /api/session/document/:id
+ * @description Update the session to accepted/pending/rejected by document id
+ * @access Public
+ */
+router.put(
+    '/document/:id/:status',
+    TutorialSessionController.updateStatusByDocumentId
+);
+
+//test
+router.get(
+    '/pending/document',
+    TutorialSessionController.getAllPendingDocuments
 );
 
 module.exports = router;

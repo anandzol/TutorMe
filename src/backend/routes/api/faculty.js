@@ -38,4 +38,11 @@ router.post('/', FacultyController.create);
  * @access Public
  */
 router.get('/courses/:id', FacultyController.getCourses);
+
+/**
+ * @route POST api/faculty/uploadCV
+ * @description
+ * @access Public
+ */
+
 module.exports = router;

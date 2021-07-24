@@ -66,8 +66,9 @@ const useStyles = makeStyles(theme => ({
         right: '20px',
         paddingRight: '61px',
         maxWidth: '100%',
-        maxHeight: '100%',
+        //maxHeight: '100%',
         height: 'auto'
+        // objectFit: 'contain'
     },
     gridImage: {
         backgroundColor: 'white',
@@ -92,6 +93,7 @@ function TutorialSessionComponent(props) {
     const [location, setLocation] = useState([]);
     const [onsite, setOnsite] = useState(false);
     const [remote, setRemote] = useState(false);
+    const [image, setImage] = useState('');
 
     const history = useHistory();
 
@@ -109,6 +111,7 @@ function TutorialSessionComponent(props) {
                 const tutor = response.data;
                 setName(tutor.name);
                 setGender(tutor.gender);
+                setImage(tutor.image.fileLink);
                 const differenceInHours = (new Date() - new Date(tutor.lastOnline)) / 36e5;
                 let dateDifference = 0;
 
@@ -171,8 +174,9 @@ function TutorialSessionComponent(props) {
                             <div className={classes.gridImage}>
                                 <img
                                     className={classes.image}
-                                    src="https://icon-library.com/images/no-profile-picture-icon-female/no-profile-picture-icon-female-24.jpg"
-                                    alt="new"
+                                    // src="https://icon-library.com/images/no-profile-picture-icon-female/no-profile-picture-icon-female-24.jpg"
+                                    src={image}
+                                    alt="No image available"
                                 />
                             </div>
                         </Grid>

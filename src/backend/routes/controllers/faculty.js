@@ -2,6 +2,7 @@
 
 const University = require('../../models/university');
 const Faculty = require('../../models/faculty');
+const fileUpload = require('../api/fileUpload').default;
 
 /**
  * API Controller for creating a new faculty

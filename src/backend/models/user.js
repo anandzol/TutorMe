@@ -37,6 +37,10 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
     dateOfBirth: Date,
+    image: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'document'
+    },
     lastOnline: {
         type: Date,
         required: true

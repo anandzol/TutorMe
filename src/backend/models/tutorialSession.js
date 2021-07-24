@@ -44,7 +44,21 @@ const TutorialSessionSchema = new mongoose.Schema({
         required: true,
         enum: ['verified', 'pending', 'rejected']
     },
-    url: String
+    // url: String,
+    cv: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'document',
+        required: true
+    },
+
+    transcript: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'document',
+        required: true
+    }
+
+    //cvName: String,
+    //cvLoc: String
 });
 
 TutorialSessionSchema.set('timestamps', true);

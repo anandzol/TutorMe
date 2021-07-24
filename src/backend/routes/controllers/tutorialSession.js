@@ -1,4 +1,5 @@
 const TutorialSession = require('../../models/tutorialSession');
+const uploadFile = require('../api/fileUpload');
 
 /**
  * API Controller for getting all sessions by university id
@@ -109,11 +110,48 @@ const getSessionById = (req, res) => {
         });
 };
 
+/**
+ * API Controller for update status of session by document id
+ * @param {Object} req req.params.id contains id of the document
+ * @param {Object} res response made to the client
+ */
+const updateStatusByDocumentId = (req, res) => {
+    TutorialSession.updateOne(
+        { cv: req.params.id },
+        { $set: { status: req.params.status } }
+    )
+        .then(session => {
+            res.json(session);
+            // message: `Updated tutorial session for document ${req.params.id} successfully'
+        })
+        .catch(error => res.status(400).json(error));
+};
+
+//test
+const getAllPendingDocuments = (req, res) => {
+    TutorialSession.find({ status: 'pending' })
+        .populate('tutorId', { firstName: 1, lastName: 1 })
+        .populate('course', { name: 1 })
+        .populate('university', { name: 1 })
+        .populate('cv', { _id: 1, name: 1, fileLink: 1 })
+        .populate('transcript', { _id: 1, name: 1, fileLink: 1 })
+        .sort({ updatedAt: -1 })
+        .then(sessions => res.status(200).json(sessions))
+        .catch(error =>
+            res.status(400).json({
+                error: 'No available sessions found',
+                message: error.message
+            })
+        );
+};
+
 module.exports = {
     getByUniversityId,
     getAllVerifiedByUniversityId,
     getAllRejectedByUniversityId,
     getAllPendingByUniversityId,
     getAllPending,
-    getSessionById
+    getSessionById,
+    updateStatusByDocumentId,
+    getAllPendingDocuments
 };

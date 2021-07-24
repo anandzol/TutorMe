@@ -7,12 +7,14 @@ import NumericInput from 'react-numeric-input';
 import { parseJwt } from '../services/AuthHeader';
 import AuthService from '../services/AuthService';
 import 'react-datepicker/dist/react-datepicker.css';
+
 import {
     getUniversityFacultiesSorted,
     getAllUniversitiesSorted
 } from '../services/UniversityService';
 import { getFacultyCoursesSorted } from '../services/FacultyService';
 import { createSession } from '../services/SessionService';
+import { getAllFiles, getFilesById, uploadFile, deleteFile } from '../services/FileUploadService';
 import './styles/styles.css';
 
 const styles = () => ({
@@ -108,7 +110,12 @@ const defaultState = {
     duration: 30,
     availableUniversities: [],
     availableFaculties: [],
-    availableCourses: []
+    availableCourses: [],
+    document: [],
+    selectedCV: null,
+    selectedTranscript: null,
+    cv: '',
+    transcript: ''
 };
 
 const labels = [
@@ -144,28 +151,69 @@ class CreateTutorialSession extends Component {
     };
 
     onCreate = e => {
-        const payload = {
-            university: this.state.university,
-            faculty: this.state.faculty,
-            course: this.state.course,
-            tutorId: this.state.tutorId,
-            description: this.state.description,
-            onsite: this.state.onsite,
-            remote: this.state.remote,
-            date: this.state.date,
-            price: this.state.price,
-            status: 'verified'
-        };
+        console.log(this.state.selectedCV && this.state.selectedTranscript == null);
 
-        createSession(
-            payload,
-            () => {},
+        if ((this.state.selectedCV && this.state.selectedTranscript) == null) {
+            alert('Please upload CV and Transcript ');
+            return;
+        }
+        uploadFile(
+            this.state.selectedCV,
+            response => {
+                // var docs = [];
+                this.setState({ cv: response.data._id }, () => {
+                    // docs.push(this.state.documentCV);
+                    uploadFile(this.state.selectedTranscript, response => {
+                        this.setState({ transcript: response.data._id }, () => {
+                            // docs.push(this.state.documentTranscript);
+                            const payload = {
+                                university: this.state.university,
+                                faculty: this.state.faculty,
+                                course: this.state.course,
+                                tutorId: this.state.tutorId,
+                                description: this.state.description,
+                                onsite: this.state.onsite,
+                                remote: this.state.remote,
+                                date: this.state.date,
+                                price: this.state.price,
+                                status: 'verified',
+                                // document: docs,
+                                cv: this.state.cv,
+                                transcript: this.state.transcript
+                            };
+
+                            createSession(
+                                payload,
+                                () => {},
+                                error => {
+                                    alert('Failed to create a session');
+                                    console.error(error);
+                                }
+                            );
+
+                            this.props.history.push('/home');
+                        });
+                    });
+                });
+            },
             error => {
                 console.error(error);
             }
         );
+    };
 
-        this.props.history.push('/home');
+    onChangeCV = e => {
+        this.setState({
+            selectedCV: e.target.files[0],
+            loaded: 0
+        });
+    };
+
+    onChangeTranscript = e => {
+        this.setState({
+            selectedTranscript: e.target.files[0],
+            loaded: 0
+        });
     };
 
     onClickCheckmark = e => {
@@ -365,12 +413,20 @@ class CreateTutorialSession extends Component {
 
                                     {/** Form for uploading a cv*/}
                                     <Form.Group className={classes.file_selector}>
-                                        <Form.File id="cvFile" />
+                                        <Form.File
+                                            id="cvFile"
+                                            name="document"
+                                            onChange={this.onChangeCV}
+                                        />
                                     </Form.Group>
 
                                     {/** Right Form for selecting the corresponding course*/}
                                     <Form.Group className={classes.file_selector}>
-                                        <Form.File id="transcriptFile" />
+                                        <Form.File
+                                            id="transcriptFile"
+                                            name="document"
+                                            onChange={this.onChangeTranscript}
+                                        />
                                     </Form.Group>
                                     <div className={classes.date_picker}>
                                         <DateTimePicker

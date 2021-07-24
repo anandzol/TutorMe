@@ -99,6 +99,7 @@ class NavigationBar extends Component {
                         <NavDropdown.Item href="/create-university">
                             Create University
                         </NavDropdown.Item>
+                        <NavDropdown.Item href="/admin-approval">Approve/Reject</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="/login-user" onClick={AuthService.logout}>
                             Sign Out

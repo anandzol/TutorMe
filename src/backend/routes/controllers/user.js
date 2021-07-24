@@ -11,13 +11,15 @@ const Booking = require('../../models/booking');
  */
 const getUserById = async (req, res) => {
     User.find({ _id: req.params.id })
+        .populate('image', { _id: 1, name: 1, fileLink: 1 })
         .then(tutor => {
             const data = {
                 name: tutor[0].firstName,
                 gender: tutor[0].gender,
                 dateOfBirth: tutor[0].dateOfBirth,
                 lastOnline: tutor[0].lastOnline,
-                ratings: tutor[0].ratings
+                ratings: tutor[0].ratings,
+                image: tutor[0].image
             };
             res.status(200).json(data);
         })

@@ -86,3 +86,37 @@ export function getSessionById(sessionId, callback, errorcallback) {
             errorcallback(error);
         });
 }
+
+/**
+ * API Endpoint for getting all pending sessions for approval
+ * @param {String} payload
+ * @param {Function} callback
+ * @param {Function} errorcallback
+ */
+export function getAllPendingSessionsForApproval(callback, errorcallback) {
+    axios
+        .get(`${API_URL}/pending/document`)
+        .then(response => {
+            callback(response);
+        })
+        .catch(error => {
+            errorcallback(error);
+        });
+}
+
+/**
+ * API Endpoint for approving/rejecting pending sessions
+ * @param {String} payload
+ * @param {Function} callback
+ * @param {Function} errorcallback
+ */
+export function updateSessionStatus(docId, status, callback, errorcallback) {
+    axios
+        .put(`${API_URL}/document/${docId}/${status}`)
+        .then(response => {
+            callback(response);
+        })
+        .catch(error => {
+            errorcallback(error);
+        });
+}

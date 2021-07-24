@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/styles';
 import Form from 'react-bootstrap/Form';
 import AuthService from '../services/AuthService';
 import { getAllUniversitiesSorted } from '../services/UniversityService';
+import { uploadFile } from '../services/FileUploadService';
 const styles = () => ({
     container: {
         paddingTop: '2rem',
@@ -54,7 +55,9 @@ const defaultState = {
     email: '',
     errors: {},
     universities: [],
-    university: ''
+    university: '',
+    selectedImage: null,
+    imageId: ''
 };
 
 const semesterCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -105,33 +108,78 @@ class RegisterUser extends Component {
         this.props.history.push('/home');
     };
 
+    onChangeImage = e => {
+        this.setState({
+            selectedImage: e.target.files[0],
+            loaded: 0
+        });
+    };
+
     onRegister = e => {
         e.preventDefault();
 
         if (this.validateInput()) {
-            const data = {
-                email: this.state.email,
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                password: this.state.password,
-                gender: this.state.gender,
-                semester: this.state.semester,
-                program: this.state.program,
-                dateOfBirth: this.state.dateOfBirth,
-                lastOnline: this.state.lastOnline,
-                role: this.state.role
-            };
-
-            AuthService.register(
-                data,
+            uploadFile(
+                this.state.selectedImage,
                 response => {
-                    this.setState(defaultState);
-                    this.props.history.push('/home');
+                    // var docs = [];
+                    this.setState({ imageId: response.data._id }, () => {
+                        const data = {
+                            email: this.state.email,
+                            firstName: this.state.firstName,
+                            lastName: this.state.lastName,
+                            password: this.state.password,
+                            gender: this.state.gender,
+                            semester: this.state.semester,
+                            program: this.state.program,
+                            dateOfBirth: this.state.dateOfBirth,
+                            lastOnline: this.state.lastOnline,
+                            role: this.state.role,
+                            image: this.state.imageId
+                        };
+
+                        AuthService.register(
+                            data,
+                            response => {
+                                this.setState(defaultState);
+                                // this.props.history.push('/home');
+                            },
+                            error => {
+                                console.error(error);
+                            }
+                        );
+                        this.props.history.push('/home');
+                    });
                 },
                 error => {
                     console.error(error);
                 }
             );
+
+            // const data = {
+            //     email: this.state.email,
+            //     firstName: this.state.firstName,
+            //     lastName: this.state.lastName,
+            //     password: this.state.password,
+            //     gender: this.state.gender,
+            //     semester: this.state.semester,
+            //     program: this.state.program,
+            //     dateOfBirth: this.state.dateOfBirth,
+            //     lastOnline: this.state.lastOnline,
+            //     role: this.state.role,
+            //     image: this.state.imageId
+            // };
+
+            // AuthService.register(
+            //     data,
+            //     response => {
+            //         this.setState(defaultState);
+            //         this.props.history.push('/home');
+            //     },
+            //     error => {
+            //         console.error(error);
+            //     }
+            // );
         }
     };
 
@@ -280,6 +328,16 @@ class RegisterUser extends Component {
                                             </Form.Group>
                                         </div>
                                     </div>
+                                </div>
+                                <div>
+                                    <Form.Group className={classes.file_selector}>
+                                        <Form.Label>Upload Photo</Form.Label>
+                                        <Form.File
+                                            id="image"
+                                            name="document"
+                                            onChange={this.onChangeImage}
+                                        />
+                                    </Form.Group>
                                 </div>
 
                                 {/* Email input */}
