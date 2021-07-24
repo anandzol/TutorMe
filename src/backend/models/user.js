@@ -58,11 +58,14 @@ const UserSchema = new mongoose.Schema(
             type: String,
             default: ''
         },
+        city: {
+            type: String,
+            default: ''
+        },
         postalCode: {
             type: String,
             default: ''
         },
-        offerings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'offering' }],
         bookings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'booking' }],
         bookedOfferings: [
             { type: mongoose.Schema.Types.ObjectId, ref: 'booking' }
@@ -97,7 +100,6 @@ UserSchema.virtual('averageRating').get(function () {
     const averageRating =
         ratedOfferings.reduce((acc, val) => acc + val, 0) /
         ratedOfferings.length;
-    console.log(`average rating: ${averageRating}`);
     const averageRatingRounded = Math.round(averageRating * 100) / 100;
 
     if (typeof averageRatingRounded === 'number') {

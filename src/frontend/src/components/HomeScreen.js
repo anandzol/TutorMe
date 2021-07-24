@@ -19,7 +19,6 @@ class HomeScreen extends Component {
         super(props);
         this.onClick = this.onClick.bind(this);
         const currentUser = parseJwt(AuthService.getCurrentUser());
-        console.log(currentUser);
         if (currentUser !== undefined) {
             this.state = {
                 firstName: currentUser.firstName,

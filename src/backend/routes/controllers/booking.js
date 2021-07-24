@@ -65,6 +65,26 @@ const rateBooking = async (req, res) => {
     }
 };
 
+const deleteBookingById = async (req, res) => {
+    const bookingId = req.params.id;
+
+    Booking.findOneAndDelete({ _id: bookingId })
+        .then(
+            response => {
+                res.status(200).message('Booking deleted successfully');
+            },
+            error => {
+                res.status(404).message('Booking not found');
+            }
+        )
+        .catch(error => {
+            res.status(404).json({
+                error: 'Booking not found',
+                message: error.message
+            });
+        });
+};
+
 /**
  * API Controller for getting all bookings by a students id
  * @param {Object} req
@@ -94,5 +114,6 @@ const getBookingsByStudentId = async (req, res) => {
 module.exports = {
     bookSession,
     getBookingsByStudentId,
-    rateBooking
+    rateBooking,
+    deleteBookingById
 };

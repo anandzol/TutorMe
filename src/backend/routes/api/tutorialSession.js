@@ -93,4 +93,11 @@ router.get(
     TutorialSessionController.getAllRejectedByUniversityId
 );
 
+/**
+ * @route GET /api/session/tutor/:id
+ * @description Get all sessions of a specific tutor by id
+ * @access Public
+ */
+router.get('/tutor/:id', TutorialSessionController.getSessionsByTutorId);
+
 module.exports = router;

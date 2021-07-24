@@ -54,6 +54,14 @@ class AuthService {
         return false;
     }
 
+    isStudent() {
+        if (this.isLoggedIn()) {
+            const currentUserToken = this.getCurrentUser();
+            const currentUser = parseJwt(currentUserToken);
+            return currentUser.role === 'student';
+        }
+    }
+
     isTutor() {
         if (this.isLoggedIn()) {
             const currentUserToken = this.getCurrentUser();

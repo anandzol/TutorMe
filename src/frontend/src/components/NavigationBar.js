@@ -92,7 +92,7 @@ class NavigationBar extends Component {
                         <NavDropdown.Item href="/create-tutorial-session">
                             Offer Session
                         </NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.4">Manage Course</NavDropdown.Item>
+                        <NavDropdown.Item href="/manage-sessions">Manage Sessions</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="/create-course">Create Course</NavDropdown.Item>
                         <NavDropdown.Item href="/create-faculty">Create Faculty</NavDropdown.Item>

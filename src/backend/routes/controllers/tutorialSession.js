@@ -134,11 +134,32 @@ const getSessionById = (req, res) => {
         });
 };
 
+/**
+ * API Controller for getting all sessions of a tutor
+ * @param {Object} req
+ * @param {Object} res
+ */
+const getSessionsByTutorId = (req, res) => {
+    console.log(req.params.id);
+    TutorialSession.find({ tutorId: req.params.id })
+        .populate({
+            path: 'course university'
+        })
+        .then(result => res.status(200).json(result))
+        .catch(error => {
+            res.status(404).json({
+                error: 'No available sessions found',
+                message: error.message
+            });
+        });
+};
+
 module.exports = {
     getByUniversityId,
     getAllVerifiedByUniversityId,
     getAllRejectedByUniversityId,
     getAllPendingByUniversityId,
     getAllPending,
-    getSessionById
+    getSessionById,
+    getSessionsByTutorId
 };

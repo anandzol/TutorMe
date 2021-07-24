@@ -6,6 +6,8 @@ import NumericInput from 'react-numeric-input';
 import { parseJwt } from '../services/AuthHeader';
 import AuthService from '../services/AuthService';
 import 'react-datepicker/dist/react-datepicker.css';
+import Select from 'react-select';
+
 import {
     getUniversityFacultiesSorted,
     getAllUniversitiesSorted
@@ -186,7 +188,7 @@ class CreateTutorialSession extends Component {
     };
 
     onChangeUniversity = e => {
-        const universityId = e.target.value;
+        const universityId = e.value;
         this.setState({ university: universityId });
 
         getUniversityFacultiesSorted(
@@ -194,9 +196,18 @@ class CreateTutorialSession extends Component {
             facultiesSorted => {
                 if (facultiesSorted.length > 0) {
                     const facultyId = facultiesSorted[0]._id;
+
+                    let facultiesFormatted = [];
+                    facultiesSorted.forEach(faculty => {
+                        facultiesFormatted.push({
+                            value: faculty._id,
+                            label: faculty.name
+                        });
+                    });
+
                     this.setState({
                         faculty: facultyId,
-                        availableFaculties: facultiesSorted
+                        availableFaculties: facultiesFormatted
                     });
 
                     const initialCourses = facultiesSorted[0].courses;
@@ -228,15 +239,22 @@ class CreateTutorialSession extends Component {
     };
 
     onChangeFaculty = e => {
-        const facultyId = e.target.value;
+        const facultyId = e.value;
 
         getFacultyCoursesSorted(
             facultyId,
             coursesSorted => {
                 if (coursesSorted.length > 0) {
+                    let coursesFormatted = [];
+                    coursesSorted.forEach(course => {
+                        coursesFormatted.push({
+                            value: course._id,
+                            label: course.name
+                        });
+                    });
                     this.setState({
                         course: coursesSorted[0]._id,
-                        availableCourses: coursesSorted
+                        availableCourses: coursesFormatted
                     });
                 } else {
                     this.setState({
@@ -249,6 +267,12 @@ class CreateTutorialSession extends Component {
                 console.log(error);
             }
         );
+    };
+
+    onChangeCourse = e => {
+        this.setState({
+            course: e.value
+        });
     };
 
     validateInput() {
@@ -269,9 +293,16 @@ class CreateTutorialSession extends Component {
 
         getAllUniversitiesSorted(
             universitiesSorted => {
-                console.log(universitiesSorted);
+                let universitiesFormatted = [];
+                universitiesSorted.forEach(university => {
+                    universitiesFormatted.push({
+                        label: university.name,
+                        value: university._id
+                    });
+                });
+
                 this.setState({
-                    availableUniversities: universitiesSorted
+                    availableUniversities: universitiesFormatted
                 });
 
                 // Faculties of the first university selected
@@ -340,42 +371,30 @@ class CreateTutorialSession extends Component {
                                         <Form.Group
                                             controlId="universityGroup"
                                             className={classes.form_option}>
-                                            <Form.Control
-                                                as="select"
-                                                name="university"
-                                                onChange={this.onChangeUniversity}>
-                                                {this.state.availableUniversities.map((item, _) => (
-                                                    <option value={item._id}>{item.name}</option>
-                                                ))}
-                                            </Form.Control>
+                                            <Select
+                                                placeholder="University"
+                                                options={this.state.availableUniversities}
+                                                onChange={this.onChangeUniversity}></Select>
                                         </Form.Group>
 
                                         {/** Form for selecting the corresponding faculty*/}
                                         <Form.Group
                                             controlId="universityGroup"
                                             className={classes.form_option}>
-                                            <Form.Control
-                                                as="select"
-                                                name="faculty"
-                                                onChange={this.onChangeFaculty}>
-                                                {this.state.availableFaculties.map((item, _) => (
-                                                    <option value={item._id}>{item.name}</option>
-                                                ))}
-                                            </Form.Control>
+                                            <Select
+                                                placeholder="Faculty"
+                                                options={this.state.availableFaculties}
+                                                onChange={this.onChangeFaculty}></Select>
                                         </Form.Group>
 
                                         {/** Form for selecting the corresponding course*/}
                                         <Form.Group
                                             controlId="universityGroup"
                                             className={classes.form_option}>
-                                            <Form.Control
-                                                as="select"
-                                                name="course"
-                                                onChange={this.onChange}>
-                                                {this.state.availableCourses.map((item, _) => (
-                                                    <option value={item._id}>{item.name}</option>
-                                                ))}
-                                            </Form.Control>
+                                            <Select
+                                                placeholder="Course"
+                                                options={this.state.availableCourses}
+                                                onChange={this.onChangeCourse}></Select>
                                         </Form.Group>
 
                                         {/** Form for uploading a cv*/}

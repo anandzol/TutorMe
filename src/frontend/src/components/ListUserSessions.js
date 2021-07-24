@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
 import AuthService from '../services/AuthService';
 import { parseJwt } from '../services/AuthHeader';
@@ -22,7 +22,8 @@ const useStyles = makeStyles(theme => ({
         width: '100%'
     },
     header: {
-        paddingTop: '2rem'
+        paddingTop: '2rem',
+        paddingBottom: '1rem'
     },
     upcomingSessionHeader: {
         paddingLeft: '3rem'
@@ -47,11 +48,12 @@ const useStyles = makeStyles(theme => ({
         overflowY: 'hidden'
     },
     sessionColumn: {
-        width: '30rem',
+        width: '100%',
         paddingLeft: '4rem',
         paddingTop: '1rem'
     },
     sessionColumnWrapper: {
+        width: '32%',
         paddingLeft: '2rem',
         paddingRight: '2rem',
         paddingBottom: '1rem',
@@ -66,7 +68,8 @@ const useStyles = makeStyles(theme => ({
         overflowX: 'auto'
     },
     pagination: {
-        paddingLeft: '2rem'
+        paddingLeft: '2rem',
+        paddingBottom: '1.5rem'
     },
     searchField: {
         position: 'relative',
@@ -87,6 +90,7 @@ const ListUserSessions = () => {
     const [previousActivePage, setPreviousActivePage] = useState(1);
     const [filteredPreviousSessions, setFilteredPreviousSessions] = useState([]);
     const [filteredUpcomingSessions, setFilteredUpcomingSessions] = useState([]);
+    const [renderStudentOptions, setRenderStudentOptions] = useState(false);
     useEffect(() => {
         const currentUserJwt = AuthService.getCurrentUser();
 
@@ -96,26 +100,41 @@ const ListUserSessions = () => {
 
         const currentUser = parseJwt(currentUserJwt);
         const currentUserId = currentUser._id;
+
+        if (AuthService.isAdmin() || AuthService.isStudent()) {
+            setRenderStudentOptions(true);
+        }
         getAllBookingsByUserId(
             currentUserId,
             response => {
                 const currentDate = new Date();
                 const bookings = response.data;
-                console.log(bookings);
+
                 const upcomingSessions = bookings.filter(
                     session => currentDate < new Date(session.startDate)
                 );
+
                 const previousSessions = bookings.filter(
                     session => currentDate >= new Date(session.startDate)
                 );
+                // We display the nearest (e.g. closest to the current date) first for upcoming sessions
+                upcomingSessions.sort(function (a, b) {
+                    return new Date(a.startDate) - new Date(b.startDate);
+                });
+                previousSessions.sort(function (a, b) {
+                    return new Date(b.startDate) - new Date(a.startDate);
+                });
+
                 setUpcomingSessions(previousSessions);
                 setPreviousSessions(previousSessions);
                 setFilteredPreviousSessions(previousSessions);
                 setFilteredUpcomingSessions(previousSessions);
 
+                // Set the displayed number of pages
                 setPreviousSessionsPages(Math.ceil(previousSessions.length / 3));
                 setUpcomingSessionsPages(Math.ceil(previousSessions.length / 3));
 
+                // Set the initially displayed bookings to the first 3
                 setDisplayedPreviousSessions(previousSessions.slice(0, 3));
                 setDisplayedUpcomingSessions(previousSessions.slice(0, 3));
             },
@@ -144,12 +163,15 @@ const ListUserSessions = () => {
     };
 
     const onSearchPrevious = e => {
+        // Search based on description, course name or tutor name
         const previousSessionsFiltered = previousSessions.filter(
             session =>
                 session.description.toLowerCase().includes(e.toLowerCase()) ||
                 session.courseName.toLowerCase().includes(e.toLowerCase()) ||
                 session.tutorId.firstName.toLowerCase().includes(e.toLowerCase())
         );
+
+        // Set number of active pages after conducting the search
         let activePages = Math.ceil(previousSessionsFiltered.length / 3);
         setFilteredPreviousSessions(previousSessionsFiltered);
         setPreviousSessionsPages(activePages);
@@ -165,12 +187,15 @@ const ListUserSessions = () => {
     };
 
     const onSearchUpcoming = e => {
+        // Search based on description, course name or tutor name
         const upcomingSessionsFiltered = upcomingSessions.filter(
             session =>
                 session.inquiry.toLowerCase().includes(e.toLowerCase()) ||
                 session.courseName.toLowerCase().includes(e.toLowerCase()) ||
                 session.tutorId.firstName.toLowerCase().includes(e.toLowerCase())
         );
+
+        // Set number of active pages after conducting the search
         let activePages = Math.ceil(upcomingSessionsFiltered.length / 3);
         setFilteredUpcomingSessions(upcomingSessionsFiltered);
         setUpcomingSessionsPages(activePages);
@@ -212,6 +237,7 @@ const ListUserSessions = () => {
                                     <UpcomingSessionCard
                                         key={item._id}
                                         value={index}
+                                        isStudent={renderStudentOptions}
                                         session={item}></UpcomingSessionCard>
                                 </Col>
                             </div>
@@ -245,6 +271,7 @@ const ListUserSessions = () => {
                                     <PreviousSessionCard
                                         key={item._id}
                                         value={index}
+                                        isStudent={renderStudentOptions}
                                         session={item}></PreviousSessionCard>
                                 </Col>
                             </div>

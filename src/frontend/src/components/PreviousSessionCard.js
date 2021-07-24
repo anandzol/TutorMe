@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import { Card } from 'react-bootstrap';
 import { withStyles } from '@material-ui/styles';
-import { getTutorById } from '../services/TutorService';
 import ReactStars from 'react-rating-stars-component';
 import { withRouter } from 'react-router';
 import { rateBooking } from '../services/BookingService';
 import formattedDate from '../utils/DateUtils';
 const styles = () => ({
     card: {
-        minHeight: '20rem',
-        maxHeight: '20rem',
-        height: '20rem',
-        minWidth: '30rem',
-        maxWidth: '30rem'
+        height: '20rem'
     },
     headerWrapper: {
         backgroundColor: '#95bcf2'
@@ -27,6 +22,7 @@ const styles = () => ({
     description: {
         paddingTop: '0.5rem',
         paddingLeft: '1rem',
+        paddingRight: '1rem',
         minHeight: '6rem',
         maxHeight: '6rem',
         overFlowY: 'auto',
@@ -47,7 +43,8 @@ const styles = () => ({
         paddingLeft: '0.5rem',
         height: '2.5rem',
         width: '7rem',
-        backgroundColor: '#b6d7a8'
+        backgroundColor: '#b6d7a8',
+        color: 'black'
     },
     divider: {
         marginTop: '0.7rem',
@@ -78,8 +75,13 @@ const styles = () => ({
 class PreviousSessionCard extends Component {
     constructor(props) {
         super();
-        this.state = props.session;
+        let formattedState = props.session;
         let date = new Date(props.session.startDate);
+        const dateFormatted = formattedDate(date);
+        formattedState['dateFormatted'] = dateFormatted;
+        formattedState['isStudent'] = props.isStudent;
+        this.state = formattedState;
+
         if (!'rating' in props.session) {
             this.setState({
                 rating: 0
@@ -112,6 +114,27 @@ class PreviousSessionCard extends Component {
 
     render() {
         const { classes } = this.props;
+        const isStudent = this.state.isStudent;
+        let ratings;
+        if (isStudent) {
+            ratings = (
+                <ReactStars
+                    count={5}
+                    size={24}
+                    value={this.state.rating}
+                    activeColor="#ffd700"
+                    onChange={this.onRatingsChanged}></ReactStars>
+            );
+        } else {
+            ratings = (
+                <ReactStars
+                    count={5}
+                    size={24}
+                    value={this.state.rating}
+                    edit={false}
+                    activeColor="#ffd700"></ReactStars>
+            );
+        }
         return (
             <div>
                 <div>
@@ -121,23 +144,18 @@ class PreviousSessionCard extends Component {
                         </div>
                         <div className={classes.description}>{this.state.description}</div>
                         <hr />
-                        <div className={classes.date}>{this.state.startDate}</div>
+                        <div className={classes.date}>{this.state.dateFormatted}</div>
                         <div className={classes.cancelButtonWrapper}>
-                            <button onClick={this.onBookAgain} className={classes.bookAgainButton}>
+                            <button
+                                onClick={this.onBookAgain}
+                                className={`${classes.bookAgainButton} btn btn-success`}>
                                 Book Again
                             </button>
                         </div>
                         <hr className={classes.divider} />
                         <div className={classes.location}>
                             Rating:
-                            <div className={classes.rating}>
-                                <ReactStars
-                                    count={5}
-                                    size={24}
-                                    value={this.state.rating}
-                                    activeColor="#ffd700"
-                                    onChange={this.onRatingsChanged}></ReactStars>
-                            </div>
+                            <div className={classes.rating}>{ratings}</div>
                         </div>
                         <hr />
                         <div className={classes.name}>

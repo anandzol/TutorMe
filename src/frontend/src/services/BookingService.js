@@ -58,3 +58,20 @@ export function rateBooking(bookingId, payload, callback, errorcallback) {
             errorcallback(error);
         });
 }
+
+/**
+ * API Controller for deleting a booking by id
+ * @param {String} bookingId
+ * @param {Function} callback
+ * @param {Function} errorcallback
+ */
+export function deleteBookingById(bookingId, callback, errorcallback) {
+    axios
+        .delete(`${API_URL}/${bookingId}`)
+        .then(response => {
+            callback(response);
+        })
+        .catch(error => {
+            errorcallback(error);
+        });
+}

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Card } from 'react-bootstrap/';
 import Grid from '@material-ui/core/Grid';
-import { getTutorById, getBookedOfferingsByUserId } from '../services/TutorService';
 import { Rating } from '@material-ui/lab/';
 import { useHistory } from 'react-router';
 

@@ -103,6 +103,7 @@ const useStyles = makeStyles(theme => ({
         paddingTop: '2rem'
     },
     sessionCard: {
+        minHeight: '50rem',
         height: '100%',
         overflowY: 'auto',
         overflowX: 'hidden',
@@ -165,9 +166,9 @@ const experienceFilter = [
     { value: 4, label: '200+' }
 ];
 const sortingValues = [
-    { value: 1, label: 'Price Ascending' },
-    { value: 2, label: 'Price Descending' },
-    { value: 3, label: 'New In' },
+    { value: 1, label: 'New In' },
+    { value: 2, label: 'Price Ascending' },
+    { value: 3, label: 'Price Descending' },
     { value: 4, label: 'Alphabetically' }
 ];
 
@@ -347,15 +348,16 @@ const ShowTutorialSessions = () => {
         if (sortValue !== -1) {
             switch (sortValue) {
                 case 1:
-                    filteredSessions = filteredSessions.sort((a, b) => a.price - b.price);
-                    break;
-                case 2:
-                    filteredSessions = filteredSessions.sort((a, b) => b.price - a.price);
-                    break;
-                case 3:
                     filteredSessions = filteredSessions.sort(
                         (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
                     );
+                    break;
+                case 2:
+                    filteredSessions = filteredSessions.sort((a, b) => a.price - b.price);
+
+                    break;
+                case 3:
+                    filteredSessions = filteredSessions.sort((a, b) => b.price - a.price);
                     break;
                 case 4:
                     filteredSessions = filteredSessions.sort((a, b) =>
@@ -398,15 +400,16 @@ const ShowTutorialSessions = () => {
         let sortedSessions = filteredSessions;
         switch (e.value) {
             case 1:
-                sortedSessions = filteredSessions.sort((a, b) => a.price - b.price);
-                break;
-            case 2:
-                sortedSessions = filteredSessions.sort((a, b) => b.price - a.price);
-                break;
-            case 3:
                 sortedSessions = filteredSessions.sort(
                     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
                 );
+                break;
+            case 2:
+                sortedSessions = filteredSessions.sort((a, b) => a.price - b.price);
+                break;
+            case 3:
+                sortedSessions = filteredSessions.sort((a, b) => b.price - a.price);
+
                 break;
             case 4:
                 sortedSessions = filteredSessions.sort((a, b) =>
@@ -631,8 +634,8 @@ const ShowTutorialSessions = () => {
                                     <Form.Group>
                                         <Select
                                             options={sortingValues}
-                                            placeholder="Sort By"
-                                            onChange={onSort}></Select>
+                                            onChange={onSort}
+                                            defaultValue={sortingValues[0]}></Select>
                                     </Form.Group>
                                 </div>
                             </div>

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { SERVER_API } from '../config';
-import { getBookedOfferingsByUserId } from '../services/TutorService';
 const API_URL = `${SERVER_API}/session`;
 
 /**
@@ -89,4 +88,25 @@ export function getSessionById(sessionId, callback, errorcallback) {
         .catch(error => {
             errorcallback(error);
         });
+}
+
+/**
+ * API Endpoint for getting all booked offerings (bookedOfferings) of a user by id
+ * @param {String} userId
+ * @param {Function} callback
+ * @param {Function} errorcallback
+ */
+export async function getAllSessionsByTutorId(userId, callback, errorcallback) {
+    try {
+        axios.get(`${API_URL}/tutor/${userId}`).then(
+            response => {
+                callback(response);
+            },
+            error => {
+                errorcallback(error);
+            }
+        );
+    } catch (error) {
+        errorcallback(error);
+    }
 }

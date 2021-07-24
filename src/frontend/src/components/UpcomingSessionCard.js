@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { Card, Button, Container, Col, Row, Form } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { withStyles } from '@material-ui/styles';
-import { getTutorById } from '../services/TutorService';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import { deleteBookingById } from '../services/BookingService';
+import formattedDate from '../utils/DateUtils';
+
 const styles = () => ({
     card: {
         minHeight: '20rem',
@@ -44,8 +48,7 @@ const styles = () => ({
     },
     cancelButton: {
         height: '40px',
-        width: '7rem',
-        backgroundColor: '#ea9999'
+        width: '7rem'
     },
     divider: {
         marginTop: '0.7rem',
@@ -72,11 +75,80 @@ const styles = () => ({
 class UpcomingSessionCard extends Component {
     constructor(props) {
         super();
+        let formattedState = props.session;
+        let date = new Date(props.session.startDate);
+        const dateFormatted = formattedDate(date);
+        formattedState['dateFormatted'] = dateFormatted;
+        formattedState['isStudent'] = props.isStudent;
         this.state = props.session;
     }
 
+    onCancel = () => {
+        const { classes } = this.props;
+
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                return (
+                    <div className="alert">
+                        <h1 className="alert__title">Confirm Deletion</h1>
+                        <p className="alert__body">
+                            Are you sure would like to cancel this booking?
+                        </p>
+                        <div className="text-center">
+                            <button
+                                onClick={() => {
+                                    const bookingId = this.state._id;
+                                    deleteBookingById(
+                                        bookingId,
+                                        response => {
+                                            window.location.reload();
+                                        },
+                                        error => {
+                                            console.error(error);
+                                        }
+                                    );
+                                    window.location.reload();
+                                    onClose();
+                                }}
+                                className={`btn btn-primary`}>
+                                Confirm
+                            </button>
+                            <button onClick={onClose} className={`btn btn-primary btn-secondary`}>
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+        });
+    };
+
     render() {
         const { classes } = this.props;
+        const isStudent = this.state.isStudent;
+        let button;
+        if (isStudent) {
+            button = (
+                <button
+                    className={`${classes.cancelButton} btn btn-danger`}
+                    onClick={this.onCancel}>
+                    Cancel
+                </button>
+            );
+        }
+
+        let locationFormatted = ' ';
+        if (this.state.onsite) {
+            if (this.state.tutorId.adress) {
+                locationFormatted += ` ${this.state.tutorId.adress}`;
+                if (this.state.tutorId.postalCode) {
+                    locationFormatted += `, ${this.state.tutorId.postalCode} ${this.state.tutorId.city}`;
+                }
+            } else {
+                locationFormatted = ' Onsite';
+            }
+        }
+
         return (
             <div>
                 <div>
@@ -86,14 +158,13 @@ class UpcomingSessionCard extends Component {
                         </div>
                         <div className={classes.inquiry}>{this.state.inquiry}</div>
                         <hr className={classes.divider} />
-                        <div className={classes.date}>{this.state.startDate}</div>
-                        <div className={classes.cancelButtonWrapper}>
-                            <button className={classes.cancelButton}>Cancel</button>
-                        </div>
+                        <div className={classes.date}>{this.state.dateFormatted}</div>
+                        <div className={classes.cancelButtonWrapper}>{button}</div>
 
                         <hr className={classes.divider} />
                         <div className={classes.location}>
-                            Location: {this.state.onsite ? 'Onsite' : ''}{' '}
+                            Location:
+                            {locationFormatted}
                             {this.state.remote ? 'Remote' : ''}
                         </div>
                         <hr />

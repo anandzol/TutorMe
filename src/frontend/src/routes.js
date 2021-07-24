@@ -8,6 +8,7 @@ import LoginUser from './components/LoginUser';
 import ShowTutorialSessions from './components/ShowTutorialSessions';
 import BookSession from './components/BookSession';
 import ListUserSessions from './components/ListUserSessions';
+import ManageSessions from './components/ManageSessions';
 const routes = [
     {
         path: '/home',
@@ -52,6 +53,10 @@ const routes = [
     {
         path: '/list-user-sessions',
         component: ListUserSessions
+    },
+    {
+        path: '/manage-sessions',
+        component: ManageSessions
     }
 ];
 
