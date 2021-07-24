@@ -38,6 +38,23 @@ export function getBookedOfferingsByUserId(tutorId, callback, errorcallback) {
             if (callback != null) {
                 callback(response);
             }
+            console.log("updated user")
+        })
+        .catch(error => {
+            if (errorcallback != null) {
+                errorcallback(error);
+            }
+        });
+}
+
+export function updateTutorById(payload, callback, errorcallback) {
+    axios
+        .put(`${API_URL}/${payload.tutorId}`, payload)
+        .then(response => {
+            if (callback != null) {
+                callback(response);
+            }
+            console.log("updated user")
         })
         .catch(error => {
             if (errorcallback != null) {

@@ -9,6 +9,7 @@ import { BsPersonFill, BsClock, BsGeoAlt } from 'react-icons/bs';
 import { BiMoney } from 'react-icons/bi';
 import DatePicker from 'react-datepicker';
 import { bookSession } from '../services/BookingService';
+import ToPayment from './BookSessionPayment'
 
 import './styles/bookSession.css';
 
@@ -161,20 +162,24 @@ class BookSession extends Component {
             tutorId: this.state.tutorId
         };
 
-        bookSession(
-            data,
-            response => {
-                this.props.history.push('/home');
-            },
-            error => {
-                console.log(error);
-            }
-        );
+        // ToPayment(data)
+        this.props.history.push(data)
+        this.props.history.push(`/book-session/${this.state.id}/payment`, { state: data});
+        console.log("data from main book session", data)
+        //TODO Move this functionality to after payment
+        // bookSession(
+        //     data,
+        //     response => {
+        //         this.props.history.push('/home');
+        //     },
+        //     error => {
+        //         console.log(error);
+        //     }
+        // );
     };
 
     render() {
         const { classes } = this.props;
-
         return (
             <div className={classes.component}>
                 <h3>Book your Session</h3>

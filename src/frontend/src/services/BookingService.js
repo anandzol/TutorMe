@@ -30,15 +30,16 @@ export async function getAllBookingsByUserId(userId, callback, errorcallback) {
  * @param {Function} callback
  * @param {Function} errorcallback
  */
-export function bookSession(payload, callback, errorcallback) {
+//TODO Check for id and link to student id
+export function bookSession(payload, callback) {
     axios
         .post(`${API_URL}/book-session`, payload)
         .then(response => {
             callback(response);
         })
-        .catch(error => {
-            errorcallback(error);
-        });
+        // .catch(error => {
+        //     errorcallback(error);
+        // });
 }
 
 /**

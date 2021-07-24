@@ -16,6 +16,7 @@ import Select from 'react-select';
 import Pagination from '@material-ui/lab/Pagination';
 
 import './styles/styles.css';
+import { getTutorById } from '../services/TutorService';
 
 const useStyles = makeStyles(theme => ({
     component: {
@@ -132,6 +133,18 @@ const useStyles = makeStyles(theme => ({
     sortSessionWrapper: {
         paddingLeft: '1rem',
         width: '13rem'
+    },
+    filter_header: {
+        display: 'flex',
+        flexDirection: 'column',
+        columnGap: '2rem',
+        // justifyContent: 'space-between',
+        // paddingTop: '9rem',
+        alignItems: 'center',
+        // position: 'absolute'
+        // borderStyle: 'inset',
+        // width: '100%',
+        // height: '100%'
     }
 }));
 
@@ -172,7 +185,7 @@ const sortingValues = [
     { value: 4, label: 'Alphabetically' }
 ];
 
-const ShowTutorialSessions = () => {
+const ShowTutorialSessions = (props) => {
     // All sessions are all sessions which are queried based on university
     const [allSessions, setAllSessions] = useState([]);
 
@@ -197,10 +210,11 @@ const ShowTutorialSessions = () => {
     const [searchKeyword, setSearchKeyword] = useState('');
     const [activePage, setActivePage] = useState(1);
     const [numberOfPages, setNumberOfPages] = useState(1);
-
-    // For development purposes, will need to be either fetched dynamically by user/ passed on by props of hoc
-    const [university, setUniversity] = useState('60bff011a5e1000beeddb38e');
     const [universityName, setUniversityName] = useState('');
+      
+    // Defaulting university to TUM in case of no selection
+    const [university, setUniversity] = useState( props.match.params.id ? props.match.params.id: '60bff011a5e1000beeddb38e' );
+
     useEffect(async () => {
         setLoading(true);
 

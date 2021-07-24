@@ -4,28 +4,40 @@ import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
 import AuthService from '../services/AuthService';
+import { parseJwt } from '../services/AuthHeader';
 import { withStyles } from '@material-ui/styles';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 
 const styles = () => ({
+    
+    component: {
+        display: 'flex',
+        alignItems: 'center',
+        // flexDirection: 'column',
+        backgroundColor: '#f0f2f5',
+        // paddingTop: '10px',
+        // paddingBottom: '10px',
+        minHeight: '92vh',
+        // color: 'black'
+    },
+
     card: {
-        left: '-1rem',
-        width: '30rem'
+        // left: '-1rem',
+        // width: '30rem',
+        // marginLeft: '25%',
+        // marginRight: '25%'
+
     },
     form: {
-        width: '60rem'
+        // width: '60rem'
     },
-    component: {
-        backgroundColor: '#f0f2f5',
-        paddingTop: '10px',
-        paddingBottom: '10px',
-        minHeight: '92vh',
-        color: 'black'
-    },
+    
     login_form: {
-        paddingTop: '2rem',
-        left: '12rem',
-        position: 'relative'
+        // marginTop: '0em',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+           
     },
     register_button: {
         position: 'relative',
@@ -88,15 +100,42 @@ class LoginUser extends Component {
 
         this.setState({
             message: '',
-            loading: true
-        });
-
+            loading: true,
+            });
+        
+        // console.log("login props", this.state)
         if (this.checkBtn.context._errors.length === 0) {
             AuthService.login(this.state.email, this.state.password).then(
                 result => {
-                    this.props.history.push('/home');
+                    // if(this.props.location.state?.from?.pathname){
+                        
+                    //     this.props.history.push(this.props.location.state.from.pathname);
+                        
+                    // }
+                    // else 
+                    
+                    if(this.props.location.state?.university)
+                        this.props.history.push(`/show-sessions/${this.props.location.state.university}`, this.state);    
+                    else{
+                        const currentUserJWT = AuthService.getCurrentUser();
+                        const currentUser = parseJwt(currentUserJWT);
+                        AuthService.getUserById(currentUser._id,
+                            response => {
+                                this.setState({university: response.data.university})
+                                if(response.data.university)
+                                    this.props.history.push(`/show-sessions/${this.state.university}`, this.state)
+                                else
+                                    this.props.history.push('/home', this.state);
+
+                                    window.location.reload()
+                                // console.log("after loging", this.state)
+                            })
+                        
+                        // this.props.history.push('/home', this.state);
+                    }
                 },
                 error => {
+                    console.log("I am here")
                     const resMessage =
                         (error.response && error.response.data && error.response.data.message) ||
                         error.message ||
@@ -120,6 +159,7 @@ class LoginUser extends Component {
 
         return (
             <div className={classes.component}>
+                {console.log("login props", this.props)}
                 <div className={`container ${classes.login_form}`}>
                     <h2>Login</h2>
                     <div className={`${classes.form}`}>

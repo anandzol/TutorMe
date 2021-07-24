@@ -17,7 +17,8 @@ const BookingSchema = new mongoose.Schema({
         type: Number,
         min: 1,
         max: 5
-    }
+    },
+    paymentStatus: Boolean
 });
 
 module.exports = Booking = mongoose.model('booking', BookingSchema);
