@@ -54,8 +54,8 @@ class App extends Component {
                             }
                         })}
                     </div>
-                    <Footer />
                 </Router>
+                <Footer />
             </div>
         );
     }

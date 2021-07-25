@@ -6,7 +6,8 @@ import { MDBContainer } from 'mdbreact';
 
 const useStyles = makeStyles(theme => ({
     footer: {
-        backgroundColor: '#cad8ee'
+        backgroundColor: '#cad8ee',
+        paddingTop: '5rem'
     }
 }));
 

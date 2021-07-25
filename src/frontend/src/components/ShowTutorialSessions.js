@@ -124,7 +124,8 @@ const useStyles = makeStyles(theme => ({
     },
     paginationComponent: {
         paddingTop: '1rem',
-        position: 'absolute'
+        paddingBottom: '1rem',
+        position: 'relative'
     },
     dateFilter: {
         width: '13rem',
@@ -133,18 +134,6 @@ const useStyles = makeStyles(theme => ({
     sortSessionWrapper: {
         paddingLeft: '1rem',
         width: '13rem'
-    },
-    filter_header: {
-        display: 'flex',
-        flexDirection: 'column',
-        columnGap: '2rem',
-        // justifyContent: 'space-between',
-        // paddingTop: '9rem',
-        alignItems: 'center'
-        // position: 'absolute'
-        // borderStyle: 'inset',
-        // width: '100%',
-        // height: '100%'
     }
 }));
 
