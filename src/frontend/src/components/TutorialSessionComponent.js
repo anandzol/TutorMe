@@ -90,7 +90,9 @@ function TutorialSessionComponent(props) {
     const [rating, setRating] = useState(0);
     const [onsite, setOnsite] = useState(false);
     const [remote, setRemote] = useState(false);
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState(
+        'https://icon-library.com/images/no-profile-picture-icon-female/no-profile-picture-icon-female-24.jpg'
+    );
     const [experience, setExperience] = useState(0);
     const [languages, setLanguages] = useState([]);
     const [postalCode, setPostalCode] = useState('');
@@ -124,7 +126,9 @@ function TutorialSessionComponent(props) {
         setExperience(props.tutor.experience);
         setLanguages(props.tutor.languages);
         setPostalCode(props.tutor.postalCode);
-        setImage(props.tutor.image.fileLink);
+        if (props.tutor.image != undefined) {
+            setImage(props.tutor.image.fileLink);
+        }
 
         if (props.remote) {
             setRemote(true);
@@ -165,7 +169,6 @@ function TutorialSessionComponent(props) {
                             <div className={classes.gridImage}>
                                 <img
                                     className={classes.image}
-                                    // src="https://icon-library.com/images/no-profile-picture-icon-female/no-profile-picture-icon-female-24.jpg"
                                     src={image}
                                     alt="No image available"
                                 />

@@ -227,7 +227,7 @@ class RegisterUser extends Component {
                                 console.error(error);
                             }
                         );
-                        his.props.history.push('/login-user', data);
+                        this.props.history.push('/login-user', data);
                     });
             
             

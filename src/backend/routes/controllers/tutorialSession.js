@@ -38,9 +38,10 @@ const getAllVerifiedByUniversityId = async (req, res) => {
         })
         .populate({
             path: 'tutorId',
-            populate: 'bookedOfferings',
+            populate: 'bookedOfferings image',
             select: 'averageRating experience firstName lastOnline dateOfBirth languages postalCode'
         })
+
         .sort({ updatedAt: -1 })
         .then(sessions => {
             sessions.forEach(session => {
@@ -159,12 +160,12 @@ const updateStatusByDocumentId = (req, res) => {
  */
 const getAllPendingDocuments = (req, res) => {
     TutorialSession.find({ status: 'pending' })
-        .populate('tutorId', { firstName: 1, lastName: 1 })
+        .populate('tutorId')
         .populate('course', { name: 1 })
         .populate('university', { name: 1 })
         .populate('cv', { _id: 1, name: 1, fileLink: 1 })
         .populate('transcript', { _id: 1, name: 1, fileLink: 1 })
-        .sort({ updatedAt: -1 })
+        // .sort({ updatedAt: -1 })
         .then(sessions => res.status(200).json(sessions))
         .catch(error =>
             res.status(400).json({
