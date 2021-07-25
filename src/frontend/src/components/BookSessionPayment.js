@@ -41,7 +41,6 @@ function ToPayment(props) {
     const classes = styles();
 
     useEffect(() => {
-        //TODO Set amount
         setAmount(sessionDetails.price);
     });
 
@@ -96,7 +95,7 @@ function ToPayment(props) {
                         {/* <span className="text-success">-₹500</span> */}
                     </li>
                     <li className="list-group-item d-flex justify-content-between">
-                        <span>Total (in euros)</span>
+                        <span>Total (in €)</span>
                         <strong>{totalAmount} €/hour</strong>
                     </li>
                 </ul>
@@ -106,16 +105,8 @@ function ToPayment(props) {
 
     return (
         <div className="container">
-            <div className="py-5 text-center">
-                <h4>
-                    Stripe Integration -{' '}
-                    <a
-                        href="https://www.cluemediator.com/"
-                        target="_blank"
-                        rel="noopener noreferrer">
-                        Clue Mediator
-                    </a>
-                </h4>
+            <div className="py-5 text-left">
+                <h4>Book your Session</h4>
             </div>
 
             {/* <div className= "row"> */}

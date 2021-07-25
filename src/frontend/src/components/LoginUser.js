@@ -21,17 +21,17 @@ const styles = () => ({
     },
 
     card: {
-        // left: '-1rem',
-        // width: '30rem',
-        // marginLeft: '25%',
-        // marginRight: '25%'
+        left: 'rem',
+        width: '30rem',
+        marginLeft: '0%',
+        marginRight: '0%'
     },
     form: {
-        // width: '60rem'
+        width: '60rem'
     },
 
     login_form: {
-        // marginTop: '0em',
+        marginTop: '0em',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
@@ -148,9 +148,8 @@ class LoginUser extends Component {
 
         return (
             <div className={classes.component}>
-                {console.log('login props', this.props)}
                 <div className={`container ${classes.login_form}`}>
-                    <h2>Login</h2>
+                    <h2 className={classes.loginHeader}>Login</h2>
                     <div className={`${classes.form}`}>
                         <Card className={`${classes.card}`}>
                             <Form

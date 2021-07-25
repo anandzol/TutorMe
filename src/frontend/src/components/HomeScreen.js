@@ -55,7 +55,6 @@ class HomeScreen extends Component {
         super();
         const currentUserJWT = AuthService.getCurrentUser();
         const currentUser = parseJwt(currentUserJWT);
-        console.log(currentUser);
         if (currentUser === undefined) {
             return;
         }
@@ -86,10 +85,16 @@ class HomeScreen extends Component {
                 </Link>
             );
         }
+
         return (
             <div>
                 <div className={classes.firstName}>
-                    <h1>{`Welcome ${this.state.firstName}!`}</h1>
+                    {console.log('inside render', this.props)}
+                    <h1>{`Welcome ${
+                        this.props?.location?.state.firstName
+                            ? this.props.location.state.firstName
+                            : this.state.firstName
+                    }!`}</h1>
                 </div>
                 <div className={classes.center}>
                     <img className={classes.image} src={tutorLogo} />

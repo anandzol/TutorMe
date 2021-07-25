@@ -162,7 +162,7 @@ class NavigationBar extends Component {
                             title={navDropDownTitle}
                             id="collasible-nav-dropdown"
                             className={classes.profileButton__span}>
-                            <NavDropdown.Item href="/login-user">Sign in</NavDropdown.Item>
+                            <NavDropdown.Item href="/login-user">Sign In</NavDropdown.Item>
                             <NavDropdown.Item href="/register-user">Sign Up</NavDropdown.Item>
                         </NavDropdown>
                     )}
