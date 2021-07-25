@@ -1,5 +1,6 @@
 const User = require('../../models/user');
 const Booking = require('../../models/booking');
+const Offering = require('../../models/offerings');
 
 // Secret key for identification for stripe
 const stripe = require('stripe')(
@@ -54,7 +55,7 @@ const bookSession = async (req, res) => {
                                         message: error.message
                                     })
                                 );
-                                
+
                 res.json({
                     message: 'booking created successfully',
                     success: true
@@ -68,6 +69,7 @@ const bookSession = async (req, res) => {
             }
         )
         .catch(error => {
+            console.log(error);
             res.status(500).json({
                 error: 'Internal server error',
                 message: error.message
