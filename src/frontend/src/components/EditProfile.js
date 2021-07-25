@@ -156,7 +156,6 @@ const EditProfile = props => {
 
     const onChangeLanguages = e => {
         let languages = e.map(language => language.label);
-        console.log(languages)
         setLanguages(languages)
     }
 
@@ -320,7 +319,6 @@ const EditProfile = props => {
                                             value={city}
                                             onChange={e => setCity(e.target.value)}
                                         />
-                                        {console.log(city)}
                                     </Col>
                                 </Row>
                                 <Row></Row>
@@ -387,8 +385,7 @@ const EditProfile = props => {
                                                 disableCalendar
                                                 clearIcon
                                                 format={'dd-MM-y'}
-                                                onChange={e => {setDateOfBirth(e)
-                                                            console.log(dateOfBirth)}}
+                                                onChange={e => {setDateOfBirth(e)}}
                                                 calendarAriaLabel={'Date of birth'}
                                                 required={true}
                                                 isClearable={false}

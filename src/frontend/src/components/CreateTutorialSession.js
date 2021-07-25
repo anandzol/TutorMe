@@ -392,7 +392,6 @@ class CreateTutorialSession extends Component {
         const { classes } = this.props;
         return (
             <div className={classes.component}>
-                {console.log(this.state)}
                 <div className={`container ${classes.padding_top}`}>
                     <h2 className={`${classes.title}`}>Create Tutorial Session</h2>
                     <div className={classes.cardWrapper}>
