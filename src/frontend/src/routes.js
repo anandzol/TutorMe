@@ -9,6 +9,9 @@ import ShowTutorialSessions from './components/ShowTutorialSessions';
 import BookSession from './components/BookSession';
 import ListUserSessions from './components/ListUserSessions';
 import ManageSessions from './components/ManageSessions';
+import WelcomeScreen from './components/WelcomeScreen'
+import BookSessionPayment from './components/BookSessionPayment'
+import EditProfile from './components/EditProfile';
 const routes = [
     {
         path: '/home',
@@ -43,9 +46,10 @@ const routes = [
         permission: 'tutor'
     },
     {
-        path: '/show-sessions',
+        path: '/show-sessions/:id',
         component: ShowTutorialSessions
     },
+    
     {
         path: '/book-session/:id',
         component: BookSession
@@ -57,6 +61,18 @@ const routes = [
     {
         path: '/manage-sessions',
         component: ManageSessions
+    },
+    {
+        path: '/',
+        component: WelcomeScreen
+    },
+    {
+        path: '/book-session/:id/payment',
+        component: BookSessionPayment
+    },
+    {
+        path: '/edit-profile',
+        component: EditProfile
     }
 ];
 

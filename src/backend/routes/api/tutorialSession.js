@@ -100,6 +100,19 @@ router.get(
  */
 router.get('/tutor/:id', TutorialSessionController.getSessionsByTutorId);
 
+
+router.put('/:id', (req, res) => {
+    TutorialSession.findByIdAndUpdate(req.params.id, req.body)
+        .then(session =>
+            res.json({
+                message: `Updated Session Info ${req.params.id} successfully`
+            })
+        )
+        .catch(error =>
+            res.status(400).json({ error: 'Unable to update the Database' })
+        );
+});
+
 /**
  * @route DELETE /api/session/:id
  * @description Delete a session by its id

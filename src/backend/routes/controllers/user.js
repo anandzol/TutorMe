@@ -9,13 +9,22 @@ const Booking = require('../../models/booking');
  * @param {Object} res
  */
 const getUserById = async (req, res) => {
+    // console.log(req)
     User.find({ _id: req.params.id })
         .then(tutor => {
+            // console.log(tutor)
             const data = {
                 name: tutor[0].firstName,
+                lastName: tutor[0].lastName,
                 gender: tutor[0].gender,
                 dateOfBirth: tutor[0].dateOfBirth,
-                lastOnline: tutor[0].lastOnline
+                lastOnline: tutor[0].lastOnline,
+                ratings: tutor[0].ratings,
+                university: tutor[0].university,
+                program: tutor[0].program,
+                semester: tutor[0].semester,
+                role: tutor[0].role,
+                email: tutor[0].email
             };
             res.status(200).json(data);
         })
@@ -27,6 +36,24 @@ const getUserById = async (req, res) => {
         });
 };
 
+/**
+ * API Controller for editing user info
+ * @param {Object} req
+ * @param {Object} res
+ */
+const updateUserById = (req, res) => {
+    // console.log("req", req.params.id)
+    User.findByIdAndUpdate(req.params.id, req.body)
+    .then(response => {
+             res.json(response)
+             console.log(response)
+             console.log(`Updated user ${req.params.id} successfully`)
+        })
+        .catch(error => {
+            console.log(error)
+            errorCallback(error);
+        }
+    )}
 /**
  * API Controller for getting all booked tutorial sessions of a user
  * @param {Object} req
@@ -90,5 +117,6 @@ const getExperienceRatingByUserId = async (req, res) => {
 module.exports = {
     getUserById,
     getUserSessionsById,
-    getExperienceRatingByUserId
+    getExperienceRatingByUserId,
+    updateUserById
 };

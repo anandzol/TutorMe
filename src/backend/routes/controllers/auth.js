@@ -79,7 +79,7 @@ const login = async (req, res) => {
     } catch (error) {
         return res.status(404).json({
             error: 'User Not Found',
-            message: err.message
+            message: error.message
         });
     }
 };

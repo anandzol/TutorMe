@@ -63,4 +63,11 @@ router.post('/login', AuthController.login);
  */
 router.post('/register', AuthController.register);
 
+/**
+ * @route PUT api/user/:id/{payload}
+ * @description Registers a new mail
+ * @access Public
+ */
+ router.put('/:id', UserController.updateUserById);
+
 module.exports = router;

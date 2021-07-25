@@ -199,8 +199,9 @@ class RegisterUser extends Component {
             AuthService.register(
                 data,
                 response => {
+                    console.log("respose", response)
                     this.setState(defaultState);
-                    this.props.history.push('/home');
+                    this.props.history.push('/login-user', data);
                 },
                 error => {
                     if (error.response.data && error.response.status === 400) {

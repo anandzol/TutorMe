@@ -15,6 +15,7 @@ import {
 import { getFacultyCoursesSorted } from '../services/FacultyService';
 import { createSession } from '../services/SessionService';
 import './styles/styles.css';
+import { getUniversityById } from '../services/UniversityService';
 
 const styles = () => ({
     title: {
@@ -120,7 +121,8 @@ const defaultState = {
     duration: 30,
     availableUniversities: [],
     availableFaculties: [],
-    availableCourses: []
+    availableCourses: [],
+    test: 'initial'
 };
 
 const labels = [
@@ -159,6 +161,22 @@ class CreateTutorialSession extends Component {
     };
 
     onCreate = e => {
+        console.log("old test value", this.state.test)
+        getUniversityById('60bff011a5e1000beeddb38e',
+        response => {
+            this.setState({
+                test: 'updated'},
+                () => {
+                    console.log("iam inside set state callback", this.state.test);
+                    this.props.history.push('/home');
+                })
+            },
+        error => {
+            console.error(error);
+        })
+
+        console.log(this.state.test)
+
         const payload = {
             university: this.state.university,
             faculty: this.state.faculty,
@@ -169,18 +187,18 @@ class CreateTutorialSession extends Component {
             remote: this.state.remote,
             date: this.state.date,
             price: this.state.price,
-            status: 'verified'
+            status: 'verified',
         };
 
-        createSession(
-            payload,
-            () => {},
-            error => {
-                console.error(error);
-            }
-        );
-
-        this.props.history.push('/home');
+        // createSession(
+        //     payload,
+        //     () => {},
+        //     error => {
+        //         console.error(error);
+        //     }
+        // );
+        
+        
     };
 
     onClickCheckmark = e => {
@@ -345,6 +363,7 @@ class CreateTutorialSession extends Component {
         const { classes } = this.props;
         return (
             <div className={classes.component}>
+                {console.log(this.state)}
                 <div className={`container ${classes.padding_top}`}>
                     <h2 className={`${classes.title}`}>Create Tutorial Session</h2>
                     <div className={classes.cardWrapper}>
