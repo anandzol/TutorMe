@@ -56,21 +56,10 @@ const EditProfile = props => {
     const [universities, setUniversities] = useState([]);
     const [university, setUniversity] = useState('');
     const [semesterCount, setSemesterCount] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
-    const [isValid, setIsValid] = useState(true);
     const [initialRender, setInitialRender] = useState(true);
     const [loading, setLoading] = useState(false);
     const [userId, setUserId] = useState('');
-    const [roles, setRoles] = useState([
-        {
-            student: 'Student'
-        },
-        {
-            tutor: 'Tutor'
-        },
-        {
-            admin: 'Admin'
-        }
-    ]);
+
     const [degree, setDegree] = useState('bachelor');
     const degrees = [
         {
@@ -179,7 +168,6 @@ const EditProfile = props => {
                                             value={firstName}
                                             onChange={e => {
                                                 setFirstName(e.target.value);
-                                                console.log('me', firstName);
                                             }}
                                         />
                                         <div className="text-danger">{errors.firstName}</div>
@@ -211,8 +199,6 @@ const EditProfile = props => {
                                                 onChange={e => {
                                                     setGender(e.target.value);
                                                     const value = e.target.value;
-                                                    console.log(value);
-                                                    // console.log(genders.value)
                                                 }}>
                                                 {genders.map((item, _) => (
                                                     <option value={Object.keys(item)[0]}>
