@@ -24,7 +24,9 @@ const TutorialSessionSchema = new mongoose.Schema({
         ref: 'faculty',
         required: true
     },
-    date: Date,
+    date: Array,
+    noLaterThreshold: String,
+    noEarlyThreshold: String,
     duration: {
         type: Number,
         min: 30,
@@ -44,31 +46,11 @@ const TutorialSessionSchema = new mongoose.Schema({
         required: true,
         enum: ['verified', 'pending', 'rejected']
     },
-    // url: String,
-    cv: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'document',
-        required: true
-    },
-
-    transcript: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'document',
-        required: true
-    }
-
-    //cvName: String,
-    //cvLoc: String
-});
-
-TutorialSessionSchema.pre('findOne', function (next) {
-    this.populate('tutorId', 'averageRating experience bookedOfferings');
-    next();
+    url: String
 });
 
 TutorialSessionSchema.set('timestamps', true);
-TutorialSessionSchema.set('toObject', { virtuals: true });
-TutorialSessionSchema.set('toJSON', { virtuals: true });
+
 module.exports = TutorialSession = mongoose.model(
     'tutorialSession',
     TutorialSessionSchema
