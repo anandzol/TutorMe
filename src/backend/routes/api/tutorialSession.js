@@ -3,6 +3,8 @@ const router = express.Router();
 
 const TutorialSession = require('../../models/tutorialSession');
 const TutorialSessionController = require('../controllers/tutorialSession');
+const Offerings = require('../../models/offerings');
+const offeringsHelper = require('../controllers/offeringsHelper');
 
 /**
  * @route GET /api/session/test
@@ -43,9 +45,18 @@ router.get('/:id', TutorialSessionController.getSessionById);
 router.post('/', (req, res) => {
     TutorialSession.create(req.body)
         .then(response => {
+            // Create slots for all available days once session is created successfully
+            const availableSlots= offeringsHelper.extractTimeSlots(response.noEarlyThreshold,response.noLaterThreshold);
+            const dates=response.date;
+            dates.forEach(element => {
+                let elementString = new Date(element).getFullYear()+'-'+(new Date(element).getMonth()+1)+'-'+ new Date(element).getDate();
+                //console.log('date String-',elementString);
+                Offerings.create({sessionId:response._id,offeringDate:element,availableSlots,dateString:elementString});
+            });
             res.json({ message: 'Session created successfully' });
         })
         .catch(error => {
+            console.log(error);
             res.status(400).json({ message: error });
         });
 });
@@ -99,7 +110,7 @@ router.get(
  * @description Update the session to accepted/pending/rejected by document id
  * @access Public
  */
-router.put(
+ router.put(
     '/document/:id/:status',
     TutorialSessionController.updateStatusByDocumentId
 );
@@ -134,5 +145,4 @@ router.put('/:id', (req, res) => {
  * @access Public
  */
 router.delete('/:id', TutorialSessionController.deleteSessionById);
-
 module.exports = router;

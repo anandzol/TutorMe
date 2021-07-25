@@ -86,6 +86,7 @@ class PreviousSessionCard extends Component {
         formattedState['dateFormatted'] = dateFormatted;
         formattedState['isStudent'] = props.isStudent;
         this.state = formattedState;
+        console.log(props.session);
 
         if (!'rating' in props.session) {
             this.setState({

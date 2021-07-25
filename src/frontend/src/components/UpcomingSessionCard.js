@@ -5,6 +5,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { deleteBookingById } from '../services/BookingService';
 import formattedDate from '../utils/DateUtils';
+import { JITSI_URI } from '../../src/config';
 
 const styles = () => ({
     card: {
@@ -50,6 +51,17 @@ const styles = () => ({
         height: '40px',
         width: '7rem'
     },
+    jitsiButtonWrapper: {
+        right: '1rem',
+        paddingTop: '10.7rem',
+        position: 'absolute'
+    },
+    jitsiButton: {
+        height: '40px',
+        width: '7rem',
+        color: '#ffffff',
+        backgroundColor: '#00cbff'
+    },
     divider: {
         marginTop: '0.7rem',
         marginBottom: '0.7rem'
@@ -81,8 +93,11 @@ class UpcomingSessionCard extends Component {
         let formattedState = props.session;
         let date = new Date(props.session.startDate);
         const dateFormatted = formattedDate(date);
+        const time = date.toLocaleTimeString();
+
         formattedState['dateFormatted'] = dateFormatted;
         formattedState['isStudent'] = props.isStudent;
+        formattedState['time'] = time;
         this.state = props.session;
     }
 
@@ -126,6 +141,12 @@ class UpcomingSessionCard extends Component {
         });
     };
 
+    openJitsiWindow=(e)=>{
+        const strWindowFeatures = "height=1920,width=1080";
+        const url = JITSI_URI+this.state._id;
+        window.open(url, "_blank", strWindowFeatures)
+    }
+    
     render() {
         const { classes } = this.props;
         const isStudent = this.state.isStudent;
@@ -155,18 +176,26 @@ class UpcomingSessionCard extends Component {
         return (
             <div>
                 <div>
+                    
                     <Card className={classes.card}>
                         <div className={classes.headerWrapper}>
                             <div className={classes.header}>{this.state.courseName}</div>
                         </div>
+
                         <div className={classes.inquiryWrapper}>
                             <div className={classes.inquiry}>{this.state.inquiry}</div>
+                            <div className={classes.jitsiButtonWrapper}>
+                                <button className={classes.jitsiButton} onClick={this.openJitsiWindow}>Room</button>
+                            </div>
                         </div>
                         <hr className={classes.divider} />
-                        <div className={classes.date}>{this.state.dateFormatted}</div>
+                        <div className={classes.date}>
+                            {this.state.dateFormatted} {this.state.time}
+                        </div>
                         <div className={classes.cancelButtonWrapper}>{button}</div>
 
                         <hr className={classes.divider} />
+
                         <div className={classes.location}>
                             Location:
                             {locationFormatted}

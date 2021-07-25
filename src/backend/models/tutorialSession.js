@@ -24,7 +24,9 @@ const TutorialSessionSchema = new mongoose.Schema({
         ref: 'faculty',
         required: true
     },
-    date: Date,
+    date: Array,
+    noLaterThreshold: String,
+    noEarlyThreshold: String,
     duration: {
         type: Number,
         min: 30,

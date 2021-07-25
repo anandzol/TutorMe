@@ -1,5 +1,6 @@
 const User = require('../../models/user');
 const Booking = require('../../models/booking');
+const Offering = require('../../models/offerings');
 
 // Secret key for identification for stripe
 const stripe = require('stripe')(
@@ -35,6 +36,26 @@ const bookSession = async (req, res) => {
                     tutor.save();
                 });
 
+                                // once the offerings are pushed , the slot is removed from offerings model.
+                                let toRemoveAvailableSlot = new Date(req.body.startDate).getHours()+":00";
+                
+                                const requestDateString = new Date(req.body.startDate).getFullYear()+"-"+(new Date(req.body.startDate).getMonth()+1)+"-"+new Date(req.body.startDate).getDate();
+                                const all=Offering.findOne({sessionId: req.body.sessionId,dateString:requestDateString}).populate('booking')
+                                .sort({ updatedAt: -1 })
+                                .then(bookings => {
+                                    //console.log('found following sessions-',bookings);
+                                    bookings.availableSlots=bookings.availableSlots.filter(item => !toRemoveAvailableSlot.includes(item));
+                                    bookings.save();
+                                    // console.log("after slot removal-",bookings.availableSlots);
+                                    //res.json(sessions)
+                                })
+                                .catch(error =>
+                                    res.status(404).json({
+                                        error: 'No available sessions found',
+                                        message: error.message
+                                    })
+                                );
+
                 res.json({
                     message: 'booking created successfully',
                     success: true
@@ -48,6 +69,7 @@ const bookSession = async (req, res) => {
             }
         )
         .catch(error => {
+            console.log(error);
             res.status(500).json({
                 error: 'Internal server error',
                 message: error.message
