@@ -52,15 +52,14 @@ const styles = () => ({
         width: '7rem'
     },
     jitsiButtonWrapper: {
-        float: 'left',
-        paddingLeft: '2rem',
-        position: 'relative',
-        bottom: '-70px',
-        paddingBottom: '0.5rem'
+        right: '1rem',
+        paddingTop: '10.7rem',
+        position: 'absolute'
     },
     jitsiButton: {
         height: '40px',
         width: '7rem',
+        color: '#ffffff',
         backgroundColor: '#00cbff'
     },
     divider: {
@@ -177,12 +176,17 @@ class UpcomingSessionCard extends Component {
         return (
             <div>
                 <div>
+                    
                     <Card className={classes.card}>
                         <div className={classes.headerWrapper}>
                             <div className={classes.header}>{this.state.courseName}</div>
                         </div>
+
                         <div className={classes.inquiryWrapper}>
                             <div className={classes.inquiry}>{this.state.inquiry}</div>
+                            <div className={classes.jitsiButtonWrapper}>
+                                <button className={classes.jitsiButton} onClick={this.openJitsiWindow}>Room</button>
+                            </div>
                         </div>
                         <hr className={classes.divider} />
                         <div className={classes.date}>
@@ -191,6 +195,7 @@ class UpcomingSessionCard extends Component {
                         <div className={classes.cancelButtonWrapper}>{button}</div>
 
                         <hr className={classes.divider} />
+
                         <div className={classes.location}>
                             Location:
                             {locationFormatted}
