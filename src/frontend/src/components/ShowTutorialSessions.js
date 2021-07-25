@@ -140,7 +140,7 @@ const useStyles = makeStyles(theme => ({
         columnGap: '2rem',
         // justifyContent: 'space-between',
         // paddingTop: '9rem',
-        alignItems: 'center',
+        alignItems: 'center'
         // position: 'absolute'
         // borderStyle: 'inset',
         // width: '100%',
@@ -185,7 +185,7 @@ const sortingValues = [
     { value: 4, label: 'Alphabetically' }
 ];
 
-const ShowTutorialSessions = (props) => {
+const ShowTutorialSessions = props => {
     // All sessions are all sessions which are queried based on university
     const [allSessions, setAllSessions] = useState([]);
 
@@ -211,9 +211,11 @@ const ShowTutorialSessions = (props) => {
     const [activePage, setActivePage] = useState(1);
     const [numberOfPages, setNumberOfPages] = useState(1);
     const [universityName, setUniversityName] = useState('');
-      
+
     // Defaulting university to TUM in case of no selection
-    const [university, setUniversity] = useState( props.match.params.id ? props.match.params.id: '60bff011a5e1000beeddb38e' );
+    const [university, setUniversity] = useState(
+        props.match.params.id ? props.match.params.id : '60bff011a5e1000beeddb38e'
+    );
 
     useEffect(async () => {
         setLoading(true);
@@ -273,8 +275,6 @@ const ShowTutorialSessions = (props) => {
     };
 
     const filterSessions = () => {
-        console.log('set rating');
-
         let filteredSessions = [];
         // Filter by selected courses
         // If no checkbox is selected, we display all courses
