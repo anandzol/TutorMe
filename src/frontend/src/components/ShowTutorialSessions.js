@@ -124,7 +124,7 @@ const useStyles = makeStyles(theme => ({
     },
     paginationComponent: {
         paddingTop: '1rem',
-        paddingBottom: '1rem',
+        paddingBottom: '3rem',
         position: 'relative'
     },
     dateFilter: {
