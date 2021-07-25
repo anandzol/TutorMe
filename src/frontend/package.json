@@ -25,6 +25,7 @@
         "react-date-picker": "^8.2.0",
         "react-datepicker": "^4.1.1",
         "react-datetime-picker": "^3.3.0",
+        "react-day-picker": "^7.4.10",
         "react-dom": ">=16.8.0",
         "react-icons": "^4.2.0",
         "react-loader-spinner": "^4.0.0",
@@ -36,6 +37,7 @@
         "react-scripts": "4.0.3",
         "react-search-field": "^1.2.1",
         "react-select": "^4.3.1",
+        "react-time-picker": "^4.3.0",
         "react-tree-pane": "0.0.8",
         "react-validation": "^3.0.7",
         "web-vitals": "^1.0.1"

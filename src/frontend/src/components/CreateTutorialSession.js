@@ -18,6 +18,10 @@ import { getAllFiles, getFilesById, uploadFile, deleteFile } from '../services/F
 import './styles/styles.css';
 import { getUniversityById } from '../services/UniversityService';
 
+import DayPickerInput, { DateUtils } from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
+import TimePicker from 'react-time-picker';
+
 const styles = () => ({
     title: {
         position: 'relative',
