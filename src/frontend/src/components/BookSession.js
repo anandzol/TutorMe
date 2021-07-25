@@ -26,7 +26,12 @@ const defaultState = {
     tutorAvailability: '',
     studentId: '',
     tutorId: '',
-    startDate: new Date()
+    startDate: '',
+    availableDates: [],
+    availableTimeSlots:[],
+    startTime: '15:00',
+    selectedTime:0,
+    timeOptions:[],
 };
 
 const styles = () => ({
@@ -90,15 +95,64 @@ class BookSession extends Component {
         this.state = defaultState;
     }
 
+    handleTimeChange = (e) => {
+        console.log(e.value);
+        this.setState({ selectedTime:e.value });
+        //console.log(`Option selected:`, this.state.selectedTime);
+      }
+
     setStartDate = e => {
+        //console.log("current date e is ", e.getDate());
         this.setState({
             startDate: e
         });
+        const allslots=this.state.availableTimeSlots;
+        const selectedDayTimeSlots=[]
+        allslots.forEach(slot=>{
+            if ((slot.getDate()===e.getDate())&&(slot.getMonth()===e.getMonth())&&(slot.getYear()===e.getYear())){
+                let slotObject ={label:slot.getHours()+":00", value:slot.getHours()};
+                selectedDayTimeSlots.push(slotObject);
+            }
+        });
+        this.setState({
+            timeOptions: selectedDayTimeSlots
+        });
+       // console.log(selectedDayTimeSlots);
     };
+
+    setStartTime = e => {
+        console.log("current time e is ", e);
+        this.setState({
+            startTime: e.target.value
+        });
+    };
+
+    selectDateTime=e=>{console.log("current select is ", e);}
 
     componentDidMount() {
         const sessionId = this.props.match.params.id;
         const currentUserJWT = AuthService.getCurrentUser();
+
+        getSlotsBySessionId(sessionId,
+            response=>{
+                let slotDates=[],slotTimes=[];
+                response.data.forEach(date=>{
+                    slotDates.push(new Date(date.offeringDate));
+                    date.availableSlots.forEach(slot=>{
+                        let currenthour = parseInt(slot.split(':')[0]);
+                        //console.log('current D-',currenthour.getDate(),' H-',currenthour.getHours(),' M-',currenthour.getMinutes());
+                        //console.log("Date-", currenthour.toISOString());
+                        //let currenthour = new Date(date.offeringDate).setHours(parseInt(slot.split(':')[0]));
+                        slotTimes.push(setHours(new Date(date.offeringDate), currenthour));
+                    })
+                });
+                 // console.log("Slot Dates", slotDates,' ',typeof slotDates[0]);
+                console.log("All Slot Times", slotTimes);
+                this.setState({availableDates:slotDates});
+                this.setState({availableTimeSlots:slotTimes});
+            },
+            error=>console.log(error));
+
 
         const currentUser = parseJwt(currentUserJWT);
         this.setState({
@@ -156,7 +210,8 @@ class BookSession extends Component {
             inquiry: this.state.inquiry,
             remote: this.state.remote,
             onsite: this.state.onsite,
-            startDate: this.state.startDate,
+            startDate: setHours(new Date( this.state.startDate), this.state.selectedTime),
+            //startDate: this.state.startDate,
             courseName: this.state.courseName,
             studentId: this.state.studentId,
             tutorId: this.state.tutorId
@@ -215,8 +270,17 @@ class BookSession extends Component {
                                         selected={this.startDate}
                                         onChange={this.setStartDate}
                                         inline
-                                        showTimeSelect
+                                        includeDates={this.state.availableDates}
+                                        //includeTimes={this.state.availableTimeSlots}
+                                        //showTimeSelect
+                                    />    
+                                </div>
+                                <div >
+                                    <Select className="react-datepicker_header"
+                                            options ={this.state.timeOptions}
+                                            onChange={this.handleTimeChange}
                                     />
+                                       
                                 </div>
                             </Col>
                         </Row>
