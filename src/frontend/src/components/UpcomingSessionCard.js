@@ -5,7 +5,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { deleteBookingById } from '../services/BookingService';
 import formattedDate from '../utils/DateUtils';
-import { JITSI_URI}  from '../../src/config'
+import { JITSI_URI } from '../../src/config';
 
 const styles = () => ({
     card: {
@@ -94,8 +94,11 @@ class UpcomingSessionCard extends Component {
         let formattedState = props.session;
         let date = new Date(props.session.startDate);
         const dateFormatted = formattedDate(date);
+        const time = date.toLocaleTimeString();
+
         formattedState['dateFormatted'] = dateFormatted;
         formattedState['isStudent'] = props.isStudent;
+        formattedState['time'] = time;
         this.state = props.session;
     }
 
@@ -176,7 +179,9 @@ class UpcomingSessionCard extends Component {
                             <div className={classes.inquiry}>{this.state.inquiry}</div>
                         </div>
                         <hr className={classes.divider} />
-                        <div className={classes.date}>{this.state.dateFormatted}</div>
+                        <div className={classes.date}>
+                            {this.state.dateFormatted} {this.state.time}
+                        </div>
                         <div className={classes.cancelButtonWrapper}>{button}</div>
 
                         <hr className={classes.divider} />

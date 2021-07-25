@@ -110,15 +110,23 @@ const ListUserSessions = () => {
                 const currentDate = new Date();
                 const bookings = response.data;
 
-                console.log('filter date-',response.data);
-                
+                console.log('filter date-', response.data);
+
+                bookings.forEach(session => {
+                    console.log(new Date(session.startDate));
+                    console.log(currentDate < new Date(session.startDate));
+                });
+
                 const upcomingSessions = bookings.filter(
                     session => currentDate < new Date(session.startDate)
                 );
 
+                console.log(upcomingSessions);
                 const previousSessions = bookings.filter(
                     session => currentDate >= new Date(session.startDate)
                 );
+
+                console.log(previousSessions);
                 // We display the nearest (e.g. closest to the current date) first for upcoming sessions
                 upcomingSessions.sort(function (a, b) {
                     return new Date(a.startDate) - new Date(b.startDate);
@@ -127,18 +135,18 @@ const ListUserSessions = () => {
                     return new Date(b.startDate) - new Date(a.startDate);
                 });
 
-                setUpcomingSessions(previousSessions);
+                setUpcomingSessions(upcomingSessions);
                 setPreviousSessions(previousSessions);
                 setFilteredPreviousSessions(previousSessions);
-                setFilteredUpcomingSessions(previousSessions);
+                setFilteredUpcomingSessions(upcomingSessions);
 
                 // Set the displayed number of pages
                 setPreviousSessionsPages(Math.ceil(previousSessions.length / 3));
-                setUpcomingSessionsPages(Math.ceil(previousSessions.length / 3));
+                setUpcomingSessionsPages(Math.ceil(upcomingSessions.length / 3));
 
                 // Set the initially displayed bookings to the first 3
                 setDisplayedPreviousSessions(previousSessions.slice(0, 3));
-                setDisplayedUpcomingSessions(previousSessions.slice(0, 3));
+                setDisplayedUpcomingSessions(upcomingSessions.slice(0, 3));
             },
             error => {
                 console.error(error);
