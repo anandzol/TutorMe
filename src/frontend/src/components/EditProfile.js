@@ -98,11 +98,10 @@ const EditProfile = props => {
             program: degree,
             semester: semester
         };
-
         AuthService.updateUserById(
             payload,
             response => {
-                props.history.push('/home');
+                props.history.push('/home', response.data);
             },
             error => {
                 console.log(error);
@@ -123,6 +122,7 @@ const EditProfile = props => {
                 setDateOfBirth(response.data.dateOfBirth);
                 setUniversity(response.data.university);
                 setEmail(response.data.email);
+                setGender(response.data.gender);
             });
 
             getAllUniversitiesSorted(
@@ -196,10 +196,11 @@ const EditProfile = props => {
                                             <Form.Control
                                                 name="gender"
                                                 as="select"
+                                                value={gender}
                                                 onChange={e => {
                                                     setGender(e.target.value);
-                                                    const value = e.target.value;
-                                                }}>
+                                                }
+                                                }>
                                                 {genders.map((item, _) => (
                                                     <option value={Object.keys(item)[0]}>
                                                         {Object.values(item)[0]}

@@ -40,11 +40,13 @@ const getUserById = async (req, res) => {
  * @param {Object} req
  * @param {Object} res
  */
+
 const updateUserById = (req, res) => {
     // console.log("req", req.params.id)
-    User.findByIdAndUpdate(req.params.id, req.body)
+    User.findByIdAndUpdate(req.params.id, req.body, {new: true})
         .then(response => {
             res.json(response);
+            console.log(response)
         })
         .catch(error => {
             errorCallback(error);
