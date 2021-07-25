@@ -4,31 +4,32 @@ import Form from 'react-bootstrap/Form';
 import AuthService from '../services/AuthService';
 import { parseJwt } from '../services/AuthHeader';
 import { getAllUniversitiesSorted } from '../services/UniversityService';
+import { Row, Col } from 'react-bootstrap/';
+import DatePicker from 'react-date-picker';
+import Select from 'react-select';
 
 const useStyles = makeStyles(theme => ({
-    main: {
-        paddingTop: '8rem'
-    },
-    container: {
-        paddingTop: '2rem',
-        paddingBottom: '10px'
-    },
+   
     row__padding_right: {
         paddingRight: '20px'
     },
     label__padding_top: {
-        paddingTop: '10px'
+        paddingTop: '0.5rem',
+        paddingBottom: '0.5rem'
     },
     button_box: {
         position: 'absolute',
         paddingTop: '2rem'
     },
     component: {
+        position: 'absolute',
         backgroundColor: '#f0f2f5',
         paddingTop: '10px',
         paddingBottom: '10px',
-        minHeight: '90vh',
-        color: 'black'
+        height: '90%',
+        width: '100%',
+        color: 'black',
+        overflow: 'auto'
     },
     button: {
         width: '10rem',
@@ -41,8 +42,39 @@ const useStyles = makeStyles(theme => ({
         paddingTop: '1rem'
     },
     title_padding_bottom: {
+        paddingTop: '1rem',
         paddingBottom: '1rem'
+    },
+    datePicker: {
+        color: '#495057',
+        borderColor: '#495057'
+    },
+    datePickerWrapper: {
+        display: 'block',
+        width: '50%',
+        padding: '.375rem .75rem',
+        fontSize: '1rem',
+        lineHeight: '1.5',
+        color: '#495057',
+        backgroundColor: '#fff',
+        backgroundClip: 'padding-box',
+        border: '1px solid #ced4da',
+        borderRadius: '.25rem',
+        transition: 'border-color .15s ease-in-out,box-shadow .15s ease-in-out',
+    },
+    passwordStrengthBar: {
+        height: '1rem'
+    },
+    card: {
+        height: '47rem'
+    },
+    postalCodeInput: {
+        width: '5rem'
+    },
+    genderSelect: {
+        width: '10rem'
     }
+    
 }));
 
 const EditProfile = props => {
@@ -55,11 +87,19 @@ const EditProfile = props => {
     const [email, setEmail] = useState('');
     const [universities, setUniversities] = useState([]);
     const [university, setUniversity] = useState('');
-    const [semesterCount, setSemesterCount] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+    const semesterCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     const [initialRender, setInitialRender] = useState(true);
     const [loading, setLoading] = useState(false);
     const [userId, setUserId] = useState('');
-
+    const [languages, setLanguages] = useState([])
+    const languagesList = [
+        { value: 'German', label: 'German' },
+        { value: 'English', label: 'English' },
+        { value: 'French', label: 'French' }
+    ];
+    const [city, setCity] = useState('')
+    const [postalCode, setPostalCode] = useState('');
+    const [adress, setadress] = useState('');
     const [degree, setDegree] = useState('bachelor');
     const degrees = [
         {
@@ -96,7 +136,12 @@ const EditProfile = props => {
             email: email,
             university: university,
             program: degree,
-            semester: semester
+            semester: semester,
+            dateOfBirth: dateOfBirth,
+            languages: languages,
+            city: city,
+            postalCode: postalCode,
+            adress: adress
         };
         AuthService.updateUserById(
             payload,
@@ -108,6 +153,11 @@ const EditProfile = props => {
             }
         );
     };
+
+    const onChangeLanguages = e => {
+        let languages = e.map(language => language.label);
+        setLanguages(languages)
+    }
 
     useEffect(() => {
         setLoading(true);
@@ -123,6 +173,10 @@ const EditProfile = props => {
                 setUniversity(response.data.university);
                 setEmail(response.data.email);
                 setGender(response.data.gender);
+                setLanguages(response.data.languages)
+                setCity(response.data.city);
+                setPostalCode(response.data.postalCode);
+                setadress(response.data.adress);
             });
 
             getAllUniversitiesSorted(
@@ -136,9 +190,9 @@ const EditProfile = props => {
                     });
                     setUniversities(universitiesMapped);
 
-                    if (universitiesMapped.length != 0) {
-                        setUniversity(universitiesMapped[0].value);
-                    }
+                    // if (universitiesMapped.length != 0) {
+                    //     setUniversity(universitiesMapped[0].value);
+                    // }
                 },
                 error => {
                     console.error(error);
@@ -151,7 +205,6 @@ const EditProfile = props => {
     return (
         <div className={classes.component}>
             <div className="container">
-                <div className={classes.main}>
                     <h2 className={`${classes.title_padding_bottom}`}>Edit Profile</h2>
                     <div className={`card col-12 login-card mt-2 hv-center`}>
                         <form>
@@ -226,15 +279,61 @@ const EditProfile = props => {
                                 />
                                 <div className="text-danger">{errors.email}</div>
                             </div>
+                            <div class={`${classes.label__padding_top}`}>
+                                <Row>
+                                    <Col xs={2}>
+                                        <label>Postal Code</label>
+                                        <input
+                                            type="number"
+                                            name="postalCode"
+                                            className="form-control"
+                                            min="10000"
+                                            max="99999"
+                                            id="postalCode"
+                                            placeholder="85748"
+                                            value={postalCode}
+                                            onChange={e => {setPostalCode(e.target.value)}}
+                                        />
+                                        <Row />
+                                    </Col>
+                                    <Col xs={6}>
+                                        <label>Adress</label>
+                                        <input
+                                            type="text"
+                                            name="adress"
+                                            className="form-control"
+                                            id="adress"
+                                            placeholder="Adress"
+                                            value={adress}
+                                            onChange={e => {setadress(e.target.value)}}
+                                        />
+                                    </Col>
+                                    <Col>
+                                        <label>City</label>
+                                        <input
+                                            type="text"
+                                            name="city"
+                                            className="form-control"
+                                            id="city"
+                                            placeholder="City"
+                                            value={city}
+                                            onChange={e => setCity(e.target.value)}
+                                        />
+                                    </Col>
+                                </Row>
+                                <Row></Row>
+                            </div>
                             <div class={classes.container + ' ' + 'row row-cols-3'}>
                                 {/* University input option */}
                                 <div class="col">
-                                    <Form.Group controlId="university">
+                                    <Form.Group controlId="universitytest">
                                         <Form.Label>University</Form.Label>
                                         <Form.Control
                                             as="select"
                                             name="university"
+                                            value={university}
                                             onChange={e => setUniversity(e.target.value)}>
+                                                
                                             {universities.map((item, _) => (
                                                 <option value={item.value}>{item.name}</option>
                                             ))}
@@ -273,8 +372,39 @@ const EditProfile = props => {
                                 </div>
                             </div>
 
+                            {/** Date of birth input */}
+                            <div class={`${classes.label__padding_top}`}>
+                                <div class={`row row-cols-2`}></div>
+                                <Row>
+                                    <Col>
+                                        <label>Date of birth</label>
+                                        <Row />
+                                        <div className={classes.datePickerWrapper}>
+                                            <DatePicker
+                                                wrapperClassName="datePicker"
+                                                disableCalendar
+                                                clearIcon
+                                                format={'dd-MM-y'}
+                                                onChange={e => {setDateOfBirth(e)}}
+                                                calendarAriaLabel={'Date of birth'}
+                                                required={true}
+                                                isClearable={false}
+                                                value={dateOfBirth}></DatePicker>
+                                        </div>
+                                    </Col>
+                                    <Col>
+                                        <label>Languages</label>
+                                        <Select
+                                            isMulti
+                                            options={languagesList}
+                                            onChange={onChangeLanguages}
+                                        />
+                                    </Col>
+                                </Row>
+                                <Row></Row>
+                            </div>
                             <div className={classes.button_box}>
-                                {/* Register Button */}
+                                {/* Save Button */}
                                 <div className="form-group">
                                     <button className={`btn btn-primary btn-lg`} onClick={onSave}>
                                         Save Information
@@ -289,7 +419,7 @@ const EditProfile = props => {
                         </form>
                     </div>
                 </div>
-            </div>
+            
         </div>
     );
 };

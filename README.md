@@ -2,7 +2,8 @@ Prerequisites:
 npm 
 
 Disclaimer: 
-The db credentials are hard coded into the backend code. It is currently hosted on a free mongodb atlas instance. 
+The db credentials as well as the file upload credentials are hard coded into the backend code. 
+The database is hosted on a free mongodb atlas instance, the file upload in an aws s3 bucket
 
 When booking the session, use 4242 4242 4242 4242 (Visa) as card number detail, any 3 digit number as cvc and a future date as expiration date. 
 

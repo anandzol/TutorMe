@@ -14,12 +14,12 @@ const styles = theme => ({
     },
     image: {
         width: '600px',
-        height: '400px',
-        paddingTop: '100px'
+        height: '300px',
+        paddingTop: '50px'
         // opacity: '0.7'
     },
     heading: {
-        fontSize: '100px',
+        fontSize: '50px',
         letterSpacing: '7px',
         fontFamily: 'Segoe UI',
         opacity: '0.8'
@@ -27,7 +27,7 @@ const styles = theme => ({
     subText: {
         letterSpacing: '2px',
         fontFamily: 'Segoe UI',
-        paddingBottom: '50px',
+        paddingBottom: '20px',
         opacity: '0.75'
     },
     button__padding_top: {
@@ -89,9 +89,8 @@ class HomeScreen extends Component {
         return (
             <div>
                 <div className={classes.firstName}>
-                    {console.log('inside render', this.props)}
                     <h1>{`Welcome ${
-                        this.props?.location?.state.firstName
+                        this?.props?.location?.state?.firstName
                             ? this.props.location.state.firstName
                             : this.state.firstName
                     }!`}</h1>
@@ -100,8 +99,8 @@ class HomeScreen extends Component {
                     <img className={classes.image} src={tutorLogo} />
 
                     <h1 className={classes.heading}>TutorMe</h1>
-                    <h2 className={classes.subText}>Your Personalised, Tailored Tutoring</h2>
-                    <h2 className={classes.subText}>See available learnings for your university</h2>
+                    <h3 className={classes.subText}>Your Personalised, Tailored Tutoring</h3>
+                    <h4 className={classes.subText}>See available learnings for your university</h4>
                     {link}
                 </div>
             </div>
