@@ -96,7 +96,7 @@ function ToPayment(props) {
                         {/* <span className="text-success">-₹500</span> */}
                     </li>
                     <li className="list-group-item d-flex justify-content-between">
-                        <span>Total (in euros)</span>
+                        <span>Total (in €)</span>
                         <strong>{totalAmount} €/hour</strong>
                     </li>
                 </ul>
@@ -106,6 +106,10 @@ function ToPayment(props) {
 
     return (
         <div className="container">
+            <div className="py-5 text-left">
+                <h4>Book your Session</h4>
+            </div>
+
             {/* <div className= "row"> */}
             <div className={classes.box}>
                 {paymentCompleted ? (
