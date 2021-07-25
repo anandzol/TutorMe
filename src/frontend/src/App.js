@@ -5,15 +5,15 @@ import NavigationBar from './components/NavigationBar';
 import AdminRoute from './components/routes/AdminRoute';
 import TutorRoute from './components/routes/TutorRoute';
 import PrivateRoute from './components/routes/PrivateRoute';
-
+import Footer from './components/Footer';
 import routes from './routes';
 
 class App extends Component {
     render() {
         return (
             <div>
-                <NavigationBar></NavigationBar>
                 <Router>
+                    <NavigationBar></NavigationBar>
                     <div>
                         {routes.map((item, i) => {
                             {
@@ -47,6 +47,7 @@ class App extends Component {
                                             key={i}
                                             path={item.path}
                                             component={item.component}
+                                            exact
                                         />
                                     );
                                 }
@@ -54,6 +55,7 @@ class App extends Component {
                         })}
                     </div>
                 </Router>
+                <Footer />
             </div>
         );
     }

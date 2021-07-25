@@ -44,11 +44,10 @@ router.get('/:id', UserController.getUserById);
 router.get('/sessions/:id', UserController.getUserSessionsById);
 
 /**
- * @route POST api/user/book-session
- * @description Book a session with the payload
- * @access Public
+ * @route GET api/user/booked-offerings/:id
+ * @description Get the booked offerings of a tutor
  */
-router.post('/book-session', UserController.bookSession);
+router.get('/booked-offerings/:id', UserController.getExperienceRatingByUserId);
 
 /**
  * @route POST api/user/login/{payload}
@@ -63,5 +62,12 @@ router.post('/login', AuthController.login);
  * @access Public
  */
 router.post('/register', AuthController.register);
+
+/**
+ * @route PUT api/user/:id/{payload}
+ * @description Registers a new mail
+ * @access Public
+ */
+ router.put('/:id', UserController.updateUserById);
 
 module.exports = router;

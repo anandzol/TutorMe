@@ -24,3 +24,46 @@ export function getTutorById(tutorId, callback, errorcallback) {
             }
         });
 }
+
+/**
+ * API Endpoint for getting all booked offerings of a tutor
+ * @param {String} tutorId
+ * @param {Function} callback
+ * @param {Function} errorcallback
+ */
+export function getBookedOfferingsByUserId(tutorId, callback, errorcallback) {
+    axios
+        .get(`${API_URL}/booked-offerings/${tutorId}`)
+        .then(response => {
+            if (callback != null) {
+                callback(response);
+            }
+            console.log('updated user');
+        })
+        .catch(error => {
+            if (errorcallback != null) {
+                errorcallback(error);
+            }
+        });
+}
+
+/**
+ * API Endpoint for updating a tutor by id
+ * @param {Object} payload
+ * @param {Function} callback
+ * @param {Function} errorcallback
+ */
+export function updateTutorById(payload, callback, errorcallback) {
+    axios
+        .put(`${API_URL}/${payload.tutorId}`, payload)
+        .then(response => {
+            if (callback != null) {
+                callback(response);
+            }
+        })
+        .catch(error => {
+            if (errorcallback != null) {
+                errorcallback(error);
+            }
+        });
+}

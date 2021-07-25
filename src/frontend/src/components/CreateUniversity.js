@@ -41,7 +41,6 @@ const styles = () => ({
 });
 
 // /components/CreateUniversity.js
-
 class CreateUniversity extends Component {
     constructor() {
         super();
@@ -92,7 +91,7 @@ class CreateUniversity extends Component {
 
     render() {
         const { classes } = this.props;
-
+        
         return (
             <div>
                 <div className={classes.component}>

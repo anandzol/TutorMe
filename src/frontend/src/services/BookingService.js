@@ -9,15 +9,19 @@ const API_URL = `${SERVER_API}/booking`;
  * @param {Function} callback
  * @param {Function} errorcallback
  */
-export function getAllBookingsByUserId(userId, callback, errorcallback) {
-    axios.get(`${API_URL}/student/${userId}`).then(
-        response => {
-            callback(response);
-        },
-        error => {
-            errorcallback(error);
-        }
-    );
+export async function getAllBookingsByUserId(userId, callback, errorcallback) {
+    try {
+        axios.get(`${API_URL}/student/${userId}`).then(
+            response => {
+                callback(response);
+            },
+            error => {
+                errorcallback(error);
+            }
+        );
+    } catch (error) {
+        errorcallback(error);
+    }
 }
 
 /**
@@ -26,9 +30,42 @@ export function getAllBookingsByUserId(userId, callback, errorcallback) {
  * @param {Function} callback
  * @param {Function} errorcallback
  */
-export function bookSession(payload, callback, errorcallback) {
+export function bookSession(payload, callback) {
+    axios.post(`${API_URL}/book-session`, payload).then(response => {
+        callback(response);
+    });
+    // .catch(error => {
+    //     errorcallback(error);
+    // });
+}
+
+/**
+ * API Controller for rating a booking
+ * @param {String} bookingId
+ * @param {Object} payload
+ * @param {Function} callback
+ * @param {Function} errorcallback
+ */
+export function rateBooking(bookingId, payload, callback, errorcallback) {
     axios
-        .post(`${API_URL}/book-session`, payload)
+        .post(`${API_URL}/rate/${bookingId}`, payload)
+        .then(response => {
+            callback(response);
+        })
+        .catch(error => {
+            errorcallback(error);
+        });
+}
+
+/**
+ * API Controller for deleting a booking by id
+ * @param {String} bookingId
+ * @param {Function} callback
+ * @param {Function} errorcallback
+ */
+export function deleteBookingById(bookingId, callback, errorcallback) {
+    axios
+        .delete(`${API_URL}/${bookingId}`)
         .then(response => {
             callback(response);
         })

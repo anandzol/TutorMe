@@ -3,12 +3,11 @@ import { getSessionById } from '../services/SessionService';
 import { getTutorById } from '../services/TutorService';
 import AuthService from '../services/AuthService';
 import { parseJwt } from '../services/AuthHeader';
-import { Card, Button, Container, Col, Row, Form } from 'react-bootstrap';
+import { Card, Button, Col, Row, Form } from 'react-bootstrap';
 import { withStyles } from '@material-ui/styles';
 import { BsPersonFill, BsClock, BsGeoAlt } from 'react-icons/bs';
 import { BiMoney } from 'react-icons/bi';
 import DatePicker from 'react-datepicker';
-import { bookSession } from '../services/BookingService';
 
 import './styles/bookSession.css';
 
@@ -48,8 +47,7 @@ const styles = () => ({
     },
     column: {
         paddingTop: '1.5rem',
-        marginLeft: 'auto',
-        paddingLeft: '4rem'
+        marginLeft: 'auto'
     },
     courseTitle: {
         fontStyle: 'italic'
@@ -107,7 +105,7 @@ class BookSession extends Component {
         getSessionById(
             sessionId,
             response => {
-                const tutorId = response.data.tutorId;
+                const tutorId = response.data.tutorId.id;
                 getTutorById(
                     tutorId,
                     tutor => {
@@ -161,20 +159,13 @@ class BookSession extends Component {
             tutorId: this.state.tutorId
         };
 
-        bookSession(
-            data,
-            response => {
-                this.props.history.push('/home');
-            },
-            error => {
-                console.log(error);
-            }
-        );
+        // ToPayment(data)
+        this.props.history.push(data);
+        this.props.history.push(`/book-session/${this.state.id}/payment`, { state: data });
     };
 
     render() {
         const { classes } = this.props;
-
         return (
             <div className={classes.component}>
                 <h3>Book your Session</h3>

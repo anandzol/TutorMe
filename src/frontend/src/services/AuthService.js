@@ -54,6 +54,14 @@ class AuthService {
         return false;
     }
 
+    isStudent() {
+        if (this.isLoggedIn()) {
+            const currentUserToken = this.getCurrentUser();
+            const currentUser = parseJwt(currentUserToken);
+            return currentUser.role === 'student';
+        }
+    }
+
     isTutor() {
         if (this.isLoggedIn()) {
             const currentUserToken = this.getCurrentUser();
@@ -61,6 +69,30 @@ class AuthService {
             return currentUser.role === 'tutor' || currentUser.role === 'admin';
         }
         return false;
+    }
+
+    getUserById(userId, callback, errorcallback) {
+        return axios
+            .get(`${API_URL}/${userId}`)
+            .then(response => {
+                callback(response);
+            },
+            error => {
+                errorcallback(error);
+            }
+            );
+    }
+
+    updateUserById(payload, callback, errorcallback) {
+        return axios
+            .put(`${API_URL}/${payload.id}`, payload)
+            .then(response => {
+                callback(response);
+            },
+            error => {
+                errorcallback(error);
+            }
+            );
     }
 }
 

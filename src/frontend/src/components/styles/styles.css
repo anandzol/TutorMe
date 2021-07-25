@@ -6,3 +6,19 @@
     border-radius: 0.25rem;
     width: 99.3%;
 }
+
+.breadcrumb {
+    background-color: white;
+}
+
+.breadcrumb-item.active {
+    color: black;
+}
+
+.react-date-picker,
+.react-date-picker *,
+.react-date-picker *:before,
+.react-date-picker *:after {
+    color: #495057;
+    border: #495057;
+}
