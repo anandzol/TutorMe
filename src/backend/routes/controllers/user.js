@@ -31,7 +31,6 @@ const getUserById = async (req, res) => {
                 postalCode: tutor[0].postalCode,
                 adress: tutor[0].adress
             };
-            console.log(data)
             res.status(200).json(data);
         })
         .catch(error => {
@@ -49,11 +48,9 @@ const getUserById = async (req, res) => {
  */
 
 const updateUserById = (req, res) => {
-    // console.log("req", req.params.id)
     User.findByIdAndUpdate(req.params.id, req.body, {new: true})
         .then(response => {
             res.json(response);
-            console.log(response)
         })
         .catch(error => {
             errorCallback(error);
