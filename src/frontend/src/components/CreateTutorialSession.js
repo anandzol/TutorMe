@@ -161,21 +161,22 @@ class CreateTutorialSession extends Component {
     };
 
     onCreate = e => {
-        console.log("old test value", this.state.test)
-        getUniversityById('60bff011a5e1000beeddb38e',
-        response => {
-            this.setState({
-                test: 'updated'},
-                () => {
-                    console.log("iam inside set state callback", this.state.test);
-                    this.props.history.push('/home');
-                })
+        getUniversityById(
+            '60bff011a5e1000beeddb38e',
+            response => {
+                this.setState(
+                    {
+                        test: 'updated'
+                    },
+                    () => {
+                        this.props.history.push('/home');
+                    }
+                );
             },
-        error => {
-            console.error(error);
-        })
-
-        console.log(this.state.test)
+            error => {
+                console.error(error);
+            }
+        );
 
         const payload = {
             university: this.state.university,
@@ -187,18 +188,8 @@ class CreateTutorialSession extends Component {
             remote: this.state.remote,
             date: this.state.date,
             price: this.state.price,
-            status: 'verified',
+            status: 'verified'
         };
-
-        // createSession(
-        //     payload,
-        //     () => {},
-        //     error => {
-        //         console.error(error);
-        //     }
-        // );
-        
-        
     };
 
     onClickCheckmark = e => {
@@ -363,7 +354,6 @@ class CreateTutorialSession extends Component {
         const { classes } = this.props;
         return (
             <div className={classes.component}>
-                {console.log(this.state)}
                 <div className={`container ${classes.padding_top}`}>
                     <h2 className={`${classes.title}`}>Create Tutorial Session</h2>
                     <div className={classes.cardWrapper}>

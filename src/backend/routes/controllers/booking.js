@@ -1,8 +1,10 @@
 const User = require('../../models/user');
 const Booking = require('../../models/booking');
 
-//TODO secret key for identification for stripe
-const stripe = require('stripe')('sk_test_51JEzYXFZbrhOEnTQ7O3oK1YqZuepwsQZjDe2F1K1oGPAOetYzyluvMb3rUEXjLTSW6EEYkTrBB4ghBawRpOAkPXH00IS2OtJs5')
+// Secret key for identification for stripe
+const stripe = require('stripe')(
+    'sk_test_51JEzYXFZbrhOEnTQ7O3oK1YqZuepwsQZjDe2F1K1oGPAOetYzyluvMb3rUEXjLTSW6EEYkTrBB4ghBawRpOAkPXH00IS2OtJs5'
+);
 
 /**
  * API Controller for booking a tutorial session
@@ -11,22 +13,19 @@ const stripe = require('stripe')('sk_test_51JEzYXFZbrhOEnTQ7O3oK1YqZuepwsQZjDe2F
  */
 const bookSession = async (req, res) => {
     let session = req.body;
-    //New bookings being created each time without any check!
+    // New bookings being created each time without any check!
     Booking.create(session)
         .then(
             booking => {
                 // Update the booking of the student
                 User.findOne({ _id: req.body.studentId }).then(student => {
                     // payment
-                    console.log(req.body)
-                    if(makePayment(req.body.paymentId, req.body.amount)){
+                    if (makePayment(req.body.paymentId, req.body.amount)) {
                         booking.paymentStatus = true;
                         student.bookings.push(booking);
                         student.save();
-                        console.log(booking._id);
-                    }
-                    else {
-                        console.log('payment failed')
+                    } else {
+                        console.error('payment failed');
                     }
                 });
 
@@ -36,8 +35,10 @@ const bookSession = async (req, res) => {
                     tutor.save();
                 });
 
-                res.json({ message: 'booking created successfully',
-            success: true });
+                res.json({
+                    message: 'booking created successfully',
+                    success: true
+                });
             },
             error => {
                 res.status(404).json({
@@ -117,61 +118,31 @@ const getBookingsByStudentId = async (req, res) => {
             res.json(user.bookings);
         })
         .catch(error => {
-            console.log(error);
             res.status(404).json({
                 error: `No available user with id: ${userId}`,
                 message: error.message
             });
-    });
-}
+        });
+};
 
 // PaymentIntent represents your intent to collect payment from a customer and tracks the lifecycle of the payment process.
-const makePayment  = async (paymentId, amount) => {
-        // Create the PaymentIntent
-        // console.log("payment id", paymentId)
-        try{
-            let intent =  await stripe.paymentIntents.create({
+const makePayment = async (paymentId, amount) => {
+    // Create the PaymentIntent
+    try {
+        let intent = await stripe.paymentIntents.create({
             payment_method: paymentId,
-            description: "Test payment",
+            description: 'Test payment',
             amount: amount * 100,
             currency: 'eur',
             confirmation_method: 'manual',
             confirm: true
-                })
-                console.log("intents", intent.status);
-                if(intent.status == 'succeeded')
-                    return true;    
-                else 
-                    return false;
-            } catch(e) {
-                console.log("error", e.message)
-            }   
-    console.log("intent", intent.status)
-    
-    
-}
-
-
-/**
- * API Controller for making a payment for student booking ID
- * @param {Object} req
- * @param {Object} res
-//  */
-// const bookingPayment = async (req, res) => {
-//     const userId = req.params.id;
-
-//     User.findOne({ _id: userId })
-//         .populate('bookings')
-//         .then(user => {
-//             res.json(user.bookings);
-//         })
-//         .catch(error => {
-//             res.status(404).json({
-//                 error: `No available user with id: ${userId}`,
-//                 message: error.message
-//             });
-//         });
-// };
+        });
+        if (intent.status == 'succeeded') return true;
+        else return false;
+    } catch (e) {
+        console.error('error', e.message);
+    }
+};
 
 module.exports = {
     bookSession,

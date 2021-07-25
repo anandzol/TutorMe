@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import graduationIcon from '../assets/graduationCap.png'
+import graduationIcon from '../assets/graduationCap.png';
 import { Link } from 'react-router-dom';
 import { Nav, Navbar, NavDropdown, Row } from 'react-bootstrap';
 import AuthService from '../services/AuthService';
 import { withStyles } from '@material-ui/styles';
 import { BsJustify, BsCalendar, BsPersonFill } from 'react-icons/bs';
-
 
 const styles = () => ({
     bar: {
@@ -34,7 +33,7 @@ const styles = () => ({
         // height: '90px',
         // width: '250px',
         // padding: '15px 14px 15px 16px',
-        position:'absolute',
+        position: 'absolute',
         left: '3rem',
         height: '5rem',
         width: '6rem'
@@ -53,9 +52,8 @@ const styles = () => ({
         color: '#56b5ab'
     },
     profileButton__span: {
-        right: '0rem',
+        right: '0rem'
     }
-   
 });
 
 class NavigationBar extends Component {
@@ -77,14 +75,12 @@ class NavigationBar extends Component {
         const navDropDownTitle = <BsPersonFill></BsPersonFill>;
         const { classes } = this.props;
         return (
-            <Navbar bg="light" variant="light" expand='lg' fixed = 'top'>
-                
+            <Navbar bg="light" variant="light" expand="lg">
                 <Navbar.Brand className={classes.bar} href="/home">
                     <Row>
                         <Link to="/home">
                             <img src={graduationIcon} className={classes.logo}></img>
                         </Link>
-                        
                     </Row>
                 </Navbar.Brand>
                 <Nav>
@@ -100,39 +96,49 @@ class NavigationBar extends Component {
                     </Link>
                 </Nav>
                 <Nav className={classes.profileButton}>
-                {isLoggedIn ? ( <NavDropdown
-                                title={navDropDownTitle}
-                                id="collasible-nav-dropdown"
-                                className={classes.profileButton__span}>
-                                <NavDropdown.Item href="/home">Home</NavDropdown.Item>
-                                <NavDropdown.Item href="/edit-profile" props = {this.props}>Edit Profile</NavDropdown.Item>
-                                { isTutorOrAdmin && 
+                    {isLoggedIn ? (
+                        <NavDropdown
+                            title={navDropDownTitle}
+                            id="collasible-nav-dropdown"
+                            className={classes.profileButton__span}>
+                            <NavDropdown.Item href="/home">Home</NavDropdown.Item>
+                            <NavDropdown.Item href="/edit-profile" props={this.props}>
+                                Edit Profile
+                            </NavDropdown.Item>
+                            {isTutorOrAdmin && (
                                 <React.Fragment>
                                     <NavDropdown.Item href="/create-tutorial-session">
-                                    Offer Session
-                                </NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.4">Manage Course</NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item href="/create-course">Create Course</NavDropdown.Item>
-                                <NavDropdown.Item href="/create-faculty">Create Faculty</NavDropdown.Item>
-                                <NavDropdown.Item href="/create-university">
-                                    Create University
-                                </NavDropdown.Item>
-                                </React.Fragment> }
-                                <NavDropdown.Item href="/" onClick={AuthService.logout}>
-                                    Sign Out
-                                </NavDropdown.Item>
-                                {/* <NavDropdown.Divider /> */}
-                            </NavDropdown> ) :
-                        (
-                            <NavDropdown
-                                title={navDropDownTitle}
-                                id="collasible-nav-dropdown"
-                                className={classes.profileButton__span}>
-                                    <NavDropdown.Item href="/login-user">Sign in</NavDropdown.Item>
-                                    <NavDropdown.Item href="/register-user">Sign Up</NavDropdown.Item>
-                                </NavDropdown>
-                        )}
+                                        Offer Session
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item href="/manage-sessions">
+                                        Manage Course
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item href="/create-course">
+                                        Create Course
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item href="/create-faculty">
+                                        Create Faculty
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item href="/create-university">
+                                        Create University
+                                    </NavDropdown.Item>
+                                </React.Fragment>
+                            )}
+                            <NavDropdown.Item href="/" onClick={AuthService.logout}>
+                                Sign Out
+                            </NavDropdown.Item>
+                            {/* <NavDropdown.Divider /> */}
+                        </NavDropdown>
+                    ) : (
+                        <NavDropdown
+                            title={navDropDownTitle}
+                            id="collasible-nav-dropdown"
+                            className={classes.profileButton__span}>
+                            <NavDropdown.Item href="/login-user">Sign in</NavDropdown.Item>
+                            <NavDropdown.Item href="/register-user">Sign Up</NavDropdown.Item>
+                        </NavDropdown>
+                    )}
                 </Nav>
             </Navbar>
         );

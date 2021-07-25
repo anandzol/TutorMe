@@ -2,6 +2,7 @@
 
 const User = require('../../models/user');
 const Booking = require('../../models/booking');
+
 /**
  * API Controller for getting all the necessary information displayed in a tutorial session
  * omits all private information (e.g. lastName, password Hash, Email)
@@ -9,10 +10,8 @@ const Booking = require('../../models/booking');
  * @param {Object} res
  */
 const getUserById = async (req, res) => {
-    // console.log(req)
     User.find({ _id: req.params.id })
         .then(tutor => {
-            // console.log(tutor)
             const data = {
                 name: tutor[0].firstName,
                 lastName: tutor[0].lastName,
@@ -44,16 +43,13 @@ const getUserById = async (req, res) => {
 const updateUserById = (req, res) => {
     // console.log("req", req.params.id)
     User.findByIdAndUpdate(req.params.id, req.body)
-    .then(response => {
-             res.json(response)
-             console.log(response)
-             console.log(`Updated user ${req.params.id} successfully`)
+        .then(response => {
+            res.json(response);
         })
         .catch(error => {
-            console.log(error)
             errorCallback(error);
-        }
-    )}
+        });
+};
 /**
  * API Controller for getting all booked tutorial sessions of a user
  * @param {Object} req

@@ -38,7 +38,7 @@ export function getBookedOfferingsByUserId(tutorId, callback, errorcallback) {
             if (callback != null) {
                 callback(response);
             }
-            console.log("updated user")
+            console.log('updated user');
         })
         .catch(error => {
             if (errorcallback != null) {
@@ -47,6 +47,12 @@ export function getBookedOfferingsByUserId(tutorId, callback, errorcallback) {
         });
 }
 
+/**
+ * API Endpoint for updating a tutor by id
+ * @param {Object} payload
+ * @param {Function} callback
+ * @param {Function} errorcallback
+ */
 export function updateTutorById(payload, callback, errorcallback) {
     axios
         .put(`${API_URL}/${payload.tutorId}`, payload)
@@ -54,7 +60,6 @@ export function updateTutorById(payload, callback, errorcallback) {
             if (callback != null) {
                 callback(response);
             }
-            console.log("updated user")
         })
         .catch(error => {
             if (errorcallback != null) {
