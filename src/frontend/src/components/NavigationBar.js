@@ -80,7 +80,7 @@ class NavigationBar extends Component {
         if (isLoggedIn) {
             navbarHome = <NavDropdown.Item href="/home">Home</NavDropdown.Item>;
             linkHome = (
-                <Link to="/home">
+                <Link to="/">
                     <img src={graduationIcon} className={classes.logo}></img>
                 </Link>
             );
