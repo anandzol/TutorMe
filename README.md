@@ -7,7 +7,7 @@ The db credentials are hard coded into the backend code. It is currently hosted 
 When booking the session, use 4242 4242 4242 4242 as card number detail, any 3 digit number as cvc and a future date as expiration date. 
 
 
-An admin user (with pre-booked session) is available with following credentials: email: admin@test.com password:password
+An admin user (with pre-booked session and pre offered sessions) is available with following credentials: email: admin@test.com password:password
 
 To run the web app: 
 1. Execute backend (npm install,  npm run app)
