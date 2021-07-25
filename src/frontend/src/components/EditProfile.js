@@ -9,7 +9,6 @@ import DatePicker from 'react-date-picker';
 import Select from 'react-select';
 
 const useStyles = makeStyles(theme => ({
-   
     row__padding_right: {
         paddingRight: '20px'
     },
@@ -60,7 +59,7 @@ const useStyles = makeStyles(theme => ({
         backgroundClip: 'padding-box',
         border: '1px solid #ced4da',
         borderRadius: '.25rem',
-        transition: 'border-color .15s ease-in-out,box-shadow .15s ease-in-out',
+        transition: 'border-color .15s ease-in-out,box-shadow .15s ease-in-out'
     },
     passwordStrengthBar: {
         height: '1rem'
@@ -74,7 +73,6 @@ const useStyles = makeStyles(theme => ({
     genderSelect: {
         width: '10rem'
     }
-    
 }));
 
 const EditProfile = props => {
@@ -91,13 +89,13 @@ const EditProfile = props => {
     const [initialRender, setInitialRender] = useState(true);
     const [loading, setLoading] = useState(false);
     const [userId, setUserId] = useState('');
-    const [languages, setLanguages] = useState([])
+    const [languages, setLanguages] = useState([]);
     const languagesList = [
         { value: 'German', label: 'German' },
         { value: 'English', label: 'English' },
         { value: 'French', label: 'French' }
     ];
-    const [city, setCity] = useState('')
+    const [city, setCity] = useState('');
     const [postalCode, setPostalCode] = useState('');
     const [adress, setadress] = useState('');
     const [degree, setDegree] = useState('bachelor');
@@ -156,8 +154,8 @@ const EditProfile = props => {
 
     const onChangeLanguages = e => {
         let languages = e.map(language => language.label);
-        setLanguages(languages)
-    }
+        setLanguages(languages);
+    };
 
     useEffect(() => {
         setLoading(true);
@@ -173,7 +171,7 @@ const EditProfile = props => {
                 setUniversity(response.data.university);
                 setEmail(response.data.email);
                 setGender(response.data.gender);
-                setLanguages(response.data.languages)
+                setLanguages(response.data.languages);
                 setCity(response.data.city);
                 setPostalCode(response.data.postalCode);
                 setadress(response.data.adress);
@@ -205,150 +203,55 @@ const EditProfile = props => {
     return (
         <div className={classes.component}>
             <div className="container">
-                    <h2 className={`${classes.title_padding_bottom}`}>Edit Profile</h2>
-                    <div className={`card col-12 login-card mt-2 hv-center`}>
-                        <form>
-                            <div className={classes.row_padding_top}>
-                                <div class="row row-cols-3">
-                                    {/* First name input */}
-                                    <div class="col">
-                                        <label htmlFor="firstNameInput">First Name</label>
-                                        <input
-                                            type="text"
-                                            name="firstName"
-                                            className="form-control"
-                                            id="firstName"
-                                            value={firstName}
-                                            onChange={e => {
-                                                setFirstName(e.target.value);
-                                            }}
-                                        />
-                                        <div className="text-danger">{errors.firstName}</div>
-                                    </div>
-
-                                    {/* First name input */}
-                                    <div class="col">
-                                        <label htmlFor="lastNameInput">Last Name</label>
-                                        <input
-                                            type="text"
-                                            name="lastName"
-                                            className="form-control"
-                                            id="lastName"
-                                            value={lastName}
-                                            onChange={e => setLastName(e.target.value)}
-                                        />
-                                        <div className="text-danger">{errors.lastName}</div>
-                                    </div>
-
-                                    {/* Gender input control */}
-                                    <div>
-                                        <Form.Group
-                                            controlId="gender"
-                                            className={classes.row__padding_right}>
-                                            <Form.Label>Gender</Form.Label>
-                                            <Form.Control
-                                                name="gender"
-                                                as="select"
-                                                value={gender}
-                                                onChange={e => {
-                                                    setGender(e.target.value);
-                                                }
-                                                }>
-                                                {genders.map((item, _) => (
-                                                    <option value={Object.keys(item)[0]}>
-                                                        {Object.values(item)[0]}
-                                                    </option>
-                                                ))}
-                                            </Form.Control>
-                                        </Form.Group>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Email input */}
-                            <div className={classes.label__padding_top}>
-                                <label htmlFor="exampleInputEmail">Email address</label>
-                                <input
-                                    type="text"
-                                    name="email"
-                                    className="form-control"
-                                    id="email"
-                                    placeholder="mail@example.com"
-                                    value={email}
-                                    onChange={e => setEmail(e.target.value)}
-                                />
-                                <div className="text-danger">{errors.email}</div>
-                            </div>
-                            <div class={`${classes.label__padding_top}`}>
-                                <Row>
-                                    <Col xs={2}>
-                                        <label>Postal Code</label>
-                                        <input
-                                            type="number"
-                                            name="postalCode"
-                                            className="form-control"
-                                            min="10000"
-                                            max="99999"
-                                            id="postalCode"
-                                            placeholder="85748"
-                                            value={postalCode}
-                                            onChange={e => {setPostalCode(e.target.value)}}
-                                        />
-                                        <Row />
-                                    </Col>
-                                    <Col xs={6}>
-                                        <label>Adress</label>
-                                        <input
-                                            type="text"
-                                            name="adress"
-                                            className="form-control"
-                                            id="adress"
-                                            placeholder="Adress"
-                                            value={adress}
-                                            onChange={e => {setadress(e.target.value)}}
-                                        />
-                                    </Col>
-                                    <Col>
-                                        <label>City</label>
-                                        <input
-                                            type="text"
-                                            name="city"
-                                            className="form-control"
-                                            id="city"
-                                            placeholder="City"
-                                            value={city}
-                                            onChange={e => setCity(e.target.value)}
-                                        />
-                                    </Col>
-                                </Row>
-                                <Row></Row>
-                            </div>
-                            <div class={classes.container + ' ' + 'row row-cols-3'}>
-                                {/* University input option */}
+                <h2 className={`${classes.title_padding_bottom}`}>Edit Profile</h2>
+                <div className={`card col-12 login-card mt-2 hv-center`}>
+                    <form>
+                        <div className={classes.row_padding_top}>
+                            <div class="row row-cols-3">
+                                {/* First name input */}
                                 <div class="col">
-                                    <Form.Group controlId="universitytest">
-                                        <Form.Label>University</Form.Label>
-                                        <Form.Control
-                                            as="select"
-                                            name="university"
-                                            value={university}
-                                            onChange={e => setUniversity(e.target.value)}>
-                                                
-                                            {universities.map((item, _) => (
-                                                <option value={item.value}>{item.name}</option>
-                                            ))}
-                                        </Form.Control>
-                                    </Form.Group>
+                                    <label htmlFor="firstNameInput">First Name</label>
+                                    <input
+                                        type="text"
+                                        name="firstName"
+                                        className="form-control"
+                                        id="firstName"
+                                        value={firstName}
+                                        onChange={e => {
+                                            setFirstName(e.target.value);
+                                        }}
+                                    />
+                                    <div className="text-danger">{errors.firstName}</div>
                                 </div>
 
-                                {/* Program input option */}
+                                {/* First name input */}
                                 <div class="col">
+                                    <label htmlFor="lastNameInput">Last Name</label>
+                                    <input
+                                        type="text"
+                                        name="lastName"
+                                        className="form-control"
+                                        id="lastName"
+                                        value={lastName}
+                                        onChange={e => setLastName(e.target.value)}
+                                    />
+                                    <div className="text-danger">{errors.lastName}</div>
+                                </div>
+
+                                {/* Gender input control */}
+                                <div>
                                     <Form.Group
-                                        controlId="degree"
-                                        onChange={e => setDegree(e.target.value)}>
-                                        <Form.Label>Program</Form.Label>
-                                        <Form.Control name="program" as="select">
-                                            {degrees.map((item, _) => (
+                                        controlId="gender"
+                                        className={classes.row__padding_right}>
+                                        <Form.Label>Gender</Form.Label>
+                                        <Form.Control
+                                            name="gender"
+                                            as="select"
+                                            value={gender}
+                                            onChange={e => {
+                                                setGender(e.target.value);
+                                            }}>
+                                            {genders.map((item, _) => (
                                                 <option value={Object.keys(item)[0]}>
                                                     {Object.values(item)[0]}
                                                 </option>
@@ -356,70 +259,168 @@ const EditProfile = props => {
                                         </Form.Control>
                                     </Form.Group>
                                 </div>
+                            </div>
+                        </div>
 
-                                {/* Semester input option */}
-                                <div class="col">
-                                    <Form.Group
-                                        controlId="semester"
-                                        onChange={e => setSemester(e.target.value)}>
-                                        <Form.Label>Semester</Form.Label>
-                                        <Form.Control name="semester" as="select" value={semester}>
-                                            {semesterCount.map((item, _) => (
-                                                <option value={item}>{item}</option>
-                                            ))}
-                                        </Form.Control>
-                                    </Form.Group>
-                                </div>
+                        {/* Email input */}
+                        <div className={classes.label__padding_top}>
+                            <label htmlFor="exampleInputEmail">Email Address</label>
+                            <input
+                                type="text"
+                                name="email"
+                                className="form-control"
+                                id="email"
+                                placeholder="mail@example.com"
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                            />
+                            <div className="text-danger">{errors.email}</div>
+                        </div>
+                        <div class={`${classes.label__padding_top}`}>
+                            <Row>
+                                <Col xs={2}>
+                                    <label>Postal Code</label>
+                                    <input
+                                        type="number"
+                                        name="postalCode"
+                                        className="form-control"
+                                        min="10000"
+                                        max="99999"
+                                        id="postalCode"
+                                        placeholder="85748"
+                                        value={postalCode}
+                                        onChange={e => {
+                                            setPostalCode(e.target.value);
+                                        }}
+                                    />
+                                    <Row />
+                                </Col>
+                                <Col xs={6}>
+                                    <label>Address</label>
+                                    <input
+                                        type="text"
+                                        name="adress"
+                                        className="form-control"
+                                        id="adress"
+                                        placeholder="Adress"
+                                        value={adress}
+                                        onChange={e => {
+                                            setadress(e.target.value);
+                                        }}
+                                    />
+                                </Col>
+                                <Col>
+                                    <label>City</label>
+                                    <input
+                                        type="text"
+                                        name="city"
+                                        className="form-control"
+                                        id="city"
+                                        placeholder="City"
+                                        value={city}
+                                        onChange={e => setCity(e.target.value)}
+                                    />
+                                </Col>
+                            </Row>
+                            <Row></Row>
+                        </div>
+                        <div class={classes.container + ' ' + 'row row-cols-3'}>
+                            {/* University input option */}
+                            <div class="col">
+                                <Form.Group controlId="universitytest">
+                                    <Form.Label>University</Form.Label>
+                                    <Form.Control
+                                        as="select"
+                                        name="university"
+                                        value={university}
+                                        onChange={e => setUniversity(e.target.value)}>
+                                        {universities.map((item, _) => (
+                                            <option value={item.value}>{item.name}</option>
+                                        ))}
+                                    </Form.Control>
+                                </Form.Group>
                             </div>
 
-                            {/** Date of birth input */}
-                            <div class={`${classes.label__padding_top}`}>
-                                <div class={`row row-cols-2`}></div>
-                                <Row>
-                                    <Col>
-                                        <label>Date of birth</label>
-                                        <Row />
-                                        <div className={classes.datePickerWrapper}>
-                                            <DatePicker
-                                                wrapperClassName="datePicker"
-                                                disableCalendar
-                                                clearIcon
-                                                format={'dd-MM-y'}
-                                                onChange={e => {setDateOfBirth(e)}}
-                                                calendarAriaLabel={'Date of birth'}
-                                                required={true}
-                                                isClearable={false}
-                                                value={dateOfBirth}></DatePicker>
-                                        </div>
-                                    </Col>
-                                    <Col>
-                                        <label>Languages</label>
-                                        <Select
-                                            isMulti
-                                            options={languagesList}
-                                            onChange={onChangeLanguages}
-                                        />
-                                    </Col>
-                                </Row>
-                                <Row></Row>
+                            {/* Program input option */}
+                            <div class="col">
+                                <Form.Group
+                                    controlId="degree"
+                                    onChange={e => setDegree(e.target.value)}>
+                                    <Form.Label>Program</Form.Label>
+                                    <Form.Control name="program" as="select">
+                                        {degrees.map((item, _) => (
+                                            <option value={Object.keys(item)[0]}>
+                                                {Object.values(item)[0]}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
+                                </Form.Group>
                             </div>
-                            <div className={classes.button_box}>
-                                {/* Save Button */}
-                                <div className="form-group">
-                                    <button className={`btn btn-primary btn-lg`} onClick={onSave}>
-                                        Save Information
-                                    </button>
-                                    <button
-                                        className={`btn btn-primary btn-secondary btn-lg`}
-                                        onClick={onCancel}>
-                                        Cancel
-                                    </button>
-                                </div>
+
+                            {/* Semester input option */}
+                            <div class="col">
+                                <Form.Group
+                                    controlId="semester"
+                                    onChange={e => setSemester(e.target.value)}>
+                                    <Form.Label>Semester</Form.Label>
+                                    <Form.Control name="semester" as="select" value={semester}>
+                                        {semesterCount.map((item, _) => (
+                                            <option value={item}>{item}</option>
+                                        ))}
+                                    </Form.Control>
+                                </Form.Group>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+
+                        {/** Date of birth input */}
+                        <div class={`${classes.label__padding_top}`}>
+                            <div class={`row row-cols-2`}></div>
+                            <Row>
+                                <Col>
+                                    <label>Date of birth</label>
+                                    <Row />
+                                    <div className={classes.datePickerWrapper}>
+                                        <DatePicker
+                                            wrapperClassName="datePicker"
+                                            disableCalendar
+                                            clearIcon
+                                            format={'dd-MM-y'}
+                                            onChange={e => {
+                                                setDateOfBirth(e);
+                                            }}
+                                            calendarAriaLabel={'Date of birth'}
+                                            required={true}
+                                            isClearable={false}
+                                            value={dateOfBirth}></DatePicker>
+                                    </div>
+                                </Col>
+                                <Col>
+                                    <label>Languages</label>
+                                    <Select
+                                        isMulti
+                                        options={languagesList}
+                                        onChange={onChangeLanguages}
+                                    />
+                                </Col>
+                            </Row>
+                            <Row></Row>
+                        </div>
+                        <div className={classes.button_box}>
+                            {/* Save Button */}
+                            <div className="form-group">
+                                <button className={`btn btn-primary btn-lg`} onClick={onSave}>
+                                    Save Information
+                                </button>
+                                <button
+                                    className={`btn btn-primary btn-secondary btn-lg`}
+                                    onClick={onCancel}>
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            
+            </div>
         </div>
     );
 };

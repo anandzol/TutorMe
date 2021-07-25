@@ -73,7 +73,7 @@ const styles = () => ({
     button_box: {
         position: 'absolute',
         right: '3rem',
-        paddingTop: '2rem'
+        paddingTop: '42rem'
     },
     button: {
         paddingRight: '1rem'
@@ -217,27 +217,27 @@ class BookSession extends Component {
                                 </div>
                             </Col>
                         </Row>
-                    </Card>
-                    <div className={classes.button_box}>
-                        {/* Register Button */}
-                        <Button
-                            variant="primary"
-                            size="lg"
-                            active
-                            className={classes.button}
-                            onClick={this.onClick}>
-                            Book Session
-                        </Button>
+                        <div className={classes.button_box}>
+                            {/* Register Button */}
+                            <Button
+                                variant="primary"
+                                size="lg"
+                                active
+                                className={classes.button}
+                                onClick={this.onClick}>
+                                Book Session
+                            </Button>
 
-                        <Button
-                            variant="secondary"
-                            size="lg"
-                            active
-                            className={classes.button}
-                            onClick={this.onCancel}>
-                            Cancel
-                        </Button>
-                    </div>
+                            <Button
+                                variant="secondary"
+                                size="lg"
+                                active
+                                className={classes.button}
+                                onClick={this.onCancel}>
+                                Cancel
+                            </Button>
+                        </div>
+                    </Card>
                 </div>
             </div>
         );
