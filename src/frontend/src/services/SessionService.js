@@ -92,8 +92,8 @@ export function getSessionById(sessionId, callback, errorcallback) {
 
 /**
  * API Endpoint for getting all pending sessions for approval
- *  @param {String} document
- *  @param {Function} callback
+ * @param {String} document
+ * @param {Function} callback
  * @param {Function} errorcallback
  */
 export function getAllPendingSessionsForApproval(callback, errorcallback) {
@@ -109,7 +109,7 @@ export function getAllPendingSessionsForApproval(callback, errorcallback) {
 
 /**
  * API Endpoint for approving/rejecting pending sessions
- *  @param {String} docId
+ * @param {String} docId @param {String} status
  * @param {Function} callback
  * @param {Function} errorcallback
  */

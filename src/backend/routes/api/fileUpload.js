@@ -1,14 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const AWS = require('aws-sdk');
-//const fs = require('fs');
 const multer = require('multer');
-
 // Multer adds a body object and a file or files object to the request object. The body object contains the values of the text fields of the form, the file or files object contains the files uploaded via the form.
 var storage = multer.memoryStorage();
 var upload = multer({ storage: storage });
-const fs = require('fs');
-
 const Document = require('../../models/document');
 
 const AWSCredentials = {
@@ -16,31 +12,6 @@ const AWSCredentials = {
     secret: 'qenjm58ZWCHDZ1ka5HC231vc2XaYiS5Hjk9c8rM4',
     bucketName: 'tutorme-upload'
 };
-
-//const s3 = new AWS.S3({
-//    accessKeyId: AWSCredentials.accessKey,
-//    secretAccessKey: AWSCredentials.secret
-//});
-
-/* const uploadToS3 = fileName => {
-    // Read content from the file
-    const fileContent = fs.readFileSync(fileName);
-
-    // Setting up S3 upload parameters
-    const params = {
-        Bucket: AWSCredentials.bucketName,
-        Key: fileName,
-        Body: fileContent
-    };
-
-    // Uploading files to the bucket
-    s3.upload(params, function (err, data) {
-        if (err) {
-            throw err;
-        }
-        console.log(`File uploaded successfully. ${data.Location}`);
-    });
-}; */
 
 // Get all Documents s Routes
 router.route('/').get((req, res, next) => {
@@ -71,7 +42,6 @@ router.post('/', upload.single('file'), function (req, res) {
     let s3bucket = new AWS.S3({
         accessKeyId: AWSCredentials.accessKey,
         secretAccessKey: AWSCredentials.secret
-        // region: process.env.AWS_REGION
     });
 
     //Where you want to store your file
@@ -106,7 +76,11 @@ router.post('/', upload.single('file'), function (req, res) {
     });
 });
 
-// Router to get a DOCUMENT file
+/**
+ * @route get api/fileupload
+ * @description get a file by id
+ * @access Public
+ */
 router.get('/:id', (req, res, next) => {
     Document.findById(req.params.id, (err, docs) => {
         if (err) {
@@ -116,7 +90,11 @@ router.get('/:id', (req, res, next) => {
     });
 });
 
-// Router to delete a DOCUMENT file
+/**
+ * @route delete api/fileupload/:id
+ * @description delete a file
+ * @access Public
+ */
 router.delete('/:id', (req, res, next) => {
     Document.findByIdAndRemove(req.params.id, (err, result) => {
         if (err) {
@@ -126,7 +104,6 @@ router.delete('/:id', (req, res, next) => {
         let s3bucket = new AWS.S3({
             accessKeyId: AWSCredentials.accessKey,
             secretAccessKey: AWSCredentials.secret
-            //region: process.env.AWS_REGION
         });
 
         let params = {
@@ -136,7 +113,7 @@ router.delete('/:id', (req, res, next) => {
 
         s3bucket.deleteObject(params, (err, data) => {
             if (err) {
-                console.log(err);
+                return err;
             } else {
                 res.send({
                     status: '200',
@@ -148,6 +125,11 @@ router.delete('/:id', (req, res, next) => {
     });
 });
 
+/**
+ * @route get api/fileupload/download/:id
+ * @description download a file
+ * @access Public
+ */
 router.get('/download/:id', (req, res, next) => {
     Document.findById(req.params.id, (err, result) => {
         if (err) {

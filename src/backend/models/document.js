@@ -1,10 +1,7 @@
 const mongoose = require('mongoose');
 
-//const AutoIncrement = require('mongoose-sequence')(mongoose);
-
 const documentSchema = new mongoose.Schema(
     {
-        // document_id: { type: Number, default: 0 },
         name: {
             type: String,
             required: true
@@ -21,7 +18,5 @@ const documentSchema = new mongoose.Schema(
         timestamps: true
     }
 );
-
-//documentSchema.plugin(AutoIncrement, { inc_field: 'document_id:' });
 
 module.exports = mongoose.model('document', documentSchema);

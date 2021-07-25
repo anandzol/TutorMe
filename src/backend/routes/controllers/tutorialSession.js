@@ -1,6 +1,4 @@
 const TutorialSession = require('../../models/tutorialSession');
-const uploadFile = require('../api/fileUpload');
-
 const User = require('../../models/user');
 /**
  * API Controller for getting all sessions by university id
@@ -149,13 +147,13 @@ const updateStatusByDocumentId = (req, res) => {
     )
         .then(session => {
             res.json(session);
-            // message: `Updated tutorial session for document ${req.params.id} successfully'
         })
         .catch(error => res.status(400).json(error));
 };
 
 /**
  * API Controller to fetch pending documents
+ * @param {Object} res response made to the client
  * @param {Object} res response made to the client
  */
 const getAllPendingDocuments = (req, res) => {
@@ -165,7 +163,7 @@ const getAllPendingDocuments = (req, res) => {
         .populate('university', { name: 1 })
         .populate('cv', { _id: 1, name: 1, fileLink: 1 })
         .populate('transcript', { _id: 1, name: 1, fileLink: 1 })
-        // .sort({ updatedAt: -1 })
+        .sort({ updatedAt: -1 })
         .then(sessions => res.status(200).json(sessions))
         .catch(error =>
             res.status(400).json({
@@ -175,7 +173,7 @@ const getAllPendingDocuments = (req, res) => {
         );
 };
 
-/*
+/**
  * API Controller for getting all sessions of a tutor
  * @param {Object} req
  * @param {Object} res

@@ -176,10 +176,8 @@ class CreateTutorialSession extends Component {
             response => {
                 // var docs = [];
                 this.setState({ cv: response.data._id }, () => {
-                    // docs.push(this.state.documentCV);
                     uploadFile(this.state.selectedTranscript, response => {
                         this.setState({ transcript: response.data._id }, () => {
-                            // docs.push(this.state.documentTranscript);
                             const payload = {
                                 university: this.state.university,
                                 faculty: this.state.faculty,
@@ -190,8 +188,7 @@ class CreateTutorialSession extends Component {
                                 remote: this.state.remote,
                                 date: this.state.date,
                                 price: this.state.price,
-                                status: 'verified',
-                                // document: docs,
+                                status: 'pending',
                                 cv: this.state.cv,
                                 transcript: this.state.transcript
                             };
@@ -392,7 +389,6 @@ class CreateTutorialSession extends Component {
         const { classes } = this.props;
         return (
             <div className={classes.component}>
-                {console.log(this.state)}
                 <div className={`container ${classes.padding_top}`}>
                     <h2 className={`${classes.title}`}>Create Tutorial Session</h2>
                     <div className={classes.cardWrapper}>

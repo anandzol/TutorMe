@@ -181,7 +181,7 @@ class RegisterUser extends Component {
             loaded: 0
         });
     };
-        
+
     onChangeDatePicker = e => {
         this.setState({ dateOfBirth: e });
     };
@@ -190,51 +190,44 @@ class RegisterUser extends Component {
         e.preventDefault();
 
         if (this.validateInput()) {
-            uploadFile(
-                this.state.selectedImage,
-                response => {
-                    // var docs = [];
-                    this.setState({ imageId: response.data._id }, () => {
-                        const data = {
-                            email: this.state.email,
-                            firstName: this.state.firstName,
-                            lastName: this.state.lastName,
-                            password: this.state.password,
-                            gender: this.state.gender,
-                            semester: this.state.semester,
-                            program: this.state.program,
-                            dateOfBirth: this.state.dateOfBirth,
-                            lastOnline: this.state.lastOnline,
-                             postalCode: this.state.postalCode,
-                            adress: this.state.adress,
-                            languages: this.state.languages,
-                            role: this.state.role,
-                            city: this.state.city,
-                            university: this.state.university,
-                            image: this.state.imageId
-                        };
+            uploadFile(this.state.selectedImage, response => {
+                this.setState({ imageId: response.data._id }, () => {
+                    const data = {
+                        email: this.state.email,
+                        firstName: this.state.firstName,
+                        lastName: this.state.lastName,
+                        password: this.state.password,
+                        gender: this.state.gender,
+                        semester: this.state.semester,
+                        program: this.state.program,
+                        dateOfBirth: this.state.dateOfBirth,
+                        lastOnline: this.state.lastOnline,
+                        postalCode: this.state.postalCode,
+                        adress: this.state.adress,
+                        languages: this.state.languages,
+                        role: this.state.role,
+                        city: this.state.city,
+                        university: this.state.university,
+                        image: this.state.imageId
+                    };
 
-                        AuthService.register(
-                            data,
-                            response => {
-                                this.setState(defaultState);
-                            
-                            },
-                            error => {
-                                if (error.response.data && error.response.status === 400) {
-                                    this.setState({ duplicateEmail: true });
-                                }
-                                console.error(error);
+                    AuthService.register(
+                        data,
+                        response => {
+                            this.setState(defaultState);
+                        },
+                        error => {
+                            if (error.response.data && error.response.status === 400) {
+                                this.setState({ duplicateEmail: true });
                             }
-                        );
-                        this.props.history.push('/login-user', data);
-                    });
-            
-            
-        });
-        
-    }
+                            console.error(error);
+                        }
+                    );
+                    this.props.history.push('/login-user', data);
+                });
+            });
         }
+    };
 
     componentDidMount() {
         getAllUniversitiesSorted(
@@ -260,7 +253,7 @@ class RegisterUser extends Component {
                 console.error(error);
             }
         );
-    };
+    }
 
     onChangeLanguages = e => {
         let languages = e.map(language => language.label);
@@ -349,7 +342,7 @@ class RegisterUser extends Component {
         });
 
         return isValid;
-    };
+    }
 
     render() {
         const { classes } = this.props;
@@ -412,16 +405,15 @@ class RegisterUser extends Component {
                                 </div>
                             </div>
                             <div>
-                                    <Form.Group className={classes.file_selector}>
-                                        <Form.Label>Upload Photo</Form.Label>
-                                        <Form.File
-                                            id="image"
-                                            name="document"
-                                            onChange={this.onChangeImage}
-                                        />
-                                    </Form.Group>
-                                </div>
-
+                                <Form.Group className={classes.file_selector}>
+                                    <Form.Label>Upload Photo</Form.Label>
+                                    <Form.File
+                                        id="image"
+                                        name="document"
+                                        onChange={this.onChangeImage}
+                                    />
+                                </Form.Group>
+                            </div>
 
                             {/* Email input */}
                             <div className={classes.label__padding_top}>
