@@ -4,6 +4,8 @@ npm
 Disclaimer: 
 The db credentials are hard coded into the backend code. It is currently hosted on a free mongodb atlas instance. 
 
+When booking the session, use 4242 4242 4242 4242 as card number detail, any 3 digit number as cvc and a future date as expiration date. 
+
 
 An admin user (with pre-booked session) is available with following credentials: email: admin@test.com password:password
 
