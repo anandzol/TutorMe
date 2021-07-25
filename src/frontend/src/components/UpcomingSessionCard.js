@@ -5,6 +5,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { deleteBookingById } from '../services/BookingService';
 import formattedDate from '../utils/DateUtils';
+import { JITSI_URI}  from '../../src/config'
 
 const styles = () => ({
     card: {
@@ -49,6 +50,18 @@ const styles = () => ({
     cancelButton: {
         height: '40px',
         width: '7rem'
+    },
+    jitsiButtonWrapper: {
+        float: 'left',
+        paddingLeft: '2rem',
+        position: 'relative',
+        bottom: '-70px',
+        paddingBottom: '0.5rem'
+    },
+    jitsiButton: {
+        height: '40px',
+        width: '7rem',
+        backgroundColor: '#00cbff'
     },
     divider: {
         marginTop: '0.7rem',

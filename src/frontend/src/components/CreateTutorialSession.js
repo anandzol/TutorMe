@@ -25,37 +25,32 @@ import TimePicker from 'react-time-picker';
 const styles = () => ({
     title: {
         position: 'relative',
-        paddingTop: '4rem',
-        paddingBottom: '1rem',
         fontWeight: 'bold',
-        left: '-18rem'
+        paddingTop: '1rem'
     },
     component: {
-        position: 'relative',
+        display: 'flex',
+        position: 'absolute',
         backgroundColor: '#f0f2f5',
-        paddingTop: '10px',
-        paddingBottom: '10px',
-        minHeight: '100vh',
-        color: 'black'
+        height: '100%',
+        width: '100%',
+        margin: '0',
     },
     card: {
-        position: 'absolute',
-        paddingTop: '1rem',
-        left: '400px',
-        width: '90rem',
-        height: '70rem'
+        position: 'relative',
+        width: '100%',
+        height: '100%'
     },
     vl: {
         borderLeft: '1px solid #dfdfdf',
-        height: '68rem',
-        position: 'relative',
-        left: '50%',
-        marginLeft: '-3px',
-        paddingTop: '10px'
+        height: '90%',
+        position: 'absolute',
+        left: '35%',
+        paddingTop: '2rem'
     },
     form_option: {
         paddingTop: '1.1rem',
-        paddingLeft: '20px',
+        paddingLeft: '1.1rem',
         width: '20rem'
     },
     form_label: {
@@ -69,36 +64,51 @@ const styles = () => ({
         width: '20rem'
     },
     form_selectors: {
-        paddingTop: '8px',
+        paddingTop: '1rem',
         paddingLeft: '5rem'
     },
     date_picker: {
-        paddingLeft: '20px',
+        paddingLeft: '1.1rem',
         width: '20rem',
-        paddingTop: '1.1rem'
+        paddingTop: '2.8rem'
     },
     numeric_input: {
-        paddingTop: '2.2rem',
-        paddingLeft: '20px'
+        paddingTop: '2rem',
+        paddingLeft: '1.1rem'
     },
     checkmarks_left: {
-        paddingTop: '2.2rem',
-        paddingLeft: '20px'
+        paddingTop: '1rem',
+        paddingLeft: '2rem'
+    },
+    checkmarks_right: {
+        paddingTop: '1rem',
+        paddingLeft: '6rem'
     },
     description_area: {
-        width: '40rem'
+        width: '275%'
     },
     padding_top: {
         paddingTop: '1rem'
     },
     button_box: {
-        position: 'absolute',
-        right: '1rem',
-        paddingTop: '5rem'
+        position: 'relative',
+        left: '70%',
+        bottom: '0',
+        paddingBottom: '2rem'
     },
     button: {
         width: '10rem',
         height: '3rem'
+    },
+    cardWrapper: {
+        paddingTop: '2rem'
+    },
+    vlWrapper: {
+        paddingTop: '2rem'
+    },
+    rowButton_box: {
+        left: '20rem',
+        paddingLeft: '20rem'
     }
 });
 
