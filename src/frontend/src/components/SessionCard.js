@@ -34,7 +34,7 @@ const styles = () => ({
         overFlow: 'auto'
     },
     verifiedHeader: {
-        backgroundColor: '#005500',
+        backgroundColor: '#a5c5a7',
         color: 'white'
     },
     price: {
@@ -60,10 +60,10 @@ const styles = () => ({
         bottom: '0rem'
     },
     pendingHeader: {
-        backgroundColor: '#fbc136'
+        backgroundColor: '#fdf7b7'
     },
     rejectedHeader: {
-        backgroundColor: '#aa0000',
+        backgroundColor: '#c04431',
         color: 'white'
     }
 });

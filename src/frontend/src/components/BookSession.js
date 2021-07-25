@@ -48,8 +48,7 @@ const styles = () => ({
     },
     column: {
         paddingTop: '1.5rem',
-        marginLeft: 'auto',
-        paddingLeft: '4rem'
+        marginLeft: 'auto'
     },
     courseTitle: {
         fontStyle: 'italic'

@@ -259,6 +259,8 @@ const ShowTutorialSessions = () => {
     };
 
     const filterSessions = () => {
+        console.log('set rating');
+
         let filteredSessions = [];
         // Filter by selected courses
         // If no checkbox is selected, we display all courses
@@ -369,11 +371,19 @@ const ShowTutorialSessions = () => {
             }
         }
         setFilteredSessions(filteredSessions);
-        const startIndex = activePage * 2 - 2;
-        const endIndex = activePage * 2;
-        let clonedArray = filteredSessions.slice();
-        clonedArray = clonedArray.slice(startIndex, endIndex);
-        setDisplayedSessions(clonedArray);
+
+        if (activePage * 2 > filteredSessions.length) {
+            setActivePage(1);
+            let clonedArray = filteredSessions.slice();
+            clonedArray = clonedArray.slice(0, 2);
+            setDisplayedSessions(clonedArray);
+        } else {
+            const startIndex = activePage * 2 - 2;
+            const endIndex = activePage * 2;
+            let clonedArray = filteredSessions.slice();
+            clonedArray = clonedArray.slice(startIndex, endIndex);
+            setDisplayedSessions(clonedArray);
+        }
     };
 
     const onClickCheckbox = e => {

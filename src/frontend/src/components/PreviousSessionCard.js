@@ -7,7 +7,9 @@ import { rateBooking } from '../services/BookingService';
 import formattedDate from '../utils/DateUtils';
 const styles = () => ({
     card: {
-        height: '20rem'
+        height: '20rem',
+        minWidth: '30rem',
+        overFlow: 'auto'
     },
     headerWrapper: {
         backgroundColor: '#95bcf2'
