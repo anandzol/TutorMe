@@ -166,10 +166,10 @@ class NavigationBar extends Component {
                                     </NavDropdown.Item>
                                 </React.Fragment>
                             )}
+                            <NavDropdown.Divider />
                             <NavDropdown.Item href="/" onClick={AuthService.logout}>
                                 Sign Out
                             </NavDropdown.Item>
-                            {/* <NavDropdown.Divider /> */}
                         </NavDropdown>
                     ) : (
                         <NavDropdown

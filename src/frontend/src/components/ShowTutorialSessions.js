@@ -339,6 +339,7 @@ const ShowTutorialSessions = props => {
         }
 
         //Filter by search keyword
+
         filteredSessions = filteredSessions.filter(
             session =>
                 session.description.toLowerCase().includes(searchKeyword.toLowerCase()) ||
@@ -347,7 +348,7 @@ const ShowTutorialSessions = props => {
         );
 
         let allFilteredSessions = filteredSessions;
-
+        console.log(allFilteredSessions);
         // We display 2 offerings per page
         setNumberOfPages(Math.ceil(allFilteredSessions.length / 2));
         if (sortValue !== -1) {
@@ -374,8 +375,7 @@ const ShowTutorialSessions = props => {
             }
         }
         setFilteredSessions(filteredSessions);
-
-        if (activePage * 2 > filteredSessions.length) {
+        if (activePage * 2 - 1 > filteredSessions.length) {
             setActivePage(1);
             let clonedArray = filteredSessions.slice();
             clonedArray = clonedArray.slice(0, 2);
@@ -457,6 +457,7 @@ const ShowTutorialSessions = props => {
 
     const handlePageChange = (e, value) => {
         setActivePage(value);
+        filterSessions(value);
     };
 
     function renderTutorialSessionComponents() {

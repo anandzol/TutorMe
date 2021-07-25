@@ -27,8 +27,7 @@ const styles = () => ({
         paddingLeft: '1rem',
         paddingRight: '1rem',
         minHeight: '6rem',
-        maxHeight: '6rem',
-        overFlowY: 'auto',
+        overFlow: 'scroll',
         height: '6rem'
     },
     date: {
@@ -72,6 +71,9 @@ const styles = () => ({
         minHeight: '1rem',
         maxHeight: '1rem',
         heigth: '1rem'
+    },
+    descriptionWrapper: {
+        overflow: 'auto'
     }
 });
 // components/PreviousSessionCard.js
@@ -154,7 +156,9 @@ class PreviousSessionCard extends Component {
                         <div className={classes.headerWrapper}>
                             <div className={classes.header}>{this.state.courseName}</div>
                         </div>
-                        <div className={classes.description}>{this.state.description}</div>
+                        <div className={classes.descriptionWrapper}>
+                            <div className={classes.description}>{this.state.description}</div>
+                        </div>
                         <hr />
                         <div className={classes.date}>{this.state.dateFormatted}</div>
                         <div className={classes.cancelButtonWrapper}>{button}</div>
