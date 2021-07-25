@@ -36,6 +36,11 @@ const styles = theme => ({
     homeDiv: {
         paddingLeft: '1rem',
         paddingTop: '8rem'
+    },
+    firstName: {
+        fontFamily: 'Segoe UI',
+        opacity: '0.8',
+        paddingLeft: '1rem'
     }
 });
 
@@ -50,13 +55,15 @@ class HomeScreen extends Component {
         super();
         const currentUserJWT = AuthService.getCurrentUser();
         const currentUser = parseJwt(currentUserJWT);
-
+        console.log(currentUser);
         if (currentUser === undefined) {
             return;
         }
+
         this.state = {
             // defaulting to TUM
-            university: '60bff011a5e1000beeddb38e'
+            university: '60bff011a5e1000beeddb38e',
+            firstName: currentUser.firstName
         };
         AuthService.getUserById(currentUser._id, response => {
             if (response.data.university) {
@@ -80,13 +87,18 @@ class HomeScreen extends Component {
             );
         }
         return (
-            <div className={classes.center}>
-                <img className={classes.image} src={tutorLogo} />
-                <h2>{}</h2>
-                <h1 className={classes.heading}>TutorMe</h1>
-                <h2 className={classes.subText}>Your Personalised, Tailored Tutoring</h2>
-                <h2 className={classes.subText}>See available learnings for your university</h2>
-                {link}
+            <div>
+                <div className={classes.firstName}>
+                    <h1>{`Welcome ${this.state.firstName}!`}</h1>
+                </div>
+                <div className={classes.center}>
+                    <img className={classes.image} src={tutorLogo} />
+
+                    <h1 className={classes.heading}>TutorMe</h1>
+                    <h2 className={classes.subText}>Your Personalised, Tailored Tutoring</h2>
+                    <h2 className={classes.subText}>See available learnings for your university</h2>
+                    {link}
+                </div>
             </div>
         );
     }

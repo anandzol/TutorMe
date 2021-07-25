@@ -74,26 +74,50 @@ class NavigationBar extends Component {
 
         const navDropDownTitle = <BsPersonFill></BsPersonFill>;
         const { classes } = this.props;
+        let linkHome;
+        let navbarHome;
+
+        if (isLoggedIn) {
+            navbarHome = <NavDropdown.Item href="/home">Home</NavDropdown.Item>;
+            linkHome = (
+                <Link to="/home">
+                    <img src={graduationIcon} className={classes.logo}></img>
+                </Link>
+            );
+        } else {
+            navbarHome = <NavDropdown.Item href="/">Home</NavDropdown.Item>;
+            linkHome = (
+                <Link to="/">
+                    <img src={graduationIcon} className={classes.logo}></img>
+                </Link>
+            );
+        }
+
         return (
             <Navbar bg="light" variant="light" expand="lg">
                 <Navbar.Brand className={classes.bar} href="/">
-                    <Row>
-                        <Link to="/">
-                            <img src={graduationIcon} className={classes.logo}></img>
-                        </Link>
-                    </Row>
+                    <Row>{linkHome}</Row>
                 </Navbar.Brand>
+
                 <Nav>
-                    <div>
-                        <Link to="/list-user-sessions">
-                            <BsJustify className={classes.listButton}></BsJustify>
-                        </Link>
-                    </div>
+                    {isLoggedIn ? (
+                        <div>
+                            <Link to="/list-user-sessions">
+                                <BsJustify className={classes.listButton}></BsJustify>
+                            </Link>
+                        </div>
+                    ) : (
+                        <div></div>
+                    )}
                 </Nav>
                 <Nav>
-                    <Link to="/">
-                        <BsCalendar className={classes.calendarButton}></BsCalendar>
-                    </Link>
+                    {isLoggedIn ? (
+                        <Link to="/">
+                            <BsCalendar className={classes.calendarButton}></BsCalendar>
+                        </Link>
+                    ) : (
+                        <div></div>
+                    )}
                 </Nav>
                 <Nav className={classes.profileButton}>
                     {isLoggedIn ? (
@@ -101,7 +125,7 @@ class NavigationBar extends Component {
                             title={navDropDownTitle}
                             id="collasible-nav-dropdown"
                             className={classes.profileButton__span}>
-                            <NavDropdown.Item href="/home">Home</NavDropdown.Item>
+                            {navbarHome}
                             <NavDropdown.Item href="/edit-profile" props={this.props}>
                                 Edit Profile
                             </NavDropdown.Item>
