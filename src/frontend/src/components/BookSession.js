@@ -8,8 +8,6 @@ import { withStyles } from '@material-ui/styles';
 import { BsPersonFill, BsClock, BsGeoAlt } from 'react-icons/bs';
 import { BiMoney } from 'react-icons/bi';
 import DatePicker from 'react-datepicker';
-import { bookSession } from '../services/BookingService';
-import ToPayment from './BookSessionPayment';
 
 import './styles/bookSession.css';
 

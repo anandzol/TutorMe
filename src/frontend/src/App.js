@@ -5,7 +5,6 @@ import NavigationBar from './components/NavigationBar';
 import AdminRoute from './components/routes/AdminRoute';
 import TutorRoute from './components/routes/TutorRoute';
 import PrivateRoute from './components/routes/PrivateRoute';
-import WelcomeScreen from './components/WelcomeScreen';
 
 import routes from './routes';
 
@@ -13,8 +12,6 @@ class App extends Component {
     render() {
         return (
             <div>
-                
-                {/* <WelcomeScreen></WelcomeScreen> */}
                 <Router>
                     <NavigationBar></NavigationBar>
                     <div>

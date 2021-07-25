@@ -161,23 +161,6 @@ class CreateTutorialSession extends Component {
     };
 
     onCreate = e => {
-        getUniversityById(
-            '60bff011a5e1000beeddb38e',
-            response => {
-                this.setState(
-                    {
-                        test: 'updated'
-                    },
-                    () => {
-                        this.props.history.push('/home');
-                    }
-                );
-            },
-            error => {
-                console.error(error);
-            }
-        );
-
         const payload = {
             university: this.state.university,
             faculty: this.state.faculty,
@@ -190,6 +173,16 @@ class CreateTutorialSession extends Component {
             price: this.state.price,
             status: 'verified'
         };
+
+        createSession(
+            payload,
+            () => {
+                this.props.history.push('/home');
+            },
+            error => {
+                console.error(error);
+            }
+        );
     };
 
     onClickCheckmark = e => {
@@ -354,6 +347,7 @@ class CreateTutorialSession extends Component {
         const { classes } = this.props;
         return (
             <div className={classes.component}>
+                {console.log(this.state)}
                 <div className={`container ${classes.padding_top}`}>
                     <h2 className={`${classes.title}`}>Create Tutorial Session</h2>
                     <div className={classes.cardWrapper}>
