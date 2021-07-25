@@ -8,7 +8,10 @@ import { withStyles } from '@material-ui/styles';
 import { BsPersonFill, BsClock, BsGeoAlt } from 'react-icons/bs';
 import { BiMoney } from 'react-icons/bi';
 import DatePicker from 'react-datepicker';
-
+import { getSlotsBySessionId } from '../services/offeringService';
+import Select from 'react-select';
+import setHours from "date-fns/setHours";
+import setMinutes from "date-fns/setMinutes";
 import './styles/bookSession.css';
 
 const defaultState = {
