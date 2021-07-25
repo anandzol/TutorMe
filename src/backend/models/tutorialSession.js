@@ -46,11 +46,31 @@ const TutorialSessionSchema = new mongoose.Schema({
         required: true,
         enum: ['verified', 'pending', 'rejected']
     },
-    url: String
+    // url: String,
+    cv: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'document',
+        required: true
+    },
+
+    transcript: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'document',
+        required: true
+    }
+
+    //cvName: String,
+    //cvLoc: String
+});
+
+TutorialSessionSchema.pre('findOne', function (next) {
+    this.populate('tutorId', 'averageRating experience bookedOfferings');
+    next();
 });
 
 TutorialSessionSchema.set('timestamps', true);
-
+TutorialSessionSchema.set('toObject', { virtuals: true });
+TutorialSessionSchema.set('toJSON', { virtuals: true });
 module.exports = TutorialSession = mongoose.model(
     'tutorialSession',
     TutorialSessionSchema
