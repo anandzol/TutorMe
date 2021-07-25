@@ -23,6 +23,7 @@
         "react-datepicker": "^4.1.1",
         "react-numeric-input": "^2.2.3",
         "react-validation": "^3.0.7",
+        "stripe": "^8.165.0",
         "validation": "0.0.1",
         "validator": "^13.6.0"
     },
