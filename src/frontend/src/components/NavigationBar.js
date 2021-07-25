@@ -9,8 +9,8 @@ import { BsJustify, BsCalendar, BsPersonFill } from 'react-icons/bs';
 const styles = () => ({
     bar: {
         fontSize: 'xxx-large',
-        fontWeight: 'bold',
-        height: '6rem'
+        height: '6rem',
+        fontWeight: '440'
     },
     listButton: {
         position: 'absolute',
@@ -30,11 +30,11 @@ const styles = () => ({
     },
 
     logo: {
-        // height: '90px',
-        // width: '250px',
-        // padding: '15px 14px 15px 16px',
+        height: '90px',
+        width: '250px',
+        padding: '15px 14px 15px 16px',
         position: 'absolute',
-        left: '3rem',
+        left: '12rem',
         height: '5rem',
         width: '6rem'
     },
@@ -49,7 +49,7 @@ const styles = () => ({
     title: {
         position: 'relative',
         left: '4rem',
-        color: '#56b5ab'
+        color: '#3399dd'
     },
     profileButton__span: {
         right: '0rem'
@@ -70,7 +70,6 @@ class NavigationBar extends Component {
         const isAdmin = AuthService.isAdmin();
         const isLoggedIn = AuthService.isLoggedIn();
         const isTutor = AuthService.isTutor();
-        const isTutorOrAdmin = isTutor || isAdmin;
 
         const navDropDownTitle = <BsPersonFill></BsPersonFill>;
         const { classes } = this.props;
@@ -96,7 +95,11 @@ class NavigationBar extends Component {
         return (
             <Navbar bg="light" variant="light" expand="lg">
                 <Navbar.Brand className={classes.bar} href="/">
-                    <Row>{linkHome}</Row>
+                    <Row>
+                        {linkHome}
+                        <div className={`${classes.title_left} col-sm-4`}>Tutor</div>
+                        <div className={`${classes.title} col-sm-0`}>Me</div>
+                    </Row>
                 </Navbar.Brand>
 
                 <Nav>
@@ -129,7 +132,18 @@ class NavigationBar extends Component {
                             <NavDropdown.Item href="/edit-profile" props={this.props}>
                                 Edit Profile
                             </NavDropdown.Item>
-                            {isTutorOrAdmin && (
+                            {isTutor && (
+                                <React.Fragment>
+                                    <NavDropdown.Item href="/create-tutorial-session">
+                                        Offer Session
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item href="/manage-sessions">
+                                        Manage Sessions
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                </React.Fragment>
+                            )}
+                            {isAdmin && (
                                 <React.Fragment>
                                     <NavDropdown.Item href="/create-tutorial-session">
                                         Offer Session

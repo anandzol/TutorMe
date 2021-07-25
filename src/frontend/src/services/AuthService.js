@@ -66,33 +66,31 @@ class AuthService {
         if (this.isLoggedIn()) {
             const currentUserToken = this.getCurrentUser();
             const currentUser = parseJwt(currentUserToken);
-            return currentUser.role === 'tutor' || currentUser.role === 'admin';
+            return currentUser.role === 'tutor';
         }
         return false;
     }
 
     getUserById(userId, callback, errorcallback) {
-        return axios
-            .get(`${API_URL}/${userId}`)
-            .then(response => {
+        return axios.get(`${API_URL}/${userId}`).then(
+            response => {
                 callback(response);
             },
             error => {
                 errorcallback(error);
             }
-            );
+        );
     }
 
     updateUserById(payload, callback, errorcallback) {
-        return axios
-            .put(`${API_URL}/${payload.id}`, payload)
-            .then(response => {
+        return axios.put(`${API_URL}/${payload.id}`, payload).then(
+            response => {
                 callback(response);
             },
             error => {
                 errorcallback(error);
             }
-            );
+        );
     }
 }
 
