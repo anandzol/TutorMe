@@ -142,6 +142,12 @@ class UpcomingSessionCard extends Component {
         });
     };
 
+    openJitsiWindow=(e)=>{
+        const strWindowFeatures = "height=1920,width=1080";
+        const url = JITSI_URI+this.state._id;
+        window.open(url, "_blank", strWindowFeatures)
+    }
+    
     render() {
         const { classes } = this.props;
         const isStudent = this.state.isStudent;
