@@ -105,7 +105,7 @@ class WelcomeScreen extends Component {
                 <img className={classes.image} src={tutorLogo} />
                 <h1 className={classes.heading}>TutorMe</h1>
                 <h2 className={classes.subText}>
-                    1-1 tutoring platform tailored to your university curriculum.
+                    1-1 Tutoring platform tailored to your university curriculum.
                 </h2>
                 <div className={`${classes.form_selectors}`}>
                     {/** Form for selecting the unversity*/}
