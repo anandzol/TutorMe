@@ -198,7 +198,6 @@ const EditProfile = props => {
                                                 as="select"
                                                 onChange={e => {
                                                     setGender(e.target.value);
-                                                    const value = e.target.value;
                                                 }}>
                                                 {genders.map((item, _) => (
                                                     <option value={Object.keys(item)[0]}>

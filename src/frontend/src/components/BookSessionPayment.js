@@ -106,18 +106,6 @@ function ToPayment(props) {
 
     return (
         <div className="container">
-            <div className="py-5 text-center">
-                <h4>
-                    Stripe Integration -{' '}
-                    <a
-                        href="https://www.cluemediator.com/"
-                        target="_blank"
-                        rel="noopener noreferrer">
-                        Clue Mediator
-                    </a>
-                </h4>
-            </div>
-
             {/* <div className= "row"> */}
             <div className={classes.box}>
                 {paymentCompleted ? (
