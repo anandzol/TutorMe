@@ -249,7 +249,18 @@ const ShowTutorialSessions = props => {
         }
         filterSessions();
         setLoading(false);
-    }, [location, price, experience, language, rating, filteredCourses, searchKeyword, activePage]);
+    }, [
+        location,
+        price,
+        experience,
+        language,
+        rating,
+        filteredCourses,
+        searchKeyword,
+        activePage,
+        startDate,
+        endDate
+    ]);
 
     const onSearch = e => {
         setSearchKeyword(e);
@@ -339,7 +350,6 @@ const ShowTutorialSessions = props => {
         }
 
         //Filter by search keyword
-
         filteredSessions = filteredSessions.filter(
             session =>
                 session.description.toLowerCase().includes(searchKeyword.toLowerCase()) ||
@@ -347,8 +357,13 @@ const ShowTutorialSessions = props => {
                 session.tutorId.firstName.toLowerCase().includes(searchKeyword.toLowerCase())
         );
 
+        // Filter by date
+        console.log(filteredSessions);
+        console.log(startDate);
+        console.log(endDate);
+
         let allFilteredSessions = filteredSessions;
-        console.log(allFilteredSessions);
+
         // We display 2 offerings per page
         setNumberOfPages(Math.ceil(allFilteredSessions.length / 2));
         if (sortValue !== -1) {
@@ -374,6 +389,7 @@ const ShowTutorialSessions = props => {
                     console.error('no available sort option');
             }
         }
+
         setFilteredSessions(filteredSessions);
         if (activePage * 2 - 1 > filteredSessions.length) {
             setActivePage(1);

@@ -14,7 +14,7 @@ const styles = () => ({
     },
     listButton: {
         position: 'absolute',
-        right: '16rem',
+        right: '12rem',
         top: '27px',
         zIndex: 1000,
         fontSize: '54px',
@@ -109,15 +109,6 @@ class NavigationBar extends Component {
                                 <BsJustify className={classes.listButton}></BsJustify>
                             </Link>
                         </div>
-                    ) : (
-                        <div></div>
-                    )}
-                </Nav>
-                <Nav>
-                    {isLoggedIn ? (
-                        <Link to="/">
-                            <BsCalendar className={classes.calendarButton}></BsCalendar>
-                        </Link>
                     ) : (
                         <div></div>
                     )}

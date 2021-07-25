@@ -65,6 +65,9 @@ const styles = () => ({
         minHeight: '1.5rem',
         height: '1.5rem'
     },
+    inquiryWrapper: {
+        overflow: 'auto'
+    },
     price: {
         float: 'right',
         paddingRight: '1rem',
@@ -156,7 +159,9 @@ class UpcomingSessionCard extends Component {
                         <div className={classes.headerWrapper}>
                             <div className={classes.header}>{this.state.courseName}</div>
                         </div>
-                        <div className={classes.inquiry}>{this.state.inquiry}</div>
+                        <div className={classes.inquiryWrapper}>
+                            <div className={classes.inquiry}>{this.state.inquiry}</div>
+                        </div>
                         <hr className={classes.divider} />
                         <div className={classes.date}>{this.state.dateFormatted}</div>
                         <div className={classes.cancelButtonWrapper}>{button}</div>
