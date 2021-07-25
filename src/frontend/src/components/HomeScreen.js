@@ -53,7 +53,6 @@ const defaultState = {
 class HomeScreen extends Component {
     constructor() {
         super();
-        // window.location.reload()
         const currentUserJWT = AuthService.getCurrentUser();
         const currentUser = parseJwt(currentUserJWT);
         if (currentUser === undefined) {
@@ -70,9 +69,6 @@ class HomeScreen extends Component {
                 this.setState({ university: response.data.university });
             }
         });
-        console.log("props", this.props)
-        // if (this.props?.location?.state?.firstName)
-        //         this.setState({firstName: this.props.location.state.firstName})
     }
 
     render() {
@@ -91,11 +87,14 @@ class HomeScreen extends Component {
         }
 
         return (
-            
             <div>
                 <div className={classes.firstName}>
-                    {console.log("inside render",this.props)}
-                    <h1>{`Welcome ${this.props?.location?.state.firstName ? this.props.location.state.firstName : this.state.firstName}!`}</h1>
+                    {console.log('inside render', this.props)}
+                    <h1>{`Welcome ${
+                        this.props?.location?.state.firstName
+                            ? this.props.location.state.firstName
+                            : this.state.firstName
+                    }!`}</h1>
                 </div>
                 <div className={classes.center}>
                     <img className={classes.image} src={tutorLogo} />
@@ -104,7 +103,7 @@ class HomeScreen extends Component {
                     <h2 className={classes.subText}>Your Personalised, Tailored Tutoring</h2>
                     <h2 className={classes.subText}>See available learnings for your university</h2>
                     {link}
-            </div>
+                </div>
             </div>
         );
     }
