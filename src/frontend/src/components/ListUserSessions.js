@@ -110,6 +110,8 @@ const ListUserSessions = () => {
                 const currentDate = new Date();
                 const bookings = response.data;
 
+                console.log('filter date-',response.data);
+                
                 const upcomingSessions = bookings.filter(
                     session => currentDate < new Date(session.startDate)
                 );
