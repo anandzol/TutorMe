@@ -237,9 +237,6 @@ const EditProfile = props => {
                                     value={email}
                                     onChange={e => setEmail(e.target.value)}
                                 />
-                                <small id="emailHelp" className="form-text text-muted">
-                                    We'll never share your email with anyone else.
-                                </small>
                                 <div className="text-danger">{errors.email}</div>
                             </div>
                             <div class={classes.container + ' ' + 'row row-cols-3'}>
