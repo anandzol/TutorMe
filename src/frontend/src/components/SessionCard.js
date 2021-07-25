@@ -35,7 +35,7 @@ const styles = () => ({
     },
     verifiedHeader: {
         backgroundColor: '#a5c5a7',
-        color: 'white'
+        color: 'black'
     },
     price: {
         maxHeight: '2rem',
@@ -64,7 +64,7 @@ const styles = () => ({
     },
     rejectedHeader: {
         backgroundColor: '#c04431',
-        color: 'white'
+        color: 'black'
     }
 });
 

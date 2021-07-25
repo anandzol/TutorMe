@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     },
     row: {
         height: '20rem',
-        paddingTop: '2rem',
+        paddingTop: '1rem',
         paddingLeft: '3rem',
         paddingRight: '2rem',
         overflow: 'hidden'
@@ -38,7 +38,8 @@ const useStyles = makeStyles(theme => ({
         paddingBottom: '2rem'
     },
     pagination: {
-        paddingLeft: '1rem'
+        paddingLeft: '1rem',
+        paddingBottom: '1rem'
     }
 }));
 const ManageSessions = () => {
