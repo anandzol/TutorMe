@@ -91,7 +91,7 @@ class HomeScreen extends Component {
                 <div className={classes.firstName}>
                     {console.log('inside render', this.props)}
                     <h1>{`Welcome ${
-                        this.props?.location?.state.firstName
+                        this?.props?.location?.state.firstName
                             ? this.props.location.state.firstName
                             : this.state.firstName
                     }!`}</h1>

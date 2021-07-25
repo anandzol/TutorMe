@@ -25,8 +25,13 @@ const getUserById = async (req, res) => {
                 program: tutor[0].program,
                 semester: tutor[0].semester,
                 role: tutor[0].role,
-                email: tutor[0].email
+                email: tutor[0].email,
+                languages: tutor[0].languages,
+                city: tutor[0].city,
+                postalCode: tutor[0].postalCode,
+                adress: tutor[0].adress
             };
+            console.log(data)
             res.status(200).json(data);
         })
         .catch(error => {
