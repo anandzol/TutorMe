@@ -5,8 +5,6 @@ import ReactStars from 'react-rating-stars-component';
 import { withRouter } from 'react-router';
 import { rateBooking } from '../services/BookingService';
 import formattedDate from '../utils/DateUtils';
-import { getTutorById, updateTutorById } from '../services/TutorService';
-import { ThemeConsumer } from 'react-bootstrap/esm/ThemeProvider';
 
 const styles = () => ({
     card: {
@@ -116,20 +114,6 @@ class PreviousSessionCard extends Component {
     onBookAgain = e => {
         this.props.history.push(`/book-session/${this.state.sessionId}`);
     };
-
-    ratingChanged = (newRating) => {
-            if(this.state.tutorId && this.state.rating)
-                newRating = (newRating + this.state.rating)/2
-            const data = {
-                tutorId: this.state.tutorId,
-                ratings: newRating
-            }
-            updateTutorById(data,
-                () => {},
-                error => {
-                    console.error(error);
-                })
-        }
 
     render() {
         const { classes } = this.props;

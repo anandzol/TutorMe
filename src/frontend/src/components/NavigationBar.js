@@ -76,9 +76,9 @@ class NavigationBar extends Component {
         const { classes } = this.props;
         return (
             <Navbar bg="light" variant="light" expand="lg">
-                <Navbar.Brand className={classes.bar} href="/home">
+                <Navbar.Brand className={classes.bar} href="/">
                     <Row>
-                        <Link to="/home">
+                        <Link to="/">
                             <img src={graduationIcon} className={classes.logo}></img>
                         </Link>
                     </Row>
@@ -91,7 +91,7 @@ class NavigationBar extends Component {
                     </div>
                 </Nav>
                 <Nav>
-                    <Link to="/home">
+                    <Link to="/">
                         <BsCalendar className={classes.calendarButton}></BsCalendar>
                     </Link>
                 </Nav>

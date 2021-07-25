@@ -3,7 +3,7 @@ import tutorLogo from '../assets/mainLogo.png';
 import { withStyles } from '@material-ui/styles';
 import { Form } from 'react-bootstrap';
 import { getAllUniversitiesSorted } from '../services/UniversityService';
-import { Link } from 'react-router-dom';
+import AuthService from '../services/AuthService';
 import tumLogo from '../assets/TUM_logo.png';
 import lmulogo from '../assets/LMU_logo.png';
 import hmlogo from '../assets/HM_Logo.jpg';
@@ -88,7 +88,13 @@ class WelcomeScreen extends Component {
     onChangeUniversity = e => {
         const universityId = e.target.value;
         this.setState({ university: universityId }, () => {
-            this.props.history.push('/login-user', this.state);
+            const currentUser = AuthService.getCurrentUser();
+
+            if (currentUser === null) {
+                this.props.history.push('/login-user', this.state);
+            } else {
+                this.props.history.push(`/show-sessions/${universityId}`);
+            }
         });
     };
 

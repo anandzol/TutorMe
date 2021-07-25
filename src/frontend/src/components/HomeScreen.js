@@ -50,27 +50,43 @@ class HomeScreen extends Component {
         super();
         const currentUserJWT = AuthService.getCurrentUser();
         const currentUser = parseJwt(currentUserJWT);
+
+        if (currentUser === undefined) {
+            return;
+        }
         this.state = {
-            //defaulting to TUM
+            // defaulting to TUM
             university: '60bff011a5e1000beeddb38e'
         };
         AuthService.getUserById(currentUser._id, response => {
-            if (response.data.university) this.setState({ university: response.data.university });
+            if (response.data.university) {
+                this.setState({ university: response.data.university });
+            }
         });
     }
 
     render() {
         const { classes } = this.props;
-        return (
-            <div className={classes.center}>
-                <img className={classes.image} src={tutorLogo} />
 
-                <h1 className={classes.heading}>TutorMe</h1>
-                <h2 className={classes.subText}>Your Personalised, Tailored Tutoring</h2>
-                <h2 className={classes.subText}>See available learnings for your university</h2>
+        let link;
+        if (this.state == null) {
+            return <div></div>;
+        }
+        if (this.state.university) {
+            link = (
                 <Link to={{ pathname: `/show-sessions/${this.state.university}` }}>
                     <h2 className={classes.subText}>Explore Now</h2>
                 </Link>
+            );
+        }
+        return (
+            <div className={classes.center}>
+                <img className={classes.image} src={tutorLogo} />
+                <h2>{}</h2>
+                <h1 className={classes.heading}>TutorMe</h1>
+                <h2 className={classes.subText}>Your Personalised, Tailored Tutoring</h2>
+                <h2 className={classes.subText}>See available learnings for your university</h2>
+                {link}
             </div>
         );
     }
