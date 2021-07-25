@@ -29,12 +29,8 @@ const styles = () => ({
     },
     card: {
         paddingTop: '2rem',
-        minHeight: '50rem',
-        maxHeight: '50rem',
         height: '50rem',
-        minWidth: '80rem',
-        maxWidth: '80rem',
-        width: '145rem'
+        width: '100%'
     },
     headerWrapper: {
         backgroundColor: '#95bcf2'
