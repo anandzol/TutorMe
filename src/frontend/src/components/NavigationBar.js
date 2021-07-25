@@ -9,8 +9,8 @@ import { BsJustify, BsCalendar, BsPersonFill } from 'react-icons/bs';
 const styles = () => ({
     bar: {
         fontSize: 'xxx-large',
-        height: '6rem',
-        fontWeight: '440'
+        height: '5rem',
+        fontWeight: '500'
     },
     listButton: {
         position: 'absolute',
