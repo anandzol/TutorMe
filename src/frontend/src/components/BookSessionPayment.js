@@ -41,7 +41,6 @@ function ToPayment(props) {
     const classes = styles();
 
     useEffect(() => {
-        //TODO Set amount
         setAmount(sessionDetails.price);
     });
 
