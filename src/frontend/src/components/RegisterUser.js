@@ -337,6 +337,11 @@ class RegisterUser extends Component {
             }
         }
 
+        if (input['imageId'] === '') {
+            isValid = false;
+            errors['imageId'] = 'Please upload your image';
+        }
+
         this.setState({
             errors: errors
         });
@@ -413,6 +418,7 @@ class RegisterUser extends Component {
                                         onChange={this.onChangeImage}
                                     />
                                 </Form.Group>
+                                <div className="text-danger">{this.state.errors.imageId}</div>
                             </div>
 
                             {/* Email input */}
