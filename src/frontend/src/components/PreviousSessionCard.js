@@ -88,9 +88,11 @@ class PreviousSessionCard extends Component {
 
         let name;
 
-        if (props.session.studentId !== undefined) {
+        console.log(props.session);
+        if (props.session.studentId.firstName !== undefined) {
             name = props.session.studentId.firstName;
-        } else if (props.session.tutorId !== undefined) {
+        } else if (props.session.tutorId.firstName !== undefined) {
+            console.log(props.session.tutorId.firstName);
             name = props.session.tutorId.firstName;
         }
 

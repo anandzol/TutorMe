@@ -95,9 +95,9 @@ class UpcomingSessionCard extends Component {
         const dateFormatted = formattedDate(date);
         const time = date.toLocaleTimeString();
         let name;
-        if (props.session.studentId !== undefined) {
+        if (props.session.studentId.firstName !== undefined) {
             name = props.session.studentId.firstName;
-        } else if (props.session.tutorId !== undefined) {
+        } else if (props.session.tutorId.firstName !== undefined) {
             name = props.session.tutorId.firstName;
         }
 
