@@ -88,19 +88,20 @@ class HomeScreen extends Component {
 
         return (
             <div>
-                <div className={classes.firstName}>
-                    <h1>{`Welcome ${
-                        this?.props?.location?.state?.firstName
-                            ? this.props.location.state.firstName
-                            : this.state.firstName
-                    }!`}</h1>
-                </div>
+                
                 <div className={classes.center}>
                     <img className={classes.image} src={tutorLogo} />
 
                     <h1 className={classes.heading}>TutorMe</h1>
                     <h3 className={classes.subText}>Your Personalised, Tailored Tutoring</h3>
-                    <h4 className={classes.subText}>See available learnings for your university</h4>
+                    <div className={classes.firstName}>
+                    <h1></h1>
+                    </div>
+                    <h4 className={classes.subText}>{`Welcome ${
+                        this?.props?.location?.state?.firstName
+                            ? this.props.location.state.firstName
+                            : this.state.firstName
+                        }!`} See available learnings for your university</h4>
                     {link}
                 </div>
             </div>
