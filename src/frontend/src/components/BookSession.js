@@ -43,6 +43,10 @@ const styles = () => ({
         paddingRight: '2rem',
         paddingLeft: '1rem'
     },
+    slot: {
+        maxWidth: '20rem',
+        width: '20rem'
+    },
     component: {
         paddingTop: '3rem',
         paddingLeft: '2rem',
@@ -276,7 +280,7 @@ class BookSession extends Component {
                                     />    
                                 </div>
                                 <div >
-                                    <Select className="react-datepicker_header"
+                                    <Select className={classes.slot}
                                             options ={this.state.timeOptions}
                                             onChange={this.handleTimeChange}
                                     />
