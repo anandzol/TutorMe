@@ -25,28 +25,6 @@ export async function getAllBookingsByUserId(userId, callback, errorcallback) {
 }
 
 /**
- * API Endpoint for getting all booked sessions (bookings) of a user by id
- * @param {String} userId
- * @param {Function} callback
- * @param {Function} errorcallback
- */
-export async function getAllBookingsByTutorId(userId, callback, errorcallback) {
-    try {
-        axios.get(`${API_URL}/tutor/${userId}`).then(
-            response => {
-                console.log(response);
-                callback(response);
-            },
-            error => {
-                errorcallback(error);
-            }
-        );
-    } catch (error) {
-        errorcallback(error);
-    }
-}
-
-/**
  * API Endpoint for booking a session
  * @param {Object} payload
  * @param {Function} callback
