@@ -129,14 +129,15 @@ const styles = () => ({
         overflowX: 'auto'
     },
     upcomingSessionRow: {
-        height: '25rem',
-        minHeight: '40rem',
-        maxHeight: '40rem',
-        minWidth: '80rem',
-        maxWidth: '80rem',
-        width: '145rem',
-        overflowX: 'auto',
-        marginLeft: '-1rem'
+        // height: '25rem',
+        // minHeight: '40rem',
+        // maxHeight: '40rem',
+        // minWidth: '80rem',
+        // maxWidth: '80rem',
+        // width: '145rem',
+        width: '100%',
+        height: '100%',
+        overflowX: 'auto'
     },
 
     upcomingSessionHeader: {
@@ -159,8 +160,8 @@ class AdminApproval extends Component {
             response => {
                 this.setState({
                     pendingSessions: response.data,
-                    displayedSessions: response.data.slice(0, 4),
-                    numberOfPages: Math.ceil(response.data.length / 4)
+                    displayedSessions: response.data.slice(0, 6),
+                    numberOfPages: Math.ceil(response.data.length / 6)
                 });
             },
             error => {
@@ -193,13 +194,13 @@ class AdminApproval extends Component {
                 activePage: 1
             });
             let clonedArray = this.state.pendingSessions.slice();
-            clonedArray = clonedArray.slice(0, 4);
+            clonedArray = clonedArray.slice(0, 6);
             this.setState({
                 displayedSessions: clonedArray
             });
         } else {
-            const startIndex = value * 4 - 4;
-            const endIndex = value * 4;
+            const startIndex = value * 6 - 6;
+            const endIndex = value * 6;
             let clonedArray = this.state.pendingSessions.slice();
             clonedArray = clonedArray.slice(startIndex, endIndex);
             this.setState({
