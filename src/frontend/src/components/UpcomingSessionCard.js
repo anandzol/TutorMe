@@ -53,7 +53,7 @@ const styles = () => ({
     },
     jitsiButtonWrapper: {
         right: '1rem',
-        paddingTop: '10.7rem',
+        paddingTop: '4rem',
         position: 'absolute'
     },
     jitsiButton: {
