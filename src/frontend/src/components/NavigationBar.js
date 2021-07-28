@@ -95,7 +95,7 @@ class NavigationBar extends Component {
 
         return (
             <Navbar bg="light" variant="light" expand="lg">
-                <Navbar.Brand className={classes.bar} href="/">
+                <Navbar.Brand className={classes.bar} href="/home">
                     <Row>
                         {linkHome}
                         <div className={`${classes.title_left} col-sm-4`}>Tutor</div>
