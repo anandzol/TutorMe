@@ -12,7 +12,10 @@ const defaultState = {
     tutorName: '',
     description: '',
     cv: '',
-    transcript: ''
+    transcript: '',
+    numberOfPages: 1,
+    activePage: 1,
+    displayedSessions: []
 };
 
 const styles = () => ({
@@ -29,8 +32,9 @@ const styles = () => ({
     },
     card: {
         paddingTop: '2rem',
-        height: '50rem',
-        width: '100%'
+        // height: '50rem',
+        width: '100%',
+        height: '100%'
     },
     headerWrapper: {
         backgroundColor: '#95bcf2'
@@ -131,8 +135,10 @@ const styles = () => ({
         minWidth: '80rem',
         maxWidth: '80rem',
         width: '145rem',
-        overflowX: 'auto'
+        overflowX: 'auto',
+        marginLeft: '-1rem'
     },
+
     upcomingSessionHeader: {
         paddingLeft: '3rem'
     },
@@ -152,7 +158,9 @@ class AdminApproval extends Component {
         getAllPendingSessionsForApproval(
             response => {
                 this.setState({
-                    pendingSessions: response.data
+                    pendingSessions: response.data,
+                    displayedSessions: response.data.slice(0, 4),
+                    numberOfPages: Math.ceil(response.data.length / 4)
                 });
 
                 console.log(this.state.pendingSessions);
@@ -182,6 +190,31 @@ class AdminApproval extends Component {
         window.location.reload();
     }
 
+    handlePageChange = (e, value) => {
+        console.log(value);
+
+        if (value * 2 - 1 > this.state.pendingSessions.length) {
+            console.log('im in if');
+            this.setState({
+                activePage: 1
+            });
+            let clonedArray = this.state.pendingSessions.slice();
+            clonedArray = clonedArray.slice(0, 4);
+            this.setState({
+                displayedSessions: clonedArray
+            });
+        } else {
+            console.log('im in else' + this.state.activePage);
+            const startIndex = value * 4 - 4;
+            const endIndex = value * 4;
+            let clonedArray = this.state.pendingSessions.slice();
+            clonedArray = clonedArray.slice(startIndex, endIndex);
+            this.setState({
+                displayedSessions: clonedArray
+            });
+        }
+    };
+
     render() {
         const { classes } = this.props;
 
@@ -197,7 +230,7 @@ class AdminApproval extends Component {
                             <h4>Pending Sessions</h4>
                         </div>
                         <Row className={classes.upcomingSessionRow}>
-                            {this.state.pendingSessions.map((item, index) => (
+                            {this.state.displayedSessions.map((item, index) => (
                                 <div className={classes.sessionColumnWrapper}>
                                     <Col className={classes.sessionColumn}>
                                         <Card className={classes.cardMini}>
@@ -259,13 +292,13 @@ class AdminApproval extends Component {
                             ))}
                         </Row>
 
-                        <div className={classes.pagination}>
+                        <div className={classes.paginationComponent}>
                             <Pagination
-                                count={1}
-                                page={1}
+                                count={this.state.numberOfPages}
+                                page={this.state.activePage}
+                                onChange={this.handlePageChange}
                                 color="primary"
                                 variant="outlined"
-                                //onChange={}
                                 size="large"></Pagination>
                         </div>
                     </Card>
