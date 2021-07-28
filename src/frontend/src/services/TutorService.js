@@ -38,7 +38,6 @@ export function getBookedOfferingsByUserId(tutorId, callback, errorcallback) {
             if (callback != null) {
                 callback(response);
             }
-            console.log('updated user');
         })
         .catch(error => {
             if (errorcallback != null) {

@@ -34,7 +34,7 @@ const styles = () => ({
         backgroundColor: '#f0f2f5',
         height: '100%',
         width: '100%',
-        margin: '0',
+        margin: '0'
     },
     card: {
         position: 'relative',
@@ -144,17 +144,17 @@ const labels = [
     'Upload relevant course transcripts',
     'Enter your hourly price (€/h)',
     'Description',
-    '',                                     //fill empty labels for multi-line text box
+    '', //fill empty labels for multi-line text box
     '',
     '',
     'Mode',
     'Dates offered',
-    '',                                     //fill empty labels after multi datepicker
+    '', //fill empty labels after multi datepicker
     '',
     '',
     '',
     'No earlier than',
-    'No later than',
+    'No later than'
 ];
 
 // /components/CreateTutorialSession.js
@@ -169,27 +169,26 @@ class CreateTutorialSession extends Component {
         this.setState({ [e.target.name]: e.target.value });
     };
 
-    onChangeNoEarlyThreshold = e =>{
-        this.setState({noEarlyThreshold:e});
-    }
+    onChangeNoEarlyThreshold = e => {
+        this.setState({ noEarlyThreshold: e });
+    };
 
-    onChangeNoLaterThreshold = e =>{
-        this.setState({noLaterThreshold:e});
-    }
+    onChangeNoLaterThreshold = e => {
+        this.setState({ noLaterThreshold: e });
+    };
 
     handleDayClick(day, { selected }) {
-        // console.log(day);
         const date = this.state.date.concat();
         if (selected) {
-          const selectedIndex = date.findIndex(selectedDay =>
-            DateUtils.isSameDay(selectedDay, day)
-          );
-          date.splice(selectedIndex, 1);
+            const selectedIndex = date.findIndex(selectedDay =>
+                DateUtils.isSameDay(selectedDay, day)
+            );
+            date.splice(selectedIndex, 1);
         } else {
-          date.push(day);
+            date.push(day);
         }
         this.setState({ date });
-      }
+    }
 
     onChangePrice = e => {
         this.setState({ price: e + 1 });
@@ -542,30 +541,31 @@ class CreateTutorialSession extends Component {
                                                 />
                                             </div>
                                             <div className={classes.date_picker}>
-                                        <DayPickerInput
-                                            selectedDays={this.state.date}
-                                            onDayClick={this.handleDayClick}
-                                            disabledDays={[  new Date(),                                   
-                                                            {
-                                                                before: new Date(),
-                                                            },
-                                                          ]}
-                                        />
-                                    </div>
-                                     <div className={classes.numeric_input}>            
-                                        <TimePicker
-                                             onChange={this.onChangeNoEarlyThreshold}
-                                             value={this.state.noEarlyThreshold}
-                                             maxDetail ="hour"
-                                         />
-                                    </div>
-                                    <div className={classes.date_picker}>
-                                        <TimePicker
-                                             onChange={this.onChangeNoLaterThreshold}
-                                             value={this.state.noLaterThreshold}
-                                             maxDetail ="hour"
-                                         />
-                                    </div>
+                                                <DayPickerInput
+                                                    selectedDays={this.state.date}
+                                                    onDayClick={this.handleDayClick}
+                                                    disabledDays={[
+                                                        new Date(),
+                                                        {
+                                                            before: new Date()
+                                                        }
+                                                    ]}
+                                                />
+                                            </div>
+                                            <div className={classes.numeric_input}>
+                                                <TimePicker
+                                                    onChange={this.onChangeNoEarlyThreshold}
+                                                    value={this.state.noEarlyThreshold}
+                                                    maxDetail="hour"
+                                                />
+                                            </div>
+                                            <div className={classes.date_picker}>
+                                                <TimePicker
+                                                    onChange={this.onChangeNoLaterThreshold}
+                                                    value={this.state.noLaterThreshold}
+                                                    maxDetail="hour"
+                                                />
+                                            </div>
                                         </Row>
                                     </div>
                                 </Row>

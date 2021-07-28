@@ -72,8 +72,7 @@ class HomeScreen extends Component {
     }
 
     render() {
-        if(!window.location.hash) {
-            console.log("reload")
+        if (!window.location.hash) {
             window.location = window.location + '#loaded';
             window.location.reload();
         }
@@ -93,17 +92,19 @@ class HomeScreen extends Component {
 
         return (
             <div>
-                
                 <div className={classes.center}>
                     <img className={classes.image} src={tutorLogo} />
 
                     <h1 className={classes.heading}>TutorMe</h1>
                     <h3 className={classes.subText}>Your Personalised, Tailored Tutoring</h3>
-                    <h4 className={classes.subText}>{`Welcome ${
-                        this?.props?.location?.state?.firstName
-                            ? this.props.location.state.firstName
-                            : this.state.firstName
-                        }!`} See available learnings for your university</h4>
+                    <h4 className={classes.subText}>
+                        {`Welcome ${
+                            this?.props?.location?.state?.firstName
+                                ? this.props.location.state.firstName
+                                : this.state.firstName
+                        }!`}{' '}
+                        See available learnings for your university
+                    </h4>
                     {link}
                 </div>
             </div>

@@ -6,7 +6,6 @@ const Offerings = require('../../models/offerings');
  * @param {Object} res response made to the client
  */
 const getBySessionId = (req, res) => {
-    console.log("Incoming slot req",req.params);
     Offerings.find({ sessionId: req.params.sessionid })
         .sort({ updatedAt: -1 })
         .then(offers => res.json(offers))
@@ -18,9 +17,6 @@ const getBySessionId = (req, res) => {
         );
 };
 
-
-
 module.exports = {
-    getBySessionId,
-
+    getBySessionId
 };

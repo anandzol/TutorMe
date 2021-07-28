@@ -53,13 +53,11 @@ const bookSession = async (req, res) => {
                     .populate('booking')
                     .sort({ updatedAt: -1 })
                     .then(bookings => {
-                        //console.log('found following sessions-',bookings);
                         bookings.availableSlots =
                             bookings.availableSlots.filter(
                                 item => !toRemoveAvailableSlot.includes(item)
                             );
                         bookings.save();
-                        // console.log("after slot removal-",bookings.availableSlots);
                         //res.json(sessions)
                     })
                     .catch(error =>

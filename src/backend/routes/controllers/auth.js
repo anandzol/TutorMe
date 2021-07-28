@@ -101,9 +101,7 @@ const register = async (req, res) => {
         if (existingUser) {
             return res.status(400).send('Email already exists');
         }
-        console.log(user);
         let retUser = await User.create(user);
-        console.log(retUser);
         const token = jwt.sign(
             {
                 _id: retUser._id,

@@ -10,8 +10,8 @@ import { BiMoney } from 'react-icons/bi';
 import DatePicker from 'react-datepicker';
 import { getSlotsBySessionId } from '../services/offeringService';
 import Select from 'react-select';
-import setHours from "date-fns/setHours";
-import setMinutes from "date-fns/setMinutes";
+import setHours from 'date-fns/setHours';
+import setMinutes from 'date-fns/setMinutes';
 import './styles/bookSession.css';
 
 const defaultState = {
@@ -28,10 +28,10 @@ const defaultState = {
     tutorId: '',
     startDate: '',
     availableDates: [],
-    availableTimeSlots:[],
+    availableTimeSlots: [],
     startTime: '15:00',
-    selectedTime:0,
-    timeOptions:[],
+    selectedTime: 0,
+    timeOptions: []
 };
 
 const styles = () => ({
@@ -99,64 +99,65 @@ class BookSession extends Component {
         this.state = defaultState;
     }
 
-    handleTimeChange = (e) => {
-        console.log(e.value);
-        this.setState({ selectedTime:e.value });
-        //console.log(`Option selected:`, this.state.selectedTime);
-      }
+    handleTimeChange = e => {
+        this.setState({ selectedTime: e.value });
+    };
 
     setStartDate = e => {
-        //console.log("current date e is ", e.getDate());
         this.setState({
             startDate: e
         });
-        const allslots=this.state.availableTimeSlots;
-        const selectedDayTimeSlots=[]
-        allslots.forEach(slot=>{
-            if ((slot.getDate()===e.getDate())&&(slot.getMonth()===e.getMonth())&&(slot.getYear()===e.getYear())){
-                let slotObject ={label:slot.getHours()+":00", value:slot.getHours()};
+        const allslots = this.state.availableTimeSlots;
+        const selectedDayTimeSlots = [];
+        allslots.forEach(slot => {
+            if (
+                slot.getDate() === e.getDate() &&
+                slot.getMonth() === e.getMonth() &&
+                slot.getYear() === e.getYear()
+            ) {
+                let slotObject = { label: slot.getHours() + ':00', value: slot.getHours() };
                 selectedDayTimeSlots.push(slotObject);
             }
         });
         this.setState({
             timeOptions: selectedDayTimeSlots
         });
-       // console.log(selectedDayTimeSlots);
+        // console.log(selectedDayTimeSlots);
     };
 
     setStartTime = e => {
-        console.log("current time e is ", e);
         this.setState({
             startTime: e.target.value
         });
     };
 
-    selectDateTime=e=>{console.log("current select is ", e);}
+    selectDateTime = e => {};
 
     componentDidMount() {
         const sessionId = this.props.match.params.id;
         const currentUserJWT = AuthService.getCurrentUser();
 
-        getSlotsBySessionId(sessionId,
-            response=>{
-                let slotDates=[],slotTimes=[];
-                response.data.forEach(date=>{
+        getSlotsBySessionId(
+            sessionId,
+            response => {
+                let slotDates = [],
+                    slotTimes = [];
+                response.data.forEach(date => {
                     slotDates.push(new Date(date.offeringDate));
-                    date.availableSlots.forEach(slot=>{
+                    date.availableSlots.forEach(slot => {
                         let currenthour = parseInt(slot.split(':')[0]);
                         //console.log('current D-',currenthour.getDate(),' H-',currenthour.getHours(),' M-',currenthour.getMinutes());
                         //console.log("Date-", currenthour.toISOString());
                         //let currenthour = new Date(date.offeringDate).setHours(parseInt(slot.split(':')[0]));
                         slotTimes.push(setHours(new Date(date.offeringDate), currenthour));
-                    })
+                    });
                 });
-                 // console.log("Slot Dates", slotDates,' ',typeof slotDates[0]);
-                console.log("All Slot Times", slotTimes);
-                this.setState({availableDates:slotDates});
-                this.setState({availableTimeSlots:slotTimes});
+                // console.log("Slot Dates", slotDates,' ',typeof slotDates[0]);
+                this.setState({ availableDates: slotDates });
+                this.setState({ availableTimeSlots: slotTimes });
             },
-            error=>console.log(error));
-
+            error => console.log(error)
+        );
 
         const currentUser = parseJwt(currentUserJWT);
         this.setState({
@@ -214,7 +215,7 @@ class BookSession extends Component {
             inquiry: this.state.inquiry,
             remote: this.state.remote,
             onsite: this.state.onsite,
-            startDate: setHours(new Date( this.state.startDate), this.state.selectedTime),
+            startDate: setHours(new Date(this.state.startDate), this.state.selectedTime),
             //startDate: this.state.startDate,
             courseName: this.state.courseName,
             studentId: this.state.studentId,
@@ -277,14 +278,14 @@ class BookSession extends Component {
                                         includeDates={this.state.availableDates}
                                         //includeTimes={this.state.availableTimeSlots}
                                         //showTimeSelect
-                                    />    
-                                </div>
-                                <div >
-                                    <Select className={classes.slot}
-                                            options ={this.state.timeOptions}
-                                            onChange={this.handleTimeChange}
                                     />
-                                       
+                                </div>
+                                <div>
+                                    <Select
+                                        className={classes.slot}
+                                        options={this.state.timeOptions}
+                                        onChange={this.handleTimeChange}
+                                    />
                                 </div>
                             </Col>
                         </Row>

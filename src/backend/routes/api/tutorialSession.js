@@ -46,12 +46,25 @@ router.post('/', (req, res) => {
     TutorialSession.create(req.body)
         .then(response => {
             // Create slots for all available days once session is created successfully
-            const availableSlots= offeringsHelper.extractTimeSlots(response.noEarlyThreshold,response.noLaterThreshold);
-            const dates=response.date;
+            const availableSlots = offeringsHelper.extractTimeSlots(
+                response.noEarlyThreshold,
+                response.noLaterThreshold
+            );
+            const dates = response.date;
             dates.forEach(element => {
-                let elementString = new Date(element).getFullYear()+'-'+(new Date(element).getMonth()+1)+'-'+ new Date(element).getDate();
-                //console.log('date String-',elementString);
-                Offerings.create({sessionId:response._id,offeringDate:element,availableSlots,dateString:elementString});
+                let elementString =
+                    new Date(element).getFullYear() +
+                    '-' +
+                    (new Date(element).getMonth() + 1) +
+                    '-' +
+                    new Date(element).getDate();
+
+                Offerings.create({
+                    sessionId: response._id,
+                    offeringDate: element,
+                    availableSlots,
+                    dateString: elementString
+                });
             });
             res.json({ message: 'Session created successfully' });
         })
@@ -110,7 +123,7 @@ router.get(
  * @description Update the session to accepted/pending/rejected by document id
  * @access Public
  */
- router.put(
+router.put(
     '/document/:id/:status',
     TutorialSessionController.updateStatusByDocumentId
 );

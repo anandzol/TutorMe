@@ -117,12 +117,10 @@ const ListUserSessions = () => {
                     session => currentDate < new Date(session.startDate)
                 );
 
-                console.log(upcomingSessions);
                 const previousSessions = bookings.filter(
                     session => currentDate >= new Date(session.startDate)
                 );
 
-                console.log(previousSessions);
                 // We display the nearest (e.g. closest to the current date) first for upcoming sessions
                 upcomingSessions.sort(function (a, b) {
                     return new Date(a.startDate) - new Date(b.startDate);

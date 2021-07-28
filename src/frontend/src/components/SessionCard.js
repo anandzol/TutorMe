@@ -81,7 +81,6 @@ class SessionCard extends Component {
         formattedSession['createdAtFormatted'] = dateFormatted;
         formattedSession['startDateFormatted'] = startDateFormatted;
 
-        console.log(formattedSession);
         this.state = formattedSession;
     }
 
