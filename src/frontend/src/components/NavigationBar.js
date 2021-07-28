@@ -75,10 +75,10 @@ class NavigationBar extends Component {
         const { classes } = this.props;
         let linkHome;
         let navbarHome;
-        console.log("logged in", isLoggedIn)
+        console.log('logged in', isLoggedIn);
 
         if (isLoggedIn) {
-            navbarHome = <NavDropdown.Item href="/home">Home</NavDropdown.Item>;
+            navbarHome = <NavDropdown.Item href="/">Home</NavDropdown.Item>;
             linkHome = (
                 <Link to="/home">
                     <img src={graduationIcon} className={classes.logo}></img>
@@ -95,7 +95,7 @@ class NavigationBar extends Component {
 
         return (
             <Navbar bg="light" variant="light" expand="lg">
-                <Navbar.Brand className={classes.bar} href="/home">
+                <Navbar.Brand className={classes.bar} href="/">
                     <Row>
                         {linkHome}
                         <div className={`${classes.title_left} col-sm-4`}>Tutor</div>
