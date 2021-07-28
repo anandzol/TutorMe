@@ -185,7 +185,9 @@ const EditProfile = props => {
                 setCity(response.data.city);
                 setPostalCode(response.data.postalCode);
                 setadress(response.data.adress);
-                setImage(response.data.image.fileLink)
+                if (props.tutor?.image != undefined) {
+                    setImage(props.tutor.image.fileLink);
+                }
             });
 
             getAllUniversitiesSorted(
