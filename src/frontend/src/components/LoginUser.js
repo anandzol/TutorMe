@@ -103,12 +103,6 @@ class LoginUser extends Component {
         if (this.checkBtn.context._errors.length === 0) {
             AuthService.login(this.state.email, this.state.password).then(
                 result => {
-                    if (this.props.location.state?.university)
-                        this.props.history.push(
-                            `/show-sessions/${this.props.location.state.university}`,
-                            this.state
-                        );
-                    else {
                         const currentUserJWT = AuthService.getCurrentUser();
                         const currentUser = parseJwt(currentUserJWT);
                         AuthService.getUserById(currentUser._id, response => {
@@ -119,11 +113,8 @@ class LoginUser extends Component {
                                     this.state
                                 );
                             else this.props.history.push('/home', this.state);
-
-                            window.location.reload();
                         });
-                    }
-                },
+                    },
                 error => {
                     const resMessage =
                         (error.response && error.response.data && error.response.data.message) ||

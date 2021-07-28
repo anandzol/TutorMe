@@ -86,16 +86,11 @@ class WelcomeScreen extends Component {
     }
 
     onChangeUniversity = e => {
-        const universityId = e.target.value;
-        this.setState({ university: universityId }, () => {
-            const currentUser = AuthService.getCurrentUser();
+        const currentUser = AuthService.getCurrentUser();
 
-            if (currentUser === null) {
-                this.props.history.push('/login-user', this.state);
-            } else {
-                this.props.history.push(`/show-sessions/${universityId}`);
-            }
-        });
+        if (currentUser === null) 
+            this.props.history.push('/login-user', this.state);
+              
     };
 
     render() {

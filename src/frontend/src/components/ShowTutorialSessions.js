@@ -205,12 +205,18 @@ const ShowTutorialSessions = props => {
     const [university, setUniversity] = useState(
         props.match.params.id ? props.match.params.id : '60bff011a5e1000beeddb38e'
     );
-
+   
     useEffect(async () => {
         setLoading(true);
 
         // Prevent api call everytime a value changes
         if (initialRender) {
+            
+            if(!window.location.hash) {
+                console.log("reload")
+                window.location = window.location + '#loaded';
+                window.location.reload();
+            }
             getUniversityById(
                 university,
                 response => {
