@@ -36,7 +36,7 @@ const styles = () => ({
         maxHeight: '1.5rem'
     },
     cancelButtonWrapper: {
-        paddingTop: '11.2rem',
+        paddingTop: '10.5rem',
         position: 'absolute',
         right: '1rem',
         paddingBottom: '0.5rem'
