@@ -32,7 +32,6 @@ const styles = () => ({
         display: 'flex',
         position: 'absolute',
         backgroundColor: '#f0f2f5',
-        height: '100%',
         width: '100%',
         margin: '0'
     },
