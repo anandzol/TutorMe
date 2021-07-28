@@ -60,7 +60,7 @@ const styles = () => ({
         height: '40px',
         width: '7rem',
         color: '#ffffff',
-        backgroundColor: '#00cbff'
+        backgroundColor: '#3399DE'
     },
     divider: {
         marginTop: '0.7rem',
