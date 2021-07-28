@@ -72,6 +72,11 @@ class HomeScreen extends Component {
     }
 
     render() {
+        if(!window.location.hash) {
+            console.log("reload")
+            window.location = window.location + '#loaded';
+            window.location.reload();
+        }
         const { classes } = this.props;
 
         let link;

@@ -72,6 +72,13 @@ const useStyles = makeStyles(theme => ({
     },
     genderSelect: {
         width: '10rem'
+    },
+    avatarImg:
+    {
+        width: 300,
+        height: 300,
+        borderRadius: 400/2,
+        marginBottom: 50
     }
 }));
 
@@ -113,6 +120,9 @@ const EditProfile = props => {
     const [optionState, setOptionState] = useState('');
     const classes = useStyles();
     const [errors, setErrors] = useState({});
+    const [image, setImage] = useState(
+        'https://icon-library.com/images/no-profile-picture-icon-female/no-profile-picture-icon-female-24.jpg'
+    );
 
     const onCancel = () => {
         if (props.location.state?.from?.pathname) {
@@ -175,6 +185,7 @@ const EditProfile = props => {
                 setCity(response.data.city);
                 setPostalCode(response.data.postalCode);
                 setadress(response.data.adress);
+                setImage(response.data.image.fileLink)
             });
 
             getAllUniversitiesSorted(
@@ -207,6 +218,15 @@ const EditProfile = props => {
                 <div className={`card col-12 login-card mt-2 hv-center`}>
                     <form>
                         <div className={classes.row_padding_top}>
+                        
+                            <div className="col-xs-1" align = "center">
+                                <img
+                                    className={classes.avatarImg}
+                                    src={image}
+                                    alt="No image available"
+                                />
+                            </div>
+                      
                             <div class="row row-cols-3">
                                 {/* First name input */}
                                 <div class="col">
