@@ -163,7 +163,7 @@ const getAllPendingDocuments = (req, res) => {
         .populate('university', { name: 1 })
         .populate('cv', { _id: 1, name: 1, fileLink: 1 })
         .populate('transcript', { _id: 1, name: 1, fileLink: 1 })
-        .sort({ updatedAt: -1 })
+        .sort({ updatedAt: 1 })
         .then(sessions => res.status(200).json(sessions))
         .catch(error =>
             res.status(400).json({

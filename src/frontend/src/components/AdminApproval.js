@@ -162,8 +162,6 @@ class AdminApproval extends Component {
                     displayedSessions: response.data.slice(0, 4),
                     numberOfPages: Math.ceil(response.data.length / 4)
                 });
-
-                console.log(this.state.pendingSessions);
             },
             error => {
                 console.error(error);
@@ -172,7 +170,6 @@ class AdminApproval extends Component {
     }
 
     onDownload(e, file) {
-        console.log(file);
         downloadFile(file);
     }
 
@@ -191,10 +188,7 @@ class AdminApproval extends Component {
     }
 
     handlePageChange = (e, value) => {
-        console.log(value);
-
         if (value * 2 - 1 > this.state.pendingSessions.length) {
-            console.log('im in if');
             this.setState({
                 activePage: 1
             });
@@ -204,7 +198,6 @@ class AdminApproval extends Component {
                 displayedSessions: clonedArray
             });
         } else {
-            console.log('im in else' + this.state.activePage);
             const startIndex = value * 4 - 4;
             const endIndex = value * 4;
             let clonedArray = this.state.pendingSessions.slice();
@@ -236,8 +229,6 @@ class AdminApproval extends Component {
                                         <Card className={classes.cardMini}>
                                             <div className={classes.headerWrapper}>
                                                 <div className={classes.cardHeader}>
-                                                    {console.log(item)}
-
                                                     {item.course.name}
                                                 </div>
                                             </div>
