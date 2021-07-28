@@ -94,9 +94,6 @@ class HomeScreen extends Component {
 
                     <h1 className={classes.heading}>TutorMe</h1>
                     <h3 className={classes.subText}>Your Personalised, Tailored Tutoring</h3>
-                    <div className={classes.firstName}>
-                    <h1></h1>
-                    </div>
                     <h4 className={classes.subText}>{`Welcome ${
                         this?.props?.location?.state?.firstName
                             ? this.props.location.state.firstName
