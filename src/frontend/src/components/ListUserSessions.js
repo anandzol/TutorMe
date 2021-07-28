@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
 import AuthService from '../services/AuthService';
 import { parseJwt } from '../services/AuthHeader';
-import { getAllBookingsByUserId } from '../services/BookingService';
+import { getAllBookingsByUserId, getAllBookingsByTutorId } from '../services/BookingService';
 import PreviousSessionCard from './PreviousSessionCard';
 import UpcomingSessionCard from './UpcomingSessionCard';
 import { withRouter } from 'react-router';
@@ -104,18 +104,16 @@ const ListUserSessions = () => {
         if (AuthService.isAdmin() || AuthService.isStudent()) {
             setRenderStudentOptions(true);
         }
+
+        if (AuthService.isTutor()) {
+        }
         getAllBookingsByUserId(
             currentUserId,
             response => {
                 const currentDate = new Date();
                 const bookings = response.data;
 
-                console.log('filter date-', response.data);
-
-                bookings.forEach(session => {
-                    console.log(new Date(session.startDate));
-                    console.log(currentDate < new Date(session.startDate));
-                });
+                console.log(bookings);
 
                 const upcomingSessions = bookings.filter(
                     session => currentDate < new Date(session.startDate)

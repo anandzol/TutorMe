@@ -85,8 +85,17 @@ class PreviousSessionCard extends Component {
         const dateFormatted = formattedDate(date);
         formattedState['dateFormatted'] = dateFormatted;
         formattedState['isStudent'] = props.isStudent;
+
+        let name;
+
+        if (props.session.studentId !== undefined) {
+            name = props.session.studentId.firstName;
+        } else if (props.session.tutorId !== undefined) {
+            name = props.session.tutorId.firstName;
+        }
+
+        formattedState['name'] = name;
         this.state = formattedState;
-        console.log(props.session);
 
         if (!'rating' in props.session) {
             this.setState({
@@ -123,6 +132,7 @@ class PreviousSessionCard extends Component {
         const isStudent = this.state.isStudent;
         let ratings;
         let button;
+        let nameText;
         if (isStudent) {
             ratings = (
                 <ReactStars
@@ -139,6 +149,7 @@ class PreviousSessionCard extends Component {
                     Book Again
                 </button>
             );
+            nameText = `Tutor: ${this.state.name}`;
         } else {
             ratings = (
                 <ReactStars
@@ -148,6 +159,7 @@ class PreviousSessionCard extends Component {
                     edit={false}
                     activeColor="#ffd700"></ReactStars>
             );
+            nameText = `Student: ${this.state.name}`;
         }
 
         return (
@@ -170,7 +182,7 @@ class PreviousSessionCard extends Component {
                         </div>
                         <hr />
                         <div className={classes.name}>
-                            Tutor: {` ${this.state.tutorId.firstName}`}
+                            {nameText}
                             <div className={classes.price}>{`Price: ${this.state.price} €/h`}</div>
                         </div>
                     </Card>

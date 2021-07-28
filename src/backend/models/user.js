@@ -78,10 +78,10 @@ const UserSchema = new mongoose.Schema(
     opts
 );
 
-UserSchema.pre('findOne', function (next) {
-    this.populate('bookedOfferings', 'startDate rating');
-    next();
-});
+// UserSchema.pre('findOne', function (next) {
+//     this.populate('bookedOfferings', 'startDate rating');
+//     next();
+// });
 
 UserSchema.virtual('experience').get(function () {
     const currentDate = new Date();

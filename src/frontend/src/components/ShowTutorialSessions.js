@@ -212,7 +212,6 @@ const ShowTutorialSessions = props => {
         // Prevent api call everytime a value changes
         if (initialRender) {
             if (!window.location.hash) {
-                console.log('reload');
                 window.location = window.location + '#loaded';
                 window.location.reload();
             }

@@ -19,6 +19,12 @@ router.post('/book-session', BookingController.bookSession);
 router.get('/student/:id', BookingController.getBookingsByStudentId);
 
 /**
+ * @route GET api/booking/tutor/:id
+ * @description
+ * @access */
+router.get('/tutor/:id', BookingController.getBookingsByTutorId);
+
+/**
  * @route GET /api/session/test
  * @description test route
  * @access Public

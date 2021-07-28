@@ -94,6 +94,14 @@ class UpcomingSessionCard extends Component {
         let date = new Date(props.session.startDate);
         const dateFormatted = formattedDate(date);
         const time = date.toLocaleTimeString();
+        let name;
+        if (props.session.studentId !== undefined) {
+            name = props.session.studentId.firstName;
+        } else if (props.session.tutorId !== undefined) {
+            name = props.session.tutorId.firstName;
+        }
+
+        formattedState['name'] = name;
 
         formattedState['dateFormatted'] = dateFormatted;
         formattedState['isStudent'] = props.isStudent;
@@ -141,16 +149,17 @@ class UpcomingSessionCard extends Component {
         });
     };
 
-    openJitsiWindow=(e)=>{
-        const strWindowFeatures = "height=1920,width=1080";
-        const url = JITSI_URI+this.state._id;
-        window.open(url, "_blank", strWindowFeatures)
-    }
-    
+    openJitsiWindow = e => {
+        const strWindowFeatures = 'height=1920,width=1080';
+        const url = JITSI_URI + this.state._id;
+        window.open(url, '_blank', strWindowFeatures);
+    };
+
     render() {
         const { classes } = this.props;
         const isStudent = this.state.isStudent;
         let button;
+        let nameText;
         if (isStudent) {
             button = (
                 <button
@@ -159,6 +168,9 @@ class UpcomingSessionCard extends Component {
                     Cancel
                 </button>
             );
+            nameText = `Tutor: ${this.state.name}`;
+        } else {
+            nameText = `Student: ${this.state.name}`;
         }
 
         let locationFormatted = ' ';
@@ -176,7 +188,6 @@ class UpcomingSessionCard extends Component {
         return (
             <div>
                 <div>
-                    
                     <Card className={classes.card}>
                         <div className={classes.headerWrapper}>
                             <div className={classes.header}>{this.state.courseName}</div>
@@ -185,7 +196,11 @@ class UpcomingSessionCard extends Component {
                         <div className={classes.inquiryWrapper}>
                             <div className={classes.inquiry}>{this.state.inquiry}</div>
                             <div className={classes.jitsiButtonWrapper}>
-                                <button className={classes.jitsiButton} onClick={this.openJitsiWindow}>Room</button>
+                                <button
+                                    className={classes.jitsiButton}
+                                    onClick={this.openJitsiWindow}>
+                                    Room
+                                </button>
                             </div>
                         </div>
                         <hr className={classes.divider} />
@@ -203,7 +218,7 @@ class UpcomingSessionCard extends Component {
                         </div>
                         <hr />
                         <div className={classes.name}>
-                            {`Tutor: ${this.state.tutorId.firstName}`}
+                            {nameText}
                             <div className={classes.price}>{`Price: ${this.state.price} €/h`}</div>
                         </div>
                     </Card>

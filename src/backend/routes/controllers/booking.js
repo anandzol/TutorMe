@@ -36,25 +36,38 @@ const bookSession = async (req, res) => {
                     tutor.save();
                 });
 
-                                // once the offerings are pushed , the slot is removed from offerings model.
-                                let toRemoveAvailableSlot = new Date(req.body.startDate).getHours()+":00";
-                
-                                const requestDateString = new Date(req.body.startDate).getFullYear()+"-"+(new Date(req.body.startDate).getMonth()+1)+"-"+new Date(req.body.startDate).getDate();
-                                const all=Offering.findOne({sessionId: req.body.sessionId,dateString:requestDateString}).populate('booking')
-                                .sort({ updatedAt: -1 })
-                                .then(bookings => {
-                                    //console.log('found following sessions-',bookings);
-                                    bookings.availableSlots=bookings.availableSlots.filter(item => !toRemoveAvailableSlot.includes(item));
-                                    bookings.save();
-                                    // console.log("after slot removal-",bookings.availableSlots);
-                                    //res.json(sessions)
-                                })
-                                .catch(error =>
-                                    res.status(404).json({
-                                        error: 'No available sessions found',
-                                        message: error.message
-                                    })
-                                );
+                // once the offerings are pushed , the slot is removed from offerings model.
+                let toRemoveAvailableSlot =
+                    new Date(req.body.startDate).getHours() + ':00';
+
+                const requestDateString =
+                    new Date(req.body.startDate).getFullYear() +
+                    '-' +
+                    (new Date(req.body.startDate).getMonth() + 1) +
+                    '-' +
+                    new Date(req.body.startDate).getDate();
+                const all = Offering.findOne({
+                    sessionId: req.body.sessionId,
+                    dateString: requestDateString
+                })
+                    .populate('booking')
+                    .sort({ updatedAt: -1 })
+                    .then(bookings => {
+                        //console.log('found following sessions-',bookings);
+                        bookings.availableSlots =
+                            bookings.availableSlots.filter(
+                                item => !toRemoveAvailableSlot.includes(item)
+                            );
+                        bookings.save();
+                        // console.log("after slot removal-",bookings.availableSlots);
+                        //res.json(sessions)
+                    })
+                    .catch(error =>
+                        res.status(404).json({
+                            error: 'No available sessions found',
+                            message: error.message
+                        })
+                    );
 
                 res.json({
                     message: 'booking created successfully',
@@ -136,8 +149,40 @@ const getBookingsByStudentId = async (req, res) => {
                 path: 'tutorId'
             }
         })
+        .populate({
+            path: 'bookedOfferings',
+            populate: {
+                path: 'studentId'
+            }
+        })
         .then(user => {
-            res.json(user.bookings);
+            if (user.role === 'tutor') {
+                res.json(user.bookedOfferings);
+            } else {
+                res.json(user.bookings);
+            }
+        })
+        .catch(error => {
+            res.status(404).json({
+                error: `No available user with id: ${userId}`,
+                message: error.message
+            });
+        });
+};
+
+/**
+ * API Controller for getting all bookings by a students id
+ * @param {Object} req
+ * @param {Object} res
+ */
+const getBookingsByTutorId = async (req, res) => {
+    const userId = req.params.id;
+    User.findOne({ _id: userId })
+        .populate({
+            path: 'bookedOfferings'
+        })
+        .then(user => {
+            res.json(user.bookedOfferings);
         })
         .catch(error => {
             res.status(404).json({
@@ -170,5 +215,6 @@ module.exports = {
     bookSession,
     getBookingsByStudentId,
     rateBooking,
-    deleteBookingById
+    deleteBookingById,
+    getBookingsByTutorId
 };
