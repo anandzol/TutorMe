@@ -181,7 +181,7 @@ class UpcomingSessionCard extends Component {
                     locationFormatted += `, ${this.state.tutorId.postalCode} ${this.state.tutorId.city}`;
                 }
             } else {
-                locationFormatted = ' Onsite';
+                locationFormatted = ' Onsite ';
             }
         }
 
