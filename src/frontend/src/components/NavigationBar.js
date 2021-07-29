@@ -78,7 +78,7 @@ class NavigationBar extends Component {
         console.log('logged in', isLoggedIn);
 
         if (isLoggedIn) {
-            navbarHome = <NavDropdown.Item href="/">Home</NavDropdown.Item>;
+            navbarHome = <NavDropdown.Item href="/home">Home</NavDropdown.Item>;
             linkHome = (
                 <Link to="/home">
                     <img src={graduationIcon} className={classes.logo}></img>
