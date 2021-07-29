@@ -217,8 +217,8 @@ const addSlotsUponCancel = async (req, res) => {
      Offering.findOne({sessionId: req.body.sessionId,dateString:requestDateString})
                 .populate('offerings')
                 .then(offerings => {
-                                    //console.log('found following sessions-',bookings);
-                                    offerings.availableSlots=offerings.availableSlots.push(toAddSlot);
+                                    //console.log('found following slots-',offerings);
+                                    offerings.availableSlots.push(toAddSlot);
                                     offerings.save();
                                 })
                 .catch(error => {
