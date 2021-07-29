@@ -185,8 +185,9 @@ const EditProfile = props => {
                 setCity(response.data.city);
                 setPostalCode(response.data.postalCode);
                 setadress(response.data.adress);
-                if (props.tutor?.image != undefined) {
-                    setImage(props.tutor.image.fileLink);
+                console.log(response)
+                if (response.data.image != undefined) {
+                    setImage(response.data.image.fileLink);
                 }
             });
 
