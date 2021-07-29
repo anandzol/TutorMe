@@ -214,7 +214,7 @@ class UpcomingSessionCard extends Component {
                         <div className={classes.location}>
                             Location:
                             {locationFormatted}
-                            {this.state.remote ? 'Remote' : ''}
+                            {this.state.remote ? ' Remote' : ''}
                         </div>
                         <hr />
                         <div className={classes.name}>
