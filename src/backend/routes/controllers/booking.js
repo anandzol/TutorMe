@@ -209,6 +209,26 @@ const makePayment = async (paymentId, amount) => {
     }
 };
 
+const addSlotsUponCancel = async (req, res) => {
+    
+    let toAddSlot = new Date(req.body.startDate).getHours()+":00";
+                
+     const requestDateString = new Date(req.body.startDate).getFullYear()+"-"+(new Date(req.body.startDate).getMonth()+1)+"-"+new Date(req.body.startDate).getDate();
+     Offering.findOne({sessionId: req.body.sessionId,dateString:requestDateString})
+                .populate('offerings')
+                .then(offerings => {
+                                    //console.log('found following sessions-',bookings);
+                                    offerings.availableSlots=offerings.availableSlots.push(toAddSlot);
+                                    offerings.save();
+                                })
+                .catch(error => {
+                                    res.status(404).json({
+                                        error: `No available user with id: ${userId}`,
+                                        message: error.message
+                                    });
+                                });
+                        };
+
 module.exports = {
     bookSession,
     getBookingsByStudentId,
