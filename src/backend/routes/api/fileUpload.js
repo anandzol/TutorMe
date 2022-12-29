@@ -8,8 +8,8 @@ var upload = multer({ storage: storage });
 const Document = require('../../models/document');
 
 const AWSCredentials = {
-    accessKey: 'AKIA54SGIBFDL7VNQA63',
-    secret: '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',
+    accessKey: '',
+    secret: '',
     bucketName: 'tutorme-upload'
 };
 
