@@ -1,0 +1,24 @@
+.react-datepicker__input-container input {
+    border-color: #ced4da;
+    color: #495057;
+    border: 1px solid rgb(221, 221, 221);
+    height: 2.2rem;
+    border-radius: 0.25rem;
+    width: 99.3%;
+}
+
+.breadcrumb {
+    background-color: white;
+}
+
+.breadcrumb-item.active {
+    color: black;
+}
+
+.react-date-picker,
+.react-date-picker *,
+.react-date-picker *:before,
+.react-date-picker *:after {
+    color: #495057;
+    border: #495057;
+}
