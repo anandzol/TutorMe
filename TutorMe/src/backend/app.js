@@ -20,6 +20,12 @@ connectDB();
 // Cors
 app.use(cors({ origin: true, credentials: true }));
 
+// UTF-8 Encoding Middleware
+app.use((req, res, next) => {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    next();
+});
+
 // Init Middleware
 app.use(express.json({ extended: false }));
 

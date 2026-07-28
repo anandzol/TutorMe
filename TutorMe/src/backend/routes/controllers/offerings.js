@@ -27,5 +27,6 @@ const create = (req, res) => {
 };
 
 module.exports = {
-    getBySessionId
+    getBySessionId,
+    create
 };

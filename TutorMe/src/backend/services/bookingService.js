@@ -1,58 +1,65 @@
 const bookingRepository = require('../repositories/bookingRepository');
+const userRepository = require('../repositories/userRepository');
 const offeringRepository = require('../repositories/offeringRepository');
+const tutorialSessionRepository = require('../repositories/tutorialSessionRepository');
 const stripe = require('stripe')(
     'sk_test_51JEzYXFZbrhOEnTQ7O3oK1YqZuepwsQZjDe2F1K1oGPAOetYzyluvMb3rUEXjLTSW6EEYkTrBB4ghBawRpOAkPXH00IS2OtJs5'
 );
 
 const bookSession = async (req, res) => {
-    let session = req.body;
-    bookingRepository.create(session)
-        .then(
-            booking => {
+    let bookingData = req.body;
+
+    // Fetch session details to populate booking with course name and other info
+    try {
+        const tutorialSession = await tutorialSessionRepository.findByIdWithCourse(bookingData.sessionId);
+        if (tutorialSession) {
+            bookingData.courseName = tutorialSession.course.name;
+            // Extract tutorId - it may be populated as a full object due to the pre-hook
+            bookingData.tutorId = tutorialSession.tutorId._id || tutorialSession.tutorId;
+            bookingData.description = tutorialSession.description;
+        }
+    } catch (err) {
+        console.error('Error fetching tutorial session:', err);
+    }
+
+    bookingRepository.create(bookingData)
+        .then(async booking => {
+            await Promise.all([
                 bookingRepository.findUser(req.body.studentId).then(student => {
                     if (makePayment(req.body.paymentId, req.body.amount)) {
                         booking.paymentStatus = true;
                         student.bookings.push(booking);
-                        student.save();
+                        return student.save();
                     } else {
                         console.error('payment failed');
                     }
-                });
-
+                }),
                 bookingRepository.findUser(req.body.tutorId).then(tutor => {
                     tutor.bookedOfferings.push(booking);
-                    tutor.save();
-                });
+                    return tutor.save();
+                })
+            ]);
 
-                let toRemoveAvailableSlot = new Date(req.body.startDate).getHours() + ':00';
-                const requestDateString = new Date(req.body.startDate).getFullYear() + '-' + (new Date(req.body.startDate).getMonth() + 1) + '-' + new Date(req.body.startDate).getDate();
+            let toRemoveAvailableSlot = new Date(req.body.startDate).getHours() + ':00';
+            const requestDateString = new Date(req.body.startDate).getFullYear() + '-' + (new Date(req.body.startDate).getMonth() + 1) + '-' + new Date(req.body.startDate).getDate();
 
-                bookingRepository.findOffering({ sessionId: req.body.sessionId, dateString: requestDateString })
-                    .then(bookings => {
-                        bookings.availableSlots = bookings.availableSlots.filter(item => !toRemoveAvailableSlot.includes(item));
-                        bookings.save();
-                    })
-                    .catch(error =>
-                        res.status(404).json({
-                            error: 'No available sessions found',
-                            message: error.message
-                        })
-                    );
-
-                res.json({
-                    message: 'booking created successfully',
-                    success: true
-                });
-            },
-            error => {
-                res.status(404).json({
-                    error: 'User not found',
-                    message: error.message
-                });
-            }
-        )
+            return bookingRepository.findOffering({ sessionId: req.body.sessionId, dateString: requestDateString })
+                .then(bookings => {
+                    bookings.availableSlots = bookings.availableSlots.filter(item => !toRemoveAvailableSlot.includes(item));
+                    return bookings.save();
+                })
+                .catch(error =>
+                    console.error('Error updating offering:', error.message)
+                );
+        })
+        .then(() => {
+            res.json({
+                message: 'booking created successfully',
+                success: true
+            });
+        })
         .catch(error => {
-            console.log(error);
+            console.error(error);
             res.status(500).json({
                 error: 'Internal server error',
                 message: error.message
@@ -100,7 +107,7 @@ const deleteBooking = async (req, res) => {
 
 const getBookingsByStudent = async (req, res) => {
     const userId = req.params.id;
-    bookingRepository.findByIdWithBookingsAndOfferings(userId)
+    userRepository.findByIdWithBookingsAndOfferings(userId)
         .then(user => {
             if (user.role === 'tutor') {
                 res.json(user.bookedOfferings);
