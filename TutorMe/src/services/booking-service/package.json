@@ -1,0 +1,21 @@
+{
+  "name": "booking-service",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TutorMe booking microservice (booking domain). Populated during Phase 5 of the monolith-to-microservices migration.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "app": "nodemon src/app.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.12",
+    "stripe": "^8.164.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

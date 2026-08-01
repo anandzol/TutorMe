@@ -1,0 +1,19 @@
+{
+  "name": "catalog-service",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TutorMe catalog microservice (course + faculty + university domains). Populated during Phase 2 of the monolith-to-microservices migration.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "app": "nodemon src/app.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.12"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

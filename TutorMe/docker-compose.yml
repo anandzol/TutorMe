@@ -1,0 +1,32 @@
+services:
+  mongodb:
+    image: mongo:6
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: tutorme
+      MONGO_INITDB_ROOT_PASSWORD: tutorme123
+    volumes:
+      - mongo-data:/data/db
+    networks: [tutorme-net]
+
+  gateway:
+    build: ./src/gateway
+    ports:
+      - "8082:8082"
+    depends_on:
+      - monolith
+    networks: [tutorme-net]
+
+  monolith:
+    build: ./src/backend
+    environment:
+      PORT: 8090
+      MONGODB_URI: mongodb://tutorme:tutorme123@mongodb:27017/tutorme?authSource=admin
+    depends_on:
+      - mongodb
+    networks: [tutorme-net]
+
+networks:
+  tutorme-net: {}
+
+volumes:
+  mongo-data: {}
